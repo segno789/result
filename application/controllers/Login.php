@@ -82,7 +82,6 @@ class Login extends CI_Controller {
                         'teh' => $logedIn['tbl_inst']['teh_cd'],
                         'zone' => $logedIn['tbl_inst']['zone_cd'],
                         'emis' => $logedIn['tbl_inst']['emis_code'],
-                        'isInserted' => $logedIn['isInserted'],
                         'isdeaf' => $isdeaf,
                         'isboardoperator' => 0
                     );

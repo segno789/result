@@ -34,6 +34,20 @@
                 return  -1;
             }
         }
+         public function getResultCardByRNO($keyword)
+        {
+            $query = $this->db->query("matric_new..spResCard9th $keyword,2015,9,1");
+            $rowcount = $query->num_rows();
+            if($rowcount > 0)
+            {
+                return $query->result_array();
+
+            }
+            else
+            {
+                return  -1;
+            }
+        }
       
   }
 ?>
