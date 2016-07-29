@@ -24,10 +24,10 @@ class Result extends CI_Controller {
         $this->load->helper('url');
         //this condition checks the existence of session if user is not accessing  
         //login method as it can be accessed without user session
-        $this->load->library('session');
+        /*$this->load->library('session');
         if( !$this->session->userdata('logged_in') && $this->router->method != 'login' ) {
             redirect('login');
-        }
+        }*/
     }
     public function index()
     {
@@ -95,7 +95,7 @@ class Result extends CI_Controller {
             'isselected' => '4',
 
         );        
-       DebugBreak();
+     
         $this->load->model('Result_model');
         $info['data'] = $this->Result_model->getResultCardByRNO($rno);
 
@@ -131,7 +131,6 @@ class Result extends CI_Controller {
         $pdf=new PDFFWithOutPage('P','in',"A4");   
         $pdf->SetAutoPageBreak(true,2);
         $totalstd =  count($info['data']);
-       DebugBreak();
         for($i =0 ; $i <$totalstd ; $i++)
         {
             $pdf->AddPage();
@@ -724,6 +723,14 @@ class Result extends CI_Controller {
         $countter = 0;
         $countter9 = 0;
         $noteimageheight =62; 
+        
+         // $pdf->SetFillColor(255,0,0);
+      // $pdf->SetLineWidth(.005);
+        $pdf->SetAlpha(.1);
+        $pdf->Image("assets/img/icon2.png",55,105, 120,100, "PNG");
+      $pdf->SetAlpha(1);
+     // $pdf->SetTextColor(0,0,0);
+        
         // THEOROR PART I SUBJECT TABLE
         if(1)
         {
@@ -780,7 +787,8 @@ class Result extends CI_Controller {
 
 
 
-            for($l = 0; $l<7; $l++) { 
+            for($l = 0; $l<7; $l++) {
+                
                 $Y = $Y + $cellheight;
 
                 $pdf->SetFont('Arial','',$font);
@@ -789,7 +797,7 @@ class Result extends CI_Controller {
 
                 $pdf->SetFont('Arial','',$font);
                 $pdf->SetXY(22.2,55.2+ $Y);
-                $pdf->Cell(70.6,$cellheight,"Health & Physical Education",1,0,'L',1);
+                $pdf->MultiCell(70.6,$cellheight,"Health & Physical Education",1,'L');
 
                 $pdf->SetFont('Arial','B',$font);
                 $pdf->SetXY(93,55.2+ $Y);
@@ -818,38 +826,40 @@ class Result extends CI_Controller {
                 $pdf->SetFont('Arial','B',$font);
                 $pdf->SetXY(186.5,55.2+ $Y);
                 $pdf->Cell(16.5,$cellheight,'',1,0,'C',1);
-
-
             }         
-
-
-
-
-           
         }
-
         $Y = $Y + $cellheight;
 
         $pdf->SetFont('Arial','B',$font);
         $pdf->SetXY(10.2,55.2+ $Y);
-        $pdf->Cell(82.8,$cellheight,'Total/OVERALL GRADE',1,0,'C',1);
+        $pdf->Cell(82.8,$cellheight/2,'Total/OVERALL GRADE:',1,0,'R',1);
 
         $pdf->SetFont('Arial','B',$font);
         $pdf->SetXY(93,55.2+ $Y);
-        $pdf->MultiCell($floatwidth,$cellheight,'1100',1,'C');
+        $pdf->MultiCell($floatwidth,$cellheight/2,'1100',1,'C');
 
         $pdf->SetFont('Arial','B',$font);
         $pdf->SetXY(108,55.2+ $Y);
-        $pdf->MultiCell(46,$cellheight,'',1,'C');
+        $pdf->MultiCell(46,$cellheight/2,'',1,'C');
         
         $pdf->SetFont('Arial','B',$font);
         $pdf->SetXY(154,55.2+ $Y);
-        $pdf->MultiCell($floatwidth+1,$cellheight,'657',1,'C');
+        $pdf->MultiCell($floatwidth+1,$cellheight/2,'657',1,'C');
         
         $pdf->SetFont('Arial','B',$font);
         $pdf->SetXY(170,55.2+ $Y);
-        $pdf->MultiCell($floatwidth+18,$cellheight,'Grade     A',1,'C');
+        $pdf->MultiCell($floatwidth+18,$cellheight/2,'Grade     A',1,'C');
 
+        
+        $pdf->SetFont('Arial','B',$font);
+        $pdf->SetXY(10.2,60.2+ $Y);
+        $pdf->Cell(82.8,$cellheight/2,'Notification:',1,0,'R',1);
+
+        $pdf->SetFont('Arial','B',$font);
+        $pdf->SetXY(93,60.2+ $Y);
+        $pdf->MultiCell(110,$cellheight/2,'',1,'L');
+        
+        
         $pdf->SetFont('Arial','',$font+2);
         $pdf->SetXY(10,66.2+ $Y);
         $pdf->MultiCell(195,6,'ssdsfsd sd f sd f sdf sd fs df sdf ssdsfsd sd f sd f sdf sd fs df sdf ssdsfsd sd f sd f sdf sd fs df sdf ssdsfsd sd f sd f sdf sd fs df sdf ssdsfsd sd f sd f sdf sd fs df sdf',0,'L');
@@ -860,15 +870,15 @@ class Result extends CI_Controller {
         $pdf->SetXY(10,77.2+ $Y);
         $pdf->MultiCell(195,6,'Note:-',0,'L');
         
-        $pdf->SetFont('Arial','',$font);
+        $pdf->SetFont('Arial','',$font-1);
         $pdf->SetXY(10,81.2+ $Y);
         $pdf->MultiCell(195,4,'(I) ssdfsdfsdfsdfsd dsdgdgdfg  dfg d fgdf g df g fd gd f g dfg  fdg df g df g dfg d fg fdgdfgdffffffffffffffffffffg  dfg df g df g fd g dfg dfg fd g df g fdg df g dfg df g dfg ',0,'L');
         
-        $pdf->SetFont('Arial','',$font);
+        $pdf->SetFont('Arial','',$font-1);
         $pdf->SetXY(10,90.2+ $Y);
         $pdf->MultiCell(195,4,'(II) ssdfsdfsdfsdfsd dsdgdgdfg  dfg d fgdf g df g fd gd f g dfg  fdg df g df g dfg d fg fdgdfgdffffffffffffffffffffg  dfg df g df g fd g dfg dfg fd g df g fdg df g dfg df g dfg ',0,'L');
         
-         $pdf->SetFont('Arial','',$font);
+         $pdf->SetFont('Arial','',$font-1);
         $pdf->SetXY(10,99.2+ $Y);
         $pdf->MultiCell(195,4,'(III) ssdfsdfsdfsdfsd dsdgdgdfg  dfg d fgdf g df g fd gd f g dfg  fdg df g df g dfg d fg fdgdfgdffffffffffffffffffffg  dfg df g df g fd g dfg dfg fd g df g fdg df g dfg df g dfg ',0,'L');
 
@@ -899,27 +909,18 @@ class Result extends CI_Controller {
         $pdf->SetFont('Arial','',9);
         $pdf->SetXY(29.2,130.2+ $Y);
         $pdf->Cell(0, 0.2, "_____________________________________", 0.25, "C") ;
-      
-      
-
-        
-
-        $pdf->SetFont('Arial','B',10);
+          /*  $pdf->SetFont('Arial','B',10);
         $pdf->SetXY(10.2,140.2+ $Y);
         $pdf->Cell(0, 0.2, " HOME ADDRESS:", 0.25, "C");    
 
          $pdf->SetFont('Arial','u',10);
         $pdf->SetXY(41.6,137.2+ $Y);
-        $pdf->MultiCell(120, 5, 'address dfsdfsdf  sd f sd fsd fs df   sdf sd f sd f sd fsd f sd fs df s df sdf sd fs df sd f sd fs df s df sd f .', 0, "L",0);
-        
-
-        $pdf->Image("assets/img/CE_Signature.png",163.0,247, 35,35, "PNG"); 
-
+        $pdf->MultiCell(120, 5, 'address dfsdfsdf  sd f sd fsd fs df   sdf sd f sd f sd fsd f sd fs df s df sdf sd fs df sd f sd fs df s df sd f .', 0, "L",0);*/
+        $pdf->Image("assets/img/CE_Signature.png",163.0,250, 35,35, "PNG"); 
         $pdf->SetFont('Arial','B',10);
-        $pdf->SetXY(147,284);
+        $pdf->SetXY(147,288);
         $pdf->Cell(0, 0.2, "CONTROLLER OF EXAMINATIONS", 0.25, "C");
-
-
+        $pdf->Image("assets/img/headsign.jpg",28.0,267, 72,24, "JPG"); 
     }
 
 
