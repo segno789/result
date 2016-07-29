@@ -44,7 +44,7 @@ if(isset($files)){
     function downloadslip9th(rno,isdownload)
     {
         $('.mPageloader').show();
-        window.location.href = '<?=base_url()?>index.php/result/resultcard9thgroupwise/'+rno+'/'+isdownload
+        window.location.href = '<?=base_url()?>index.php/result/resultcard9th/'+rno+'/'+isdownload
         if(isdownload == 1)
         {
             $('.mPageloader').hide();

@@ -95,7 +95,7 @@ class Result extends CI_Controller {
             'isselected' => '4',
 
         );        
-       // DebugBreak();
+       DebugBreak();
         $this->load->model('Result_model');
         $info['data'] = $this->Result_model->getResultCardByRNO($rno);
 
@@ -131,13 +131,12 @@ class Result extends CI_Controller {
         $pdf=new PDFFWithOutPage('P','in',"A4");   
         $pdf->SetAutoPageBreak(true,2);
         $totalstd =  count($info['data']);
-       // DebugBreak();
+       DebugBreak();
         for($i =0 ; $i <$totalstd ; $i++)
         {
             $pdf->AddPage();
             $this->makeResultCard9th($pdf,$info['data'][$i]);
-           if($i==3)
-            break;  
+           
         }
         
         
@@ -183,7 +182,7 @@ class Result extends CI_Controller {
         
        /* if($info['Gender']==1) $Gender= 'MALE'; 
         else if($info['Gender']==2) $Gender= 'FEMALE';*/
-            $filepath = REGULAR_IMAGE_PATH.$info['picpath'];
+            $filepath = $info['picpath'];
         //$filepath = 'assets/img/download.jpg';
 
 

@@ -117,7 +117,7 @@
                                                 $grp_name = 'Science';
                                                 break;
                                             case '2':
-                                                $grp_name = 'Humanities';
+                                                $grp_name = 'GENERAL';
                                                 break;
                                             case '5':
                                                 $grp_name = 'DEAF & DEFECTIVE';
