@@ -27,17 +27,17 @@ define('DIR_WRITE_MODE', 0777);
 |
 */
 
-define('FOPEN_READ',							'rb');
-define('FOPEN_READ_WRITE',						'r+b');
-define('FOPEN_WRITE_CREATE_DESTRUCTIVE',		'wb'); // truncates existing file data, use with care
-define('FOPEN_READ_WRITE_CREATE_DESTRUCTIVE',	'w+b'); // truncates existing file data, use with care
-define('FOPEN_WRITE_CREATE',					'ab');
-define('FOPEN_READ_WRITE_CREATE',				'a+b');
-define('FOPEN_WRITE_CREATE_STRICT',				'xb');
-define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
+define('FOPEN_READ',                            'rb');
+define('FOPEN_READ_WRITE',                        'r+b');
+define('FOPEN_WRITE_CREATE_DESTRUCTIVE',        'wb'); // truncates existing file data, use with care
+define('FOPEN_READ_WRITE_CREATE_DESTRUCTIVE',    'w+b'); // truncates existing file data, use with care
+define('FOPEN_WRITE_CREATE',                    'ab');
+define('FOPEN_READ_WRITE_CREATE',                'a+b');
+define('FOPEN_WRITE_CREATE_STRICT',                'xb');
+define('FOPEN_READ_WRITE_CREATE_STRICT',        'x+b');
 
 define('PRIVATE_IMAGE_PATH', 'uploads/2016/private/');
-define('REGULAR_IMAGE_PATH', 'uploads/2016/regular/');
+define('REGULAR_IMAGE_PATH', 'http://ssc.bisegrw.com/');
 define('CURRENT_SESS', 'Online Result Card 9th Annual 2016');
 
 

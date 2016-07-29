@@ -134,7 +134,7 @@
                                         <td>'.$vals["Dob"].'</td>
                                         <td>'.$grp_name.'</td>
                                         <td>'.$vals["result1"].'</td>
-                                        <td style="text-align:center"> <img src="'.base_url().$vals["picpath"].'" style="height: 60px;">'.'</td>
+                                        <td style="text-align:center"> <img src="'.REGULAR_IMAGE_PATH.$vals["picpath"].'" style="height: 60px;">'.'</td>
                                         ';
 
                                         echo'<td>

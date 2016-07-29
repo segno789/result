@@ -40,39 +40,21 @@ if(isset($files)){
 <script type="">
 
 
-    function downloadslip(rno,isdownload)
-    {
-        $('.mPageloader').show();
-        window.location.href = '<?=base_url()?>result/resultcard9th/'+rno+'/'+isdownload
 
-        if(isdownload == 1)
-        {
-            $('.mPageloader').hide();
-        }
-    }
     function downloadslip9th(rno,isdownload)
     {
         $('.mPageloader').show();
-        window.location.href = '<?=base_url()?>result/resultcard9th/'+rno+'/'+isdownload
+        window.location.href = '<?=base_url()?>index.php/result/resultcard9thgroupwise/'+rno+'/'+isdownload
         if(isdownload == 1)
         {
             $('.mPageloader').hide();
         }
     }
-    function downloadgroupwise(isdownload)
-    {
-        $('.mPageloader').show();
-        window.location.href = '<?=base_url()?>result/MatricRollNoGroupwise/'+$("#std_group").val()+'/'+isdownload
 
-        if(isdownload == 1)
-        {
-            $('.mPageloader').hide();
-        }
-    }
-        function downloadgroupwise12(isdownload)
+    function downloadgroupwise12(isdownload)
     {
         $('.mPageloader').show();
-        window.location.href = '<?=base_url()?>/result/InterRollNoGroupwise/'+$("#std_group").val()+'/'+isdownload
+        window.location.href = '<?=base_url()?>index.php/result/InterRollNoGroupwise/'+$("#std_group").val()+'/'+isdownload
 
         if(isdownload == 1)
         {
@@ -82,51 +64,34 @@ if(isset($files)){
     function downloadgroupwise9th(isdownload)
     {
         $('.mPageloader').show();
-        window.location.href = '<?=base_url()?>/result/NinthRollNoGroupwise/'+$("#std_group").val()+'/'+isdownload
+        window.location.href = '<?=base_url()?>index.php/result/resultcard9thgroupwise/'+$("#std_group").val()+'/'+isdownload
         if(isdownload == 1)
         {
             $('.mPageloader').hide();
         }
     }
-     function downloadslip_Inter(rno)
+    function downloadslip_Inter(rno)
     {
-        window.location.href = '<?=base_url()?>result/InterRollNo/'+rno+'/2'
+        window.location.href = '<?=base_url()?>index.php/result/InterRollNo/'+rno+'/2'
     }
-    
+
     function downloadgroupwise()
     {
-        window.location.href = '<?=base_url()?>result/MatricRollNoGroupwise/'+$("#std_group").val()
+        window.location.href = '<?=base_url()?>index.php/result/MatricRollNoGroupwise/'+$("#std_group").val()
     }
-    
-      function downloadslip11th(rno,isdownload)
-    {
-        $('.mPageloader').show();
-        window.location.href = '<?=base_url()?>result/EleventhRollNo/'+rno+'/'+isdownload
-        if(isdownload == 1)
-        {
-            $('.mPageloader').hide();
-        }
-    }
-    function downloadgroupwise11th(isdownload)
-    {
-        $('.mPageloader').show();
-        window.location.href = '<?=base_url()?>result/InterP1RollNoGroupwise/'+$("#std_group").val()+'/'+isdownload
-        if(isdownload == 1)
-        {
-            $('.mPageloader').hide();
-        }
-    }
+
+
     function logout(){
-    var msg = "Are you Sure You want to LOGOUT?"
-       
+        var msg = "Are you Sure You want to LOGOUT?"
+
         alertify.confirm(msg, function (e) {
-           
+
             if (e) {
                 // user clicked "ok"
                 window.location.href ='<?php echo base_url(); ?>login/logout';
             } 
         });
-}
+    }
 </script>
 
 

@@ -110,6 +110,45 @@ class Result extends CI_Controller {
         $pdf->Output('Result.pdf', 'I');  
     }
 
+     public function resultcard9thgroupwise()
+    {
+        $this->load->helper('url');
+        $keyword = $this->uri->segment(3);
+        $isdownload = $this->uri->segment(4);
+        $data = array(
+            'isselected' => '4',
+
+        );        
+        $this->load->library('session');
+        $Logged_In_Array = $this->session->all_userdata();
+        $userinfo = $Logged_In_Array['logged_in'];
+        $Inst_Id = $userinfo['Inst_Id'];
+        
+        $this->load->model('Result_model');
+        $info['data'] = $this->Result_model->getResultCardByGroupWise($keyword,$Inst_Id);
+
+        $this->load->library('PDFFWithOutPage');
+        $pdf=new PDFFWithOutPage('P','in',"A4");   
+        $pdf->SetAutoPageBreak(true,2);
+        $totalstd =  count($info['data']);
+       // DebugBreak();
+        for($i =0 ; $i <$totalstd ; $i++)
+        {
+            $pdf->AddPage();
+            $this->makeResultCard9th($pdf,$info['data'][$i]);
+           if($i==3)
+            break;  
+        }
+        
+        
+        
+       
+        if($isdownload ==  1)
+        $pdf->Output('Result.pdf', 'D'); 
+        else  if($isdownload ==  2)  
+        $pdf->Output('Result.pdf', 'I');  
+    }
+    
     public function resultcard12th()
     {
         $this->load->helper('url');
@@ -144,8 +183,8 @@ class Result extends CI_Controller {
         
        /* if($info['Gender']==1) $Gender= 'MALE'; 
         else if($info['Gender']==2) $Gender= 'FEMALE';*/
-        //$filepath = 'assets/'.$info['picpath'];
-        $filepath = 'assets/img/download.jpg';
+            $filepath = REGULAR_IMAGE_PATH.$info['picpath'];
+        //$filepath = 'assets/img/download.jpg';
 
 
         $fontSize = 10; 
