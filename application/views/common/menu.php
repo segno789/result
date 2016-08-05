@@ -9,8 +9,10 @@
                     <?php 
                 if($isselected == '4'){?>
 
+                    
                     <li>
-                        <a style="width: 115px;" href="<?php echo base_url(); ?>result/dashboard9th" class="<?php if($isselected == '4') {echo 'selected';}?>" >
+                        
+                        <a style="width: 115px;"  class="<?php if($isselected == '4') {echo 'selected';}?>" >
                             <div class="fs1" aria-hidden="true" data-icon="&#xe032;"> </div>
                             Result Cards
                         </a>
@@ -28,27 +30,27 @@
             if($isselected == '4'){
                 ?>
                 <ul >
-                    <li><a href="<?php echo base_url(); ?>Result/dashboard9th"   data-original-title="" >Result Cards: </a></li>
-                     <li>
-                    <a href="<?php echo base_url(); ?>Result/dashboard9th">
-                   9th Result Cards
-                    </a>
-                    </li>
-                   <!-- <li>
-                        <a href="<?php echo base_url(); ?>RollNoSlip/TenthStd">
-                            10th Roll No. Slip
-                        </a>
-                    </li>
-                     <li>
-                    <a href="<?php echo base_url(); ?>RollNoSlip/EleventhStd">
-                    11th Roll No. Slip
-                    </a>
-                    </li>
+                    <li><a   data-original-title="" >Result Cards: </a></li>
+                   
+                   <?php if($edu_lvl == 1 || $edu_lvl == 3 ) {?>
                     <li>
-                        <a href="<?php echo base_url(); ?>RollNoSlip/InterStd">
-                            12th Roll No. Slip
+                        <a href="<?php echo base_url(); ?>Result/dashboard9th">
+                            9th Result Cards
                         </a>
-                    </li>-->
+                    </li>
+                    <?php } 
+                    
+                    if($edu_lvl == 2 || $edu_lvl == 3 ) 
+                     {
+                    ?>
+                    <li>
+                        <a href="<?php echo base_url(); ?>Result/dashboard12th">
+                            12th Result Cards
+                        </a>
+                    </li>
+                   <?php }?>
+                   
+                 
                     <li>
                         <a onclick="return logout();">Logout</a>
                     </li>

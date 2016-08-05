@@ -32,44 +32,34 @@ class Login extends CI_Controller {
 
             $this->load->model('login_model'); 
             $logedIn = $this->login_model->auth($_POST['username'],$_POST['password']);
-
+//DebugBreak();
             if($logedIn != false)
             {  
                 $grp =  $logedIn['tbl_inst']['allowed_mGrp'];
-                if($logedIn['flusers']['edu_lvl'] == 2)
+               /* if($logedIn['flusers']['edu_lvl'] == 2)
                 {
                     $data = array(
                         'user_status' => 1                     
                     );
                     $this->load->view('login/login.php',$data);
                 }
-                else if($logedIn['flusers']['status'] == 0)
+                else*/
+                 if($logedIn['flusers']['status'] == 0)
                 {
                     $data = array(
                         'user_status' => 3                     
                     );
                     $this->load->view('login/login.php',$data);
                 }
-                else if(($logedIn['tbl_inst']['allowed_mGrp'] == NULL || $logedIn['tbl_inst']['allowed_mGrp'] == 0 || $logedIn['tbl_inst']['allowed_mGrp'] == '') && $logedIn['tbl_inst']['IsGovernment'] ==2 )
-                {
-                    $data = array(
-                        'user_status' => 7                     
-                    );
-                    $this->load->view('login/login.php',$data);
-                }
+               
                 else
                 {
                     $isdeaf = 0;
 
-                    if($logedIn['tbl_inst']['IsGovernment'] ==1)
-                    {
-                        $logedIn['tbl_inst']['allowed_mGrp'] = '1,2,5,7,8';
-                    }
-
-                    //DebugBreak();
+                    
                     $sess_array = array(
                         'Inst_Id' => $logedIn['flusers']['inst_cd'] ,
-                        'edu_lvl' => $logedIn['flusers']['edu_lvl'],
+                        'edu_lvl' => $logedIn['tbl_inst']['edu_lvl'],
                         'inst_Name' => $logedIn['flusers']['inst_name'],
                         'gender' => $logedIn['tbl_inst']['Gender'],
                         'isrural' => $logedIn['tbl_inst']['IsRural'],
@@ -88,7 +78,13 @@ class Login extends CI_Controller {
                     $this->load->library('session');
 
                     $this->session->set_userdata('logged_in', $sess_array); 
+                    
+                    if($logedIn['tbl_inst']['edu_lvl'] == 1 || $logedIn['tbl_inst']['edu_lvl'] == 3)
                     redirect('result/dashboard9th','refresh');
+                    else if($logedIn['tbl_inst']['edu_lvl'] == 2 || $logedIn['tbl_inst']['edu_lvl']==3)
+                    {
+                         redirect('result/dashboard12th','refresh'); 
+                    }
 
 
                 }

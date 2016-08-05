@@ -72,7 +72,7 @@ if(isset($files)){
     }
     function downloadslip_Inter(rno)
     {
-        window.location.href = '<?=base_url()?>index.php/result/InterRollNo/'+rno+'/2'
+        window.location.href = '<?=base_url()?>index.php/result/resultcard12th/'+rno+'/2'
     }
 
     function downloadgroupwise()
