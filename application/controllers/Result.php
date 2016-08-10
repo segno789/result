@@ -361,34 +361,34 @@ class Result extends CI_Controller {
         //$pdf->Cell(0, 0.2, "".$info['Sch_cd'].' - '.$info['sch_name'], 0.25, "L");
         
         $instnfo =  $info['Sch_cd'].' - '.$info['sch_name'];
-        $valig = 93;
-        if(strlen($instnfo)>70)
+        $valig = 94;
+        if(strlen($instnfo)>80)
         {
             $fontsize = $fontsize -1;
         }
-        if(strlen($instnfo)>85)
+        if(strlen($instnfo)>95)
         {
             $valig =  90;
             
         }
         $pdf->SetFont('Arial','B',9);
         $pdf->SetXY(10.2,97);
-        $pdf->Cell(0, 0.2, "INSTITUTION/DISTRICT:", 0.25, "C");
+        $pdf->Cell(0, 0.2, "INSTITUTION:", 0.25, "C");
 
         $pdf->SetFont('Arial','',$fontsize);
-        $pdf->SetXY(47,97);
+        $pdf->SetXY(30,97);
         if($fontsize>=10)
-        $pdf->Cell(0, 0.2, "______________________________________________________________________________", 0.25, "C");
+        $pdf->Cell(0, 0.2, "_______________________________________________________________________________________", 0.25, "C");
         else
         {
-        $pdf->Cell(0, 0.2, "_______________________________________________________________________________________", 0.25, "C");
+        $pdf->Cell(0, 0.2, "_________________________________________________________________________________________________", 0.25, "C");
         }
         
         
         
-        $pdf->SetXY(50,$valig);
+        $pdf->SetXY(34,$valig);
         
-        $pdf->MultiCell(160, 4,$instnfo.'', 0, "L",0);
+        $pdf->MultiCell(175, 4,$instnfo.'', 0, "L",0);
 
         $pdf->SetFont('Arial','B',9);
         $pdf->SetXY(10.2,103);
@@ -516,44 +516,48 @@ class Result extends CI_Controller {
 
         $pdf->SetFont('Arial','',9);
         $pdf->SetXY(10.2,223);
-        $pdf->Cell(0, 0.2, "Prepared By:", 0.25, "C");
+        $pdf->Cell(0, 0.2, "Dealing Official:", 0.25, "C");
 
         $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(29.2,223);
-        $pdf->Cell(0, 0.2, "_____________________________________", 0.25, "C");
+        $pdf->SetXY(32.2,223);
+        $pdf->Cell(0, 0.2, "_______________________________________________________________________________________", 0.25, "C");
+        
+           $pdf->SetFont('Arial','',10);
+        $pdf->SetXY(32.2,222.8);
+        $pdf->Cell(0, 0.2, "            ".$info['Emp_Rslt'].'-'.$info['emp_name'], 0.25, "C") ;
 
         
          $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(100.2,223);
+        $pdf->SetXY(100.2,233);
         $pdf->Cell(0, 0.2, "Printing Date:", 0.25, "C");
         
-        $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(120.2,223);
-        $pdf->Cell(0, 0.2, "_____________________________________", 0.25, "C");
-        
-        $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(120.2,223);
-        $pdf->Cell(0, 0.2, "               ".date('d-m-Y h:i a'), 0.25, "C");
-        
-        $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(10.2,233);
-        $pdf->Cell(0, 0.2, "Checked By:", 0.25, "C");
-
-        $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(29.2,233);
-        $pdf->Cell(0, 0.2, "_____________________________________", 0.25, "C");
-
-        $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(100.2,233);
-        $pdf->Cell(0, 0.2, "Result Date:", 0.25, "C");
-
         $pdf->SetFont('Arial','',9);
         $pdf->SetXY(120.2,233);
         $pdf->Cell(0, 0.2, "_____________________________________", 0.25, "C");
         
         $pdf->SetFont('Arial','',10);
-         $pdf->SetXY(120.2,233);
-        $pdf->Cell(0, 0.2, '                20-08-2016', 0.25, "C");
+        $pdf->SetXY(120.2,232.8);
+        $pdf->Cell(0, 0.2, "               ".date('d-m-Y h:i a'), 0.25, "C");
+        
+        /*$pdf->SetFont('Arial','',9);
+        $pdf->SetXY(10.2,233);
+        $pdf->Cell(0, 0.2, "Checked By:", 0.25, "C");
+
+        $pdf->SetFont('Arial','',9);
+        $pdf->SetXY(29.2,233);
+        $pdf->Cell(0, 0.2, "_____________________________________", 0.25, "C");*/
+
+        $pdf->SetFont('Arial','',9);
+        $pdf->SetXY(10.2,233);
+        $pdf->Cell(0, 0.2, "Result Date:", 0.25, "C");
+
+        $pdf->SetFont('Arial','',9);
+        $pdf->SetXY(27,233);
+        $pdf->Cell(0, 0.2, "_____________________________________", 0.25, "C");
+        
+        $pdf->SetFont('Arial','',10);
+         $pdf->SetXY(20.2,232.8);
+        $pdf->Cell(0, 0.2, '                    20-08-2016', 0.25, "C");
 
         $pdf->SetFont('Arial','B',9);
         $pdf->SetXY(35.2,238);
@@ -571,7 +575,7 @@ class Result extends CI_Controller {
         $pdf->Image("assets/img/CE_Signature.png",163.0,247, 35,35, "PNG"); 
 
         $pdf->SetFont('Arial','B',10);
-        $pdf->SetXY(147,284);
+        $pdf->SetXY(145,284);
         $pdf->Cell(0, 0.2, "CONTROLLER OF EXAMINATIONS", 0.25, "C");
         
           $pdf->Image("assets/img/headsign.jpg",28.0,255, 72,24, "JPG"); 
@@ -597,8 +601,8 @@ class Result extends CI_Controller {
         else if($info['grp_cd'] == 9) $grp_cd='ALOOM-E-SHARQIA';
         else if($info['grp_cd'] == 10) $grp_cd='KHASA';
         else if($info['grp_cd'] == 11) $grp_cd='FAZAL';
-        //$filepath = 'assets/'.$info['picpath'];
-        $filepath = 'assets/img/download.jpg';
+        $filepath = $info['picpath'];
+        //$filepath = 'assets/img/download.jpg';
         $ispass = '';
         if($info['status'] ==  1)
         {
@@ -764,34 +768,36 @@ class Result extends CI_Controller {
        $fontsize = 10;
        //DebugBreak();
         $instnfo =  $info['coll_cd'].' - '.$info['sch_name'];
+       
+             
         $valig = 83;
-        if(strlen($instnfo)>70)
+        if(strlen($instnfo)>80)
         {
             $fontsize = $fontsize-1;
         }
-        if(strlen($instnfo)>85)
+        if(strlen($instnfo)>95)
         {
             $valig =  80;
             
         }
         $pdf->SetFont('Arial','B',9);
         $pdf->SetXY(10.2,86);
-        $pdf->Cell(0, 0.2, "INSTITUTION/DISTRICT:", 0.25, "C");
+        $pdf->Cell(0, 0.2, "INSTITUTION:", 0.25, "C");
 
         $pdf->SetFont('Arial','',$fontsize);
-        $pdf->SetXY(46.2,86);
+        $pdf->SetXY(30.2,86);
         if($fontsize>=10)
-        $pdf->Cell(0, 0.2, "________________________________________________________________________________", 0.25, "C");
+        $pdf->Cell(0, 0.2, "________________________________________________________________________________________", 0.25, "C");
         else
         {
-        $pdf->Cell(0, 0.2, "________________________________________________________________________________________", 0.25, "C");
+        $pdf->Cell(0, 0.2, "_________________________________________________________________________________________________", 0.25, "C");
         }
         
         
         
-        $pdf->SetXY(48,$valig);
+        $pdf->SetXY(33,$valig);
         
-        $pdf->MultiCell(160, 4,$instnfo.'', 0, "L",0);
+        $pdf->MultiCell(170, 4,$instnfo.'', 0, "L",0);
 
      
         $pdf->SetFont('Arial','B',9);
@@ -872,15 +878,17 @@ class Result extends CI_Controller {
             $subinduTotal = '';
             $subprst = '';
             $count = 7;
+            $subP1 = '';
+            $subP2 = '';
+            $cellheightnew = '';
             if($info['grp_cd'] == 5)
             {
                 $count = 8;
             }
-            
-            
             for($l = 0; $l<$count; $l++) {
 
-               $subNo = '';
+                $subNo = '';
+                $subinduTotal = '';
                 $Y = $Y + $cellheight;
                 if($l == 0 )
                 {
@@ -895,10 +903,10 @@ class Result extends CI_Controller {
                     }
 
                     $subjectstaus1 = $this->subStatus($info['sub3pf1']);
-                    
+
                     if($info['sub3pf1'] == 1 || $info['sub3pf1'] == 2)
                     {
-                       $subinduTotal =  $submarks;
+                        $subinduTotal =  $submarks;
                     }
                     $subjectstaus2 = '';
 
@@ -908,7 +916,7 @@ class Result extends CI_Controller {
                 }
                 else if($l == 1 )
                 {
-                 //  DebugBreak();
+                    //  DebugBreak();
                     $subcd = $info['sub8'];
 
                     if($info['sub8st2'] == 2)
@@ -919,14 +927,14 @@ class Result extends CI_Controller {
                     {
                         $submarks2 = $info['sub8mt2'];  
                     }
-                    
-             
+
+
                     $subjectstaus2 = $this->subStatus($info['sub8pf2']);
-                     if($info['sub8pf2'] == 1 || $info['sub8pf2'] == 2)
+                    if($info['sub8pf2'] == 1 || $info['sub8pf2'] == 2)
                     {
-                       $subinduTotal =  $submarks2;
+                        $subinduTotal =  $submarks2;
                     }
-                    
+
                     $subjectstaus1 = '';
                     $submarks = '';//$info['sub'.$subctn.'mt2']; 
                     $subtotal = 50;
@@ -961,48 +969,85 @@ class Result extends CI_Controller {
                     }
                     $subjectstaus1 = $this->subStatus($info['sub'.$subctn.'pf1']);
                     $subjectstaus2 = $this->subStatus($info['sub'.$subctn.'pf2']);
-                    
+
                     if(($info['sub'.$subctn.'pf1'] == 1 && $info['sub'.$subctn.'pf2'] == 1) || ($info['sub'.$subctn.'pf1'] == 2 || $info['sub'.$subctn.'pf2'] == 2))
                     {
                         $subinduTotal = $submarks+ $submarks2;
                     }
-                 
-                   if($subNo == 'sub5' || $subNo == 'sub6' || $subNo == 'sub7' || $subNo == 'sub4')
-                   {
-                         // DebugBreak();
-                      $subprst = $this->Get_gradePrac_Inter($subcd,$info['sub'.$subctn.'mp2'],$info['sub'.$subctn.'prpf']) ;
-                   }
-                   else 
-                   {
+
+                    if($subNo == 'sub5' || $subNo == 'sub6' || $subNo == 'sub7' || $subNo == 'sub4')
+                    {
+                        // DebugBreak();
+                        $subprst = $this->Get_gradePrac_Inter($subcd,$info['sub'.$subctn.'mp2'],$info['sub'.$subctn.'prpf']) ;
+                    }
+                    else 
+                    {
                         $subprst = '';
-                   }
-                   
-                   
-                   
+                    }
+
+
+
                     $subtotal  = 200;
                 }
-                $totalmarks       =  $totalmarks +$subtotal; 
-                $obtainmarkstotal = $obtainmarkstotal +$subinduTotal;
+
                 //  $subremarks = $info['sub'.$subctn.'remarks'];
-              
+                if($l >0)
+                 $Y = $Y  -2;
+                 
+               
+                 
+                 
                 $subname = '';
                 $subname = $this->GetiSubNameHere($subcd) ;
 
-                $sety = $cellheight;
+                $sety = $cellheight-2;
+                $sety1 = $sety;
                 $subname1 = '';
-              $isborder = 'B';
-                 if($info['grp_cd'] == 5 && ($subNo == 'sub6' || $subNo == 'sub7' || $subNo == 'sub5'))
-               {
-                  // DebugBreak();
-                   $subcd = $info[$subNo.'a'];
-                   $subname1 = $this->GetiSubNameHere($subcd) ;
-                   $isborder ='';
-                   $sety = $cellheight/2 ;
-               }
-               
-                $pdf->SetFont('Arial','',$font);
+                $isborder = 'B';
+                
+                 $pdf->SetFont('Arial','',$font);
                 $pdf->SetXY(10.2,55.2+ $Y);
-                $pdf->Cell(12,$cellheight,$l+1,1,0,'C',1);
+                $pdf->Cell(12,$sety,$l+1,'1',0,'C',1);
+                
+                
+                
+                if($info['grp_cd'] == 5 && ($subNo == 'sub6' || $subNo == 'sub7' || $subNo == 'sub5'))
+                {
+                    // DebugBreak();
+                    $subcd = $info[$subNo.'a'];
+                    $subname1 = $this->GetiSubNameHere($subcd) ;
+                    $isborder ='';
+                    $sety = $sety1-4;
+                    $subtotal= 150;
+                }
+                else  if($info['grp_cd'] == 5 && $subNo == 'sub4')
+                {
+                    $subtotal= 150;  
+                }
+
+                $totalmarks       =  $totalmarks +$subtotal; 
+                $obtainmarkstotal = $obtainmarkstotal +$subinduTotal;
+
+                if($subjectstaus1 == 'F' && $subP1 == '')
+                {
+                    $subP1 = ' (i) '.$subname;
+                }
+                else if($subjectstaus1 == 'F' && $subP1 != '')
+                {
+                    $subP1.= '  (ii) '.$subname;
+                }
+
+                if($subjectstaus2 == 'F' && $subP2 == '' && $subname1 == '')
+                {
+                    $subP2 = ' (i) '.$subname;
+                }
+                else if($subjectstaus2 == 'F' && $subP2 != '' && $subname1 == '')
+                {
+                    $subP2.= '  (ii) '.$subname;
+                }
+
+
+              
 
                 $pdf->SetFont('Arial','',$font);
                 $pdf->SetXY(22.2,55.2+ $Y);
@@ -1011,47 +1056,64 @@ class Result extends CI_Controller {
 
                 if($subname1 != '')
                 {
-                   $pdf->SetFont('Arial','',$font);
-                   $pdf->SetXY(22.2,60.2+ $Y);
-                   $pdf->MultiCell(70.6,$sety,$subname1,'B','L');  
+
+                    if($subjectstaus2 == 'F' && $subP2 == '')
+                    {
+                        $subP2 = '(i) '.$subname1;
+                    }
+                    else if($subjectstaus2 == 'F' && $subP2 != '')
+                    {
+                        $subP2.= '  (ii) '.$subname1;
+                    } 
+
+
+                    $pdf->SetFont('Arial','',$font);
+                    $pdf->SetXY(22.2,59.2+ $Y);
+                    $pdf->MultiCell(70.6,$sety,$subname1,'B','L');  
                 }
-                
-                
+
+
+                $sety = $sety1;
                 $pdf->SetFont('Arial','B',$font);
                 $pdf->SetXY(93,55.2+ $Y);
-                $pdf->MultiCell($floatwidth,$cellheight,$subtotal,1,'C');
+                $pdf->MultiCell($floatwidth,$sety,$subtotal,1,'C');
 
                 $pdf->SetFont('Arial','B',$font);
                 $pdf->SetXY(108,55.2+ $Y);
-                $pdf->MultiCell($floatwidth,$cellheight,$submarks,1,'C');
+                $pdf->MultiCell($floatwidth,$sety,$submarks,1,'C');
 
                 $pdf->SetFont('Arial','B',$font);
                 $pdf->SetXY(123,55.2+ $Y);
-                $pdf->MultiCell($floatwidth,$cellheight,$submarks2,1,'C');
+                $pdf->MultiCell($floatwidth,$sety,$submarks2,1,'C');
 
                 $pdf->SetFont('Arial','B',$font);
                 $pdf->SetXY(138,55.2+ $Y);
-                $pdf->MultiCell($floatwidth+1,$cellheight,$subprst,1,'C');
+                $pdf->MultiCell($floatwidth+1,$sety,$subprst,1,'C');
 
                 $pdf->SetFont('Arial','B',$font);
                 $pdf->SetXY(154,55.2+ $Y);
-                $pdf->MultiCell($floatwidth+1,$cellheight,$subinduTotal,1,'C');
+                $pdf->MultiCell($floatwidth+1,$sety,$subinduTotal,1,'C');
 
                 $pdf->SetFont('Arial','B',$font);
                 $pdf->SetXY(170,55.2+ $Y);
-                $pdf->Cell(16.5,$cellheight,$subjectstaus1,1,0,'C',1);
+                $pdf->Cell(16.5,$sety,$subjectstaus1,1,0,'C',1);
 
                 $pdf->SetFont('Arial','B',$font);
                 $pdf->SetXY(186.5,55.2+ $Y);
-                $pdf->Cell(16.5,$cellheight,$subjectstaus2,1,0,'C',1);
+                $pdf->Cell(16.5,$sety,$subjectstaus2,1,0,'C',1);
+                
+                 
+                
+                
             }         
         }
         //DebugBreak();
-        $grade = '';
+             $grade = '';
         $msg = '';
         $chancestr = '';
         $Cat11 = $info['cat11'];
         $cat12 = $info['cat12'];
+        $notification = '';
         if($info['status'] == 1)
         {
             $percent = ($obtainmarkstotal/1100)*100;
@@ -1084,6 +1146,10 @@ class Result extends CI_Controller {
             {
                 $msg = 'Candidate has Passed after Passing Fazal Examination '.ucwords(trim($obj->words)).'.';
             }
+            
+            $notification = $info['result2'];
+            
+            
         }
         else
         {
@@ -1093,9 +1159,24 @@ class Result extends CI_Controller {
             {
                 if ($Cat11=="1" or $Cat11=="2" or $cat12=="1" or $cat12=="2")
                 {
-                    $msg = 'The Candidate has failed in subject(s) and eligible to reappear till:'; 
+                    $msg = 'The Candidate has failed in subject(s) and eligible to reappear till'; 
                 }
                $chancestr = $this->calchance($info['chance']);
+               
+               if($info['result1'] != '')
+               {
+                   $notification = 'P-I: '.$info['result1'].' ';
+                   
+               }
+               if($notification != '' && $info['result2'] != '')
+               {
+                  $notification.=  '  P-II: '.$info['result2'].' ';
+               }
+               else if($info['result2'] != '')
+               {
+                   $notification =  ' P-II: '.$info['result2'].' ';
+               }
+               
             }
             else if($info['status'] == 3)
             {
@@ -1127,7 +1208,7 @@ class Result extends CI_Controller {
         }
        
         
-        $Y = $Y + $cellheight;
+        $Y = $Y + $cellheight-2;
 
         $pdf->SetFont('Arial','B',$font);
         $pdf->SetXY(10.2,55.2+ $Y);
@@ -1156,19 +1237,50 @@ class Result extends CI_Controller {
 
         $pdf->SetFont('Arial','B',$font);
         $pdf->SetXY(93,63.2+ $Y);
-        $pdf->MultiCell(110,$cellheight-2,'    '.$info['result2'],1,'L');
+        $pdf->MultiCell(110,$cellheight-2,'    '.$notification,1,'L');
         
         
        
         
         if($chancestr != '')
         {
+          
             $pdf->SetFont('Arial','',$font+1);
             $pdf->SetXY(10,72.2+ $Y);
             $pdf->MultiCell(195,6,$msg,0,'L');
-            $pdf->SetFont('Arial','B',$font+1);
-            $pdf->SetXY(10,76.2+ $Y);
-            $pdf->MultiCell(195,6,$chancestr,0,'L'); 
+
+            $pdf->SetFont('Arial','B',$font);
+            $pdf->SetXY(112,72.2+ $Y);
+            $pdf->MultiCell(195,6,$chancestr.'.',0,'L'); 
+           
+           
+            if($subP1 != '')
+            {
+                $Y = $Y+3;
+                $pdf->SetFont('Arial','',$font);
+                $pdf->SetXY(10,74.2+ $Y);
+                $pdf->MultiCell(140,6,'Part I:  '.$subP1,0,'L');  
+              
+            }
+            if($subP2 != '' && $subP1 =='')
+            {
+               $Y = $Y+3;
+                $pdf->SetFont('Arial','',$font);
+                $pdf->SetXY(10,74.2+ $Y);
+                $pdf->MultiCell(195,6,'Part II: '.$subP2,0,'L');    
+               
+            }
+
+           else if($subP2 != '' && $subP1 !='')
+            {
+               $Y = $Y +4;
+                $pdf->SetFont('Arial','',$font);
+                $pdf->SetXY(10,74.2+ $Y);
+                $pdf->MultiCell(140,6,'Part II: '.$subP2,0,'L');    
+                
+            }
+               
+            
         }
         else
         {
@@ -1176,72 +1288,70 @@ class Result extends CI_Controller {
             $pdf->SetXY(10,72.2+ $Y);
             $pdf->MultiCell(195,6,$msg,0,'L');
         }
-         $Y = $Y+5;
+         $Y = $Y+3;
         $pdf->SetFont('Arial','B',$font+2);
         $pdf->SetXY(10,76.2+ $Y);
         $pdf->MultiCell(195,6,'Note:-',0,'L');
         
-        $pdf->SetFont('Arial','',$font);
+        $pdf->SetFont('Arial','',$font+.5);
         $pdf->SetXY(10,81.2+ $Y);
-        $pdf->MultiCell(195,4,'(I) This provisional result intimation is issued as notice only. Errors and omissions are excepted. Any entry appearing in it does not itself confer any right or privilege independently for the grant of proper certificate which will be issued under the rule.',0,'L');
+        $pdf->MultiCell(196,4,'(I) This provisional result intimation is issued as notice only. Errors and omissions are excepted. Any entry appearing in it does not itself confer any right or privilege independently for the grant of proper certificate which will be issued under the rule.',0,'J');
         
-        $pdf->SetFont('Arial','',$font);
+        $pdf->SetFont('Arial','',$font+.5);
         $pdf->SetXY(10,89.2+ $Y);
-        $pdf->MultiCell(195,4,"(II) The Star (*) indicates the candidate has passed the subject/s with concessional mark under Rule 1.21 of the Board's Calendar. In case he/she is not willing to accept the concessional marks, necessary permission to reappear in the subject/s may be obtained 30 days before the commencement of the next examination. The candidate will have to attach the attested copy of revised result intimation with the Admission Form.  ",0,'L');
+        $pdf->MultiCell(196,4,"(II) The Star (*) indicates the candidate has passed the subject/s with concessional mark under Rule 1.21 of the Board's Calendar. In case he/she is not willing to accept the concessional marks, necessary permission to reappear in the subject/s may be obtained 30 days before the commencement of the next examination. The candidate will have to attach the attested copy of revised result intimation with the Admission Form.  ",0,'J');
         
-         $pdf->SetFont('Arial','',$font);
-        $pdf->SetXY(10,104.2+ $Y);
-        $pdf->MultiCell(195,4,'(III) If the result intimation is lost, an interim result intimation may be obtained by the candidate on payment of prescribed fee. ',0,'L');
+         $pdf->SetFont('Arial','',$font+.5);
+        $pdf->SetXY(10,105.2+ $Y);
+        $pdf->MultiCell(196,4,'(III) If the result intimation is lost, an interim result intimation may be obtained by the candidate on payment of prescribed fee. ',0,'j');
 
-        
-        $pdf->Image("assets/img/result_note.jpg",45.2,108.2+ $Y, 153,10, "jpg"); 
+        $Y+=1;
+        $pdf->Image("assets/img/result_note.jpg",45.2,108+ $Y, 150,10, "jpg"); 
 
         $pdf->SetFont('Arial','',9);
         $pdf->SetXY(10.2,120.2+ $Y);
-        $pdf->Cell(0, 0.2, "Prepared By:", 0.25, "C");
+        $pdf->Cell(0, 0.2, "Dealing Official:", 0.25, "C");
 
         $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(29.2,120.2+ $Y);
-        $pdf->Cell(0, 0.2, "_____________________________________", 0.25, "C") ;
+        $pdf->SetXY(32.2,120.2+ $Y);
+        $pdf->Cell(0, 0.2, "________________________________________________________________________", 0.25, "C") ;
         
+         $pdf->SetFont('Arial','',10);
+        $pdf->SetXY(32.2,120.2+ $Y);
+        $pdf->Cell(0, 0.2, "   ".$info['Emp_Rslt'].'-'.$info['emp_name'], 0.25, "C") ;
+        
+       
         
         $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(100.2,120.2+ $Y);
-        $pdf->Cell(0, 0.2, " Dated:", 0.25, "C");
+        $pdf->SetXY(10.2,127.2+ $Y);
+        $pdf->Cell(0, 0.2, "Result Date:", 0.25, "C");
 
-         $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(110.8,120.2+ $Y);
+         $pdf->SetFont('Arial','',10);
+        $pdf->SetXY(27.8,127+ $Y);
         $pdf->Cell(0, 0.2, "   12th September, 2016", 0.25, "C") ;
         
         $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(110.8,120.2+ $Y);
-        $pdf->Cell(0, 0.2, "__________________________", 0.25, "C") ;
+        $pdf->SetXY(27.8,127.2+ $Y);
+        $pdf->Cell(0, 0.2, "______________________________", 0.25, "C") ;
 
-         $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(10.2,127.2+ $Y);
-        $pdf->Cell(0, 0.2, "Checked By:", 0.25, "C");
-
-        $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(29.2,127.2+ $Y);
-        $pdf->Cell(0, 0.2, "_____________________________________", 0.25, "C") ;
         
         $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(100.2,127.2+ $Y);
+        $pdf->SetXY(85.2,127.2+ $Y);
         $pdf->Cell(0, 0.2, "Printing Date:", 0.25, "C");
 
         $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(120.2,127.2+ $Y);
-        $pdf->Cell(0, 0.2, "_____________________", 0.25, "C");
+        $pdf->SetXY(104.2,127.2+ $Y);
+        $pdf->Cell(0, 0.2, "_______________________________", 0.25, "C");
 
-        $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(120.2,127.2+ $Y);
-        $pdf->Cell(0, 0.2, "   ".date('d-m-Y h:i a'), 0.25, "C");
+        $pdf->SetFont('Arial','',10);
+        $pdf->SetXY(104.2,127+ $Y);
+        $pdf->Cell(0, 0.2, "     ".date('d-m-Y h:i a'), 0.25, "C");
       
-        $pdf->Image("assets/img/CE_Signature.png",163.0,250, 35,35, "PNG"); 
+        $pdf->Image("assets/img/CE_Signature.png",163.0,252, 35,35, "PNG"); 
         $pdf->SetFont('Arial','B',10);
-        $pdf->SetXY(147,288);
+        $pdf->SetXY(145,288);
         $pdf->Cell(0, 0.2, "CONTROLLER OF EXAMINATIONS", 0.25, "C");
-        $pdf->Image("assets/img/headsign.jpg",28.0,265, 72,24, "JPG"); 
+        $pdf->Image("assets/img/headsign.jpg",28.0,135+$Y, 72,24, "JPG"); 
     }
 
 
@@ -1495,7 +1605,7 @@ else if($_sub_cd ==37)  $ret_val = "75";
 else if($_sub_cd ==40)  $ret_val = "60";
 else if($_sub_cd ==43)  $ret_val = "40";
 else if($_sub_cd ==48)  $ret_val = "40";
-else if($_sub_cd ==51)  $ret_val = "75";
+else if($_sub_cd ==51)  $ret_val = "50";
 else if($_sub_cd ==66)  $ret_val = "75";
 else if($_sub_cd ==69)  $ret_val = "30";
 else if($_sub_cd ==70)  $ret_val = "30";
@@ -1611,7 +1721,7 @@ else if($_sub_cd == 88)  $ret_val = "REFRIGERATION AND AIR CONDITIONING";
 else if($_sub_cd == 89)  $ret_val = "FISH FARMING";
 else if($_sub_cd == 90)  $ret_val = "COMPUTER HARDWARE";
 else if($_sub_cd == 91)  $ret_val = "BEAUTICIAN";
-else if($_sub_cd == 92)  $ret_val = "General Math"; 
+else if($_sub_cd == 92)  $ret_val = "GENERAL MATH"; 
 else if($_sub_cd == 93)  $ret_val = "COMPUTER SCIENCES_DFD";    
 else if($_sub_cd == 94)  $ret_val = "HEALTH & PHYSICAL EDUCATION_DFD";   
                                                                                                                                                                                                                                                                                                                 return $ret_val ;             

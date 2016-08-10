@@ -97,6 +97,10 @@
                                         $grp_name='';                             
                                         foreach($data as $key=>$vals):
                                         $n++;
+                                        
+                                        if($vals["result1"] != '')
+                                        $vals["result2"].= ' '.$vals["result1"];
+                                        
                                         $roll_no = !empty($vals["rno"])?$vals["rno"]:"N/A";
                                         $grp_name = $vals["grp_cd"];
                                         switch ($grp_name) {
@@ -133,7 +137,7 @@
                                         <td>'.$vals["Fname"].'</td>
                                         <td>'.$grp_name.'</td>
                                          <td>'.$vals["result2"].'</td>
-                                        <td style="text-align:center"> <img src="'.$vals["picpath"].'" style="height: 60px;">'.'</td>
+                                        <td style="text-align:center"> <img src="'.REGULAR_IMAGE_PATH.$vals["picpath"].'" style="height: 60px;">'.'</td>
                                         '; 
                                         
 
