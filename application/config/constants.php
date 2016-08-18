@@ -39,6 +39,7 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',        'x+b');
 define('PRIVATE_IMAGE_PATH', 'uploads/2016/private/');
 define('REGULAR_IMAGE_PATH', 'http://ssc.bisegrw.com/');
 define('CURRENT_SESS', 'Online Result Card 9th Annual 2016');
+define('CURRENT_SESS_YEAR', 'Result SSC 9th Annual 2016');
 
 
 

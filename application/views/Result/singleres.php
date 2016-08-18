@@ -36,10 +36,7 @@
             </div> 
             <div id="page">
                
-                <!-- <input id="btn-print" type="button" value="Print" style="width: 86px;
-                height: 31px;
-                color: black;
-                font-size: 20px;" /> -->
+             
                 <div id="resultsDiv" style="margin-bottom: 40px;min-height: 473px;">
                     <div style="  color: #246785;font-size: 20px;     margin-bottom:  35px;     display: inline-block;    margin-left: 75px;"> Gazette & CD Password: <b style="color: red;font-size: 22px;" >Inter_Supply_2015</b></div>
                     <?php 
@@ -52,7 +49,7 @@
                     else if( @$isfound ==1)
                     {
 
-                        include "ma10presult.php";  
+                        include "ma9presult.php";  
                     }   ?>
                    
 

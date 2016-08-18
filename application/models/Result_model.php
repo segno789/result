@@ -8,7 +8,7 @@
 
         public function getresult($keyword,$isrno)
         {
-            $query = $this->db->query("Registration..Current_Matric_Result_Announcement '$keyword',10,2016,1,$isrno");
+            $query = $this->db->query("Registration..Current_Matric_Result_Announcement '$keyword',9,2016,1,$isrno");
             $rowcount = $query->num_rows();
             if($rowcount > 0)
             {

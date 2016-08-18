@@ -46,7 +46,7 @@ $sess =1;
 $title = 'Matric (Annual) Examination, 2016';
 
 $result =  $result[0];
-
+ $_POST['year'] =  $result['iyear'];
 if ($result === FALSE){                
 
     echo('<center><span class="blink" style="font-size:25px;  " > You entered invalid Roll-Number, Please enter valid Roll Number from  400000 to 602981 </span></center>');
@@ -57,14 +57,13 @@ else
     $Spl_cd = getField($result,"spl_cd");
     if($Spl_cd != '' || $Spl_cd != null) 
     {
-        //$res =  $mymatricObj->getsplcase($Spl_cd);
         if($Spl_cd == 10 or $Spl_cd == 11 or $Spl_cd == 12 or $Spl_cd == 13 or $Spl_cd == 14 or $Spl_cd == 16 or $Spl_cd == 17 or $Spl_cd == 24 or $Spl_cd == 8 or $Spl_cd == 15 or $Spl_cd == 9  or $Spl_cd == 4  or $Spl_cd == 5  or $Spl_cd == 99 ) 
             $splName = getField($result,"result2");
         else 
             $splName = getField($res,"Spl_Name");
         $naration = getField($result,"Spl_Name");
         echo('<center><span class="blink" style="font-size:25px; text-align:justified" > This Student Record is '. $splName . '.</br> </span></center>');
-        echo('<center><span   style="font-size:25px; text-align:justified" > <input type="button" id="btn" name="btn" onclick="history.go(-1);"  value="Go Back" />  </span></center>');
+        echo('<center><span   style="font-size:25px; text-align:justified" >  </span></center>');
     }
     else 
     {
@@ -169,8 +168,15 @@ else
                     <td>150</td>
                     <td><?php if(getField($result,"sub1st1") == 1 || getField($result,"sub1st1") == 4) {echo getField($result,"S1MT1");} else if(getField($result,"sub1st1") == 2) echo 'A'; ?></td>
                     <td><?php if(getField($result,"sub1st2") == 1 || getField($result,"sub1st2") == 4) {echo getField($result,"S1MT2");} else if(getField($result,"sub1st2") == 2) echo 'A'; ?></td>
+                 
                     <td>&nbsp;</td>
-                    <td><?php echo getField($result,"S1Tot"); ?></td>
+                    <td><?php 
+                         if(getField($result,"S1PF1") == 1 && getField($result,"S1PF2") == 1) 
+                         {
+                              echo getField($result,"S1MT2")+getField($result,"S1MT1");
+                         }
+                         
+                     ?></td>
                     <td>
                         <?php
                         $mVar = getField($result,"S1PF1");
@@ -189,10 +195,14 @@ else
                     <td>2</td>
                     <td align="left">ENGLISH</td>
                     <td>150</td>
-                    <td><?php if(getField($result,"sub2st1") == 1 || getField($result,"sub2st1") == 4) {echo getField($result,"S1MT1");} else if(getField($result,"sub2st1") == 2) echo 'A'; ?></td>
-                    <td><?php if(getField($result,"sub2st2") == 1 || getField($result,"sub2st2") == 4) {echo getField($result,"S1MT2");} else if(getField($result,"sub2st2") == 2) echo 'A'; ?></td>
+                    <td><?php if(getField($result,"sub2st1") == 1 || getField($result,"sub2st1") == 4) {echo getField($result,"S2MT1");} else if(getField($result,"sub2st1") == 2) echo 'A'; ?></td>
+                    <td><?php if(getField($result,"sub2st2") == 1 || getField($result,"sub2st2") == 4) {echo getField($result,"S2MT2");} else if(getField($result,"sub2st2") == 2) echo 'A'; ?></td>
                     <td>&nbsp;</td>
-                    <td><?php echo getField($result,"S2Tot");    ?>
+                    <td><?php  if(getField($result,"S2PF1") == 1 && getField($result,"S2PF2") == 1) 
+                         {
+                               echo getField($result,"S2MT2")+getField($result,"S2MT1");
+                         }
+                        ?>
                     </td>
                     <td><?php
                         $mVar = getField($result,"S2PF1");
@@ -230,7 +240,15 @@ else
                     <td><?php if(getField($result,"sub3st1") == 1 || getField($result,"sub3st1") == 4) {echo getField($result,"S3MT1");} else if(getField($result,"sub3st1") == 2) echo 'A'; ?></td>
                     <td ><?php if($schm==1){if(getField($result,"sub3st2") == 1 || getField($result,"sub3st2") == 4) {echo getField($result,"S3MT2");} else if(getField($result,"sub3st2") == 2) echo 'A';;}else{echo '-';} ?></td>
                     <td>&nbsp;</td>
-                    <td><?php if($schm==2){echo getField($result,"S3MT1");} else {echo getField($result,"S3Tot");} ?>
+                    <td><?php if($schm==2){echo getField($result,"S3MT1");} else {
+                        
+                         if(getField($result,"S3PF1") == 1 && getField($result,"S3PF2") == 1) 
+                         {
+                              echo getField($result,"S3MT2")+getField($result,"S3MT1");
+                         }
+                         
+                        
+                    } ?>
                     </td>
                     <td>
                         <?php
@@ -242,14 +260,20 @@ else
                     <td><?php if($schm==1){$mVar = getField($result,"S3PF2"); echo subStatus($mVar);}else{echo '-';} ?></td>
                 </tr>
                 <!-- Sub-8 (Pak-St) -->          
-                <tr height="28">
+                   <tr height="28">
                     <td>4</td>
                     <td align="left">PAKISTAN STUDIES</td>
                     <td><?php if($schm==1){echo '100';}else{echo '75';}?></td>
                     <td><?php if($schm==1){if(getField($result,"sub8st1") == 1 || getField($result,"sub8st1") == 4) {echo getField($result,"S8MT1");} else if(getField($result,"sub8st1") == 2) echo 'A';}else{echo '-';} ?></td>
                     <td><?php if(getField($result,"sub8st2") == 1 || getField($result,"sub8st2") == 4) {echo getField($result,"S8MT2");} else if(getField($result,"sub8st2") == 2) echo 'A';  ?></td>
                     <td>&nbsp;</td>
-                    <td><?php if($schm==2){if(getField($result,"sub8st2") == 1 || getField($result,"sub8st2") == 4) {echo getField($result,"S8MT2");} else if(getField($result,"sub8st2") == 2) echo 'A'; } else { echo $mVar = getField($result,"S8Tot");} ?></td>
+                    <td><?php if($schm==2){if(getField($result,"sub8st2") == 1 || getField($result,"sub8st2") == 4) {echo getField($result,"S8MT2");} else if(getField($result,"sub8st2") == 2) echo 'A'; } else {  
+                        if(getField($result,"S8PF2") == 1 && getField($result,"S8PF1") == 1) 
+                         {
+                               echo getField($result,"S8MT2")+getField($result,"S8MT1");
+                         }
+                        
+                    } ?></td>
                     <td><?php if($schm==1){$mVar = getField($result,"S8PF1");echo subStatus($mVar);}else{echo '-';} ?></td>
                     <td>    
                         <?php
@@ -267,8 +291,13 @@ else
                     <td><?php if($Cat09 !=4 and $Cat10 !=4 and $result['iyear']>=2007) { echo 150-$oldschm ;}else{echo '100';}?></td>
                     <td><?php if(getField($result,"sub4st1") == 1 || getField($result,"sub4st1") == 4) {echo getField($result,"S4MT1");} else if(getField($result,"sub4st1") == 2) echo 'A'; ?></td>
                     <td><?php if(getField($result,"sub4st2") == 1 || getField($result,"sub4st2") == 4) {echo getField($result,"S4MT2");} else if(getField($result,"sub4st2") == 2) echo 'A'; ?></td>
+
                     <td>&nbsp;</td>
-                    <td><?php echo getField($result,"S4Tot");    ?></td>                
+                    <td><?php if(getField($result,"S4PF1") == 1 && getField($result,"S4PF2") == 1) 
+                         {
+                                echo  getField($result,"S4MT2")+getField($result,"S4MT1");
+                         }
+                             ?></td>                
                     <td>
                         <?php
                         $mVar = getField($result,"S4PF1");
@@ -294,16 +323,21 @@ else
                     <td><?php if($Cat09 !=4 and $Cat10 !=4 and  $result['iyear']>=2007) { echo 150-$oldschm;} else{echo '100';}?></td>
                     <td><?php if(getField($result,"sub5st1") == 1 || getField($result,"sub5st1") == 4) {echo getField($result,"S5MT1");} else if(getField($result,"sub5st1") == 2) echo 'A';; ?></td>
                     <td><?php if(getField($result,"sub5st2") == 1 || getField($result,"sub5st2") == 4) {echo getField($result,"S5MT2");} else if(getField($result,"sub5st2") == 2) echo 'A'; ?></td>
+
                     <td><?php
                         $s5st = getField($result,"S5SP2");
                         if($s5st == 2) {echo "A";}
                         else
                         {
-                            if ($schm==1){echo get_gradeMAPrac_new(getField($result,"S5MP2"),getField($result,"S5SP2"),getField($result,"S5"));}
+                            if ($schm==1){echo get_gradeMAPrac_new_ma2016(getField($result,"S5MP2"),getField($result,"S5SP2"),getField($result,"S5"),getField($result,"S5PrSt2"));}
                             else {echo getField($result,"S5MP2");} 
                         }
                     ?></td>
-                    <td><?php echo getField($result,"S5Tot");    ?></td>
+                    <td><?php if(getField($result,"S5PF1") == 1 && getField($result,"S5PF2") == 1) 
+                         {
+                              echo getField($result,"S5MT2")+getField($result,"S5MT1");
+                         }
+                            ?></td>
                     <td>
                         <?php
                         $mVar = getField($result,"S5PF1");
@@ -330,18 +364,24 @@ else
 
                     </td>
                     <td><?php if($Cat09 !=4 and $Cat10 !=4 and  $result['iyear']>=2007) {echo 150-$oldschm;}else {echo '100';}?></td>
-                    <td><?php if(getField($result,"sub6st1") == 1 || getField($result,"sub6st1") == 4) {echo getField($result,"S6MT1");} else if(getField($result,"sub6st1") == 2) echo 'A'; ?></td>
-                    <td><?php if(getField($result,"sub6st2") == 1 || getField($result,"sub6st2") == 4) {echo getField($result,"S6MT2");} else if(getField($result,"sub6st1") == 2) echo 'A'; ?></td>
+                  <td><?php if(getField($result,"sub6st1") == 1 || getField($result,"sub6st1") == 4) {echo getField($result,"S6MT1");} else if(getField($result,"sub6st1") == 2) echo 'A'; ?></td>
+                    <td><?php if(getField($result,"sub6st2") == 1 || getField($result,"sub6st2") == 4) {echo getField($result,"S6MT2");} else if(getField($result,"sub6st2") == 2) echo 'A'; ?></td>
+
                     <td><?php 
                         $s6st = getField($result,"S6SP2");
                         if($s6st == 2) {echo "A";}
                         else
                         {
-                            if ($schm==1){echo get_gradeMAPrac(getField($result,"S6MP2"),getField($result,"S6"));} 
+                            if ($schm==1){echo get_gradeMAPrac_new_ma2016(getField($result,"S6MP2"),getField($result,"S6SP2"),getField($result,"S6"),getField($result,"S6PrSt2"));}
+
                             else {echo getField($result,"S6MP2");} 
                         }
                     ?></td>
-                    <td><?php echo getField($result,"S6Tot");    ?></td>
+                    <td><?php if(getField($result,"S6PF1") == 1 && getField($result,"S6PF2") == 1) 
+                         {
+                              echo  getField($result,"S6MT2")+getField($result,"S6MT1");
+                         }
+                              ?></td>
                     <td>
                         <?php
                         $mVar = getField($result,"S6PF1");
@@ -367,18 +407,23 @@ else
                         ?> 
                     </td>
                     <td><?php if($Cat09 !=4 and $Cat10 !=4 and   $result['iyear']>=2007) {echo 150-$oldschm;} else {echo '100';}?></td>
-                    <td><?php if(getField($result,"sub7st1") == 1 || getField($result,"sub7st1") == 4) {echo getField($result,"S7MT1");} else if(getField($result,"sub7st1") == 2) echo 'A'; ?></td>
+                     <td><?php if(getField($result,"sub7st1") == 1 || getField($result,"sub7st1") == 4) {echo getField($result,"S7MT1");} else if(getField($result,"sub7st1") == 2) echo 'A'; ?></td>
                     <td><?php if(getField($result,"sub7st2") == 1 || getField($result,"sub7st2") == 4) {echo getField($result,"S7MT2");} else if(getField($result,"sub7st2") == 2) echo 'A'; ?></td>
+
                     <td><?php 
                         $s7st = getField($result,"S7SP2");
                         if($s7st == 2) {echo "A";}
                         else
                         {
-                            if ($schm==1){echo get_gradeMAPrac( getField($result,"S7MP2"),getField($result,"S7"));}
+                            if ($schm==1){echo get_gradeMAPrac_new_ma2016(getField($result,"S7MP2"),getField($result,"S7SP2"),getField($result,"S7"),getField($result,"S7PrSt2"));}
                             else{echo getField($result,"S7MP2"); }
                         }
                     ?></td>
-                    <td><?php echo getField($result,"S7Tot"); ?></td>
+                    <td><?php if(getField($result,"S7PF1") == 1 && getField($result,"S7PF2") == 1) 
+                         {
+                             echo  getField($result,"S7MT2")+getField($result,"S7MT1");
+                         }
+                           ?></td>
                     <td>
                         <?php
                         $mVar = getField($result,"S7PF1");
@@ -463,13 +508,13 @@ else
                             if ($Cat09=="1" or $Cat09=="2" or $Cat10=="1" or $Cat10=="2")
                                 echo "< Candidate has failed in subject(s) and eligible to reappear till ";
                             if ($Chance=="1")
-                                echo "Supplementary Examination, 2016 >";                                    
+                                echo "Supplementary Examination, 2017 >";                                    
                             else
                                 if ($Chance=="2")
-                                    echo "Annual Examination, 2016 >";
+                                    echo "Annual Examination, 2017 >";
                                 else
                                     if ($Chance=="3")
-                                        echo "Supplementary Examination, 2015 >";
+                                        echo "Supplementary Examination, 2017 >";
                         }
                         else if ($Status=="3" and $_POST['year'] >=2014)
                         {        //Fail (Full)

@@ -35,16 +35,17 @@ class Login extends CI_Controller {
 //DebugBreak();
             if($logedIn != false)
             {  
-                $grp =  $logedIn['tbl_inst']['allowed_mGrp'];
-               /* if($logedIn['flusers']['edu_lvl'] == 2)
+              
+               if( $logedIn['isactive'] == 1)
                 {
                     $data = array(
-                        'user_status' => 1                     
+                        'user_status' => 4,                     
+                        'remarks' => $logedIn['flusers']['Remarks']                     
                     );
                     $this->load->view('login/login.php',$data);
                 }
-                else*/
-                 if($logedIn['flusers']['status'] == 0)
+                
+                else if($logedIn['flusers']['status'] == 0)
                 {
                     $data = array(
                         'user_status' => 3                     
@@ -54,6 +55,7 @@ class Login extends CI_Controller {
                
                 else
                 {
+                      $grp =  $logedIn['tbl_inst']['allowed_mGrp'];
                     $isdeaf = 0;
 
                     
@@ -96,7 +98,8 @@ class Login extends CI_Controller {
             else
             {  
                 $data = array(
-                    'user_status' => 1                     
+                    'user_status' => 1,                     
+                                  
                 );
                 $this->load->view('login/login.php',$data);
 

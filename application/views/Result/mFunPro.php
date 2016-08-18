@@ -238,7 +238,70 @@
         }                    
     }
     //------------------------------------------------------------------
-
+  function Get9thSubMarks($_sub_cd)
+    {
+    $ret_val = '';
+if($_sub_cd ==1)  $ret_val = "75";
+else if($_sub_cd ==2)  $ret_val = "75";
+else if($_sub_cd ==3)  $ret_val = "50";
+else if($_sub_cd ==4)  $ret_val = "50";
+else if($_sub_cd ==5)  $ret_val = "75";
+else if($_sub_cd ==6)  $ret_val = "60";
+else if($_sub_cd ==7)  $ret_val = "60";
+else if($_sub_cd ==8)  $ret_val = "60";
+else if($_sub_cd ==9)  $ret_val = "75";
+else if($_sub_cd ==10)  $ret_val = "50";
+else if($_sub_cd ==11)  $ret_val = "75";
+else if($_sub_cd ==12)  $ret_val = "75";
+else if($_sub_cd ==13)  $ret_val = "75";
+else if($_sub_cd ==14)  $ret_val = "75";
+else if($_sub_cd ==15)  $ret_val = "75";
+else if($_sub_cd ==16)  $ret_val = "75";
+else if($_sub_cd ==17)  $ret_val = "75";
+else if($_sub_cd ==18)  $ret_val = "40";
+else if($_sub_cd ==19)  $ret_val = "75";
+else if($_sub_cd ==20)  $ret_val = "75";
+else if($_sub_cd ==21)  $ret_val = "75";
+else if($_sub_cd ==22)  $ret_val = "75";
+else if($_sub_cd ==23)  $ret_val = "75";
+else if($_sub_cd ==24)  $ret_val = "75";
+else if($_sub_cd ==25)  $ret_val = "75";
+else if($_sub_cd ==26)  $ret_val = "75";
+else if($_sub_cd ==27)  $ret_val = "60";
+else if($_sub_cd ==29)  $ret_val = "75";
+else if($_sub_cd ==30)  $ret_val = "60";
+else if($_sub_cd ==31)  $ret_val = "75";
+else if($_sub_cd ==32)  $ret_val = "75";
+else if($_sub_cd ==33)  $ret_val = "75";
+else if($_sub_cd ==34)  $ret_val = "75";
+else if($_sub_cd ==35)  $ret_val = "75";
+else if($_sub_cd ==36)  $ret_val = "75";
+else if($_sub_cd ==37)  $ret_val = "75";
+else if($_sub_cd ==40)  $ret_val = "60";
+else if($_sub_cd ==43)  $ret_val = "40";
+else if($_sub_cd ==48)  $ret_val = "40";
+else if($_sub_cd ==51)  $ret_val = "50";
+else if($_sub_cd ==66)  $ret_val = "75";
+else if($_sub_cd ==69)  $ret_val = "30";
+else if($_sub_cd ==70)  $ret_val = "30";
+else if($_sub_cd ==72)  $ret_val = "30";
+else if($_sub_cd ==73)  $ret_val = "75";
+else if($_sub_cd ==78)  $ret_val = "50";
+else if($_sub_cd ==79)  $ret_val = "40";
+else if($_sub_cd ==81)  $ret_val = "75";
+else if($_sub_cd ==82)  $ret_val = "75";
+else if($_sub_cd ==83)  $ret_val = "40";
+else if($_sub_cd ==84)  $ret_val = "75";
+else if($_sub_cd ==85)  $ret_val = "75";
+else if($_sub_cd ==86)  $ret_val = "75";
+else if($_sub_cd ==87)  $ret_val = "75";
+else if($_sub_cd ==89)  $ret_val = "40";
+else if($_sub_cd ==90)  $ret_val = "40";
+else if($_sub_cd ==92)  $ret_val = "75";
+else if($_sub_cd ==93)  $ret_val = "30";
+else if($_sub_cd ==94)  $ret_val = "30";
+return $ret_val;
+    }
 function get_gradeMA_oldSch($marks,$status) {
 if($status == 1)    
 {

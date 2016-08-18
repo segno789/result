@@ -572,7 +572,7 @@ class Result extends CI_Controller {
         $pdf->MultiCell(125, 5, $info['addr'], 0, "L",0);
 
 
-        $pdf->Image("assets/img/CE_Signature.png",163.0,247, 35,35, "PNG"); 
+        $pdf->Image("assets/img/CE_Signature.png",163.0,247, 38,36, "JPG"); 
 
         $pdf->SetFont('Arial','B',10);
         $pdf->SetXY(145,284);
@@ -974,7 +974,8 @@ class Result extends CI_Controller {
                     {
                         $subinduTotal = $submarks+ $submarks2;
                     }
-
+                    
+                   
                     if($subNo == 'sub5' || $subNo == 'sub6' || $subNo == 'sub7' || $subNo == 'sub4')
                     {
                         // DebugBreak();
@@ -1015,6 +1016,7 @@ class Result extends CI_Controller {
                 {
                     // DebugBreak();
                     $subcd = $info[$subNo.'a'];
+                      $subprst = $this->Get_gradePrac_Inter($subcd,$info['sub'.$subctn.'mp2'],$info['sub'.$subctn.'prpf']) ;
                     $subname1 = $this->GetiSubNameHere($subcd) ;
                     $isborder ='';
                     $sety = $sety1-4;
@@ -1347,7 +1349,7 @@ class Result extends CI_Controller {
         $pdf->SetXY(104.2,127+ $Y);
         $pdf->Cell(0, 0.2, "     ".date('d-m-Y h:i a'), 0.25, "C");
       
-        $pdf->Image("assets/img/CE_Signature.png",163.0,252, 35,35, "PNG"); 
+        $pdf->Image("assets/img/CE_Signature.png",163.0,252, 38,36, "jpg"); 
         $pdf->SetFont('Arial','B',10);
         $pdf->SetXY(145,288);
         $pdf->Cell(0, 0.2, "CONTROLLER OF EXAMINATIONS", 0.25, "C");
