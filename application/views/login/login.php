@@ -62,7 +62,7 @@
                                             }
                                             else if($user_status == 4)
                                             {
-                                                echo "<b style='color: #f63131;    font-size: 13px;'>".$remarks.". Please contact to Online Registration Branch at B.I.S.E. Gujranwala.</b>";
+                                                echo "<b style='color: #f63131;    font-size: 13px;'>".$remarks."</b>";
                                             }
                                             else if($user_status == 5)
                                             {

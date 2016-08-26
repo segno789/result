@@ -70,14 +70,14 @@ if ($result === FALSE)
 
 }
 else {
-
+//DebugBreak();
 
     $Spl_cd = getField($result,"spl_cd");
     if($Spl_cd != '' || $Spl_cd != null) 
     {
 
 
-        if($Spl_cd == 10 or $Spl_cd == 11 or $Spl_cd == 12 or $Spl_cd == 13 or $Spl_cd == 14 or $Spl_cd == 16 or $Spl_cd == 17 or $Spl_cd == 24 or $Spl_cd == 8 or $Spl_cd == 15 or $Spl_cd == 9  or $Spl_cd == 4  or $Spl_cd == 5  or $Spl_cd == 99 ) 
+        if($Spl_cd == 10 or $Spl_cd == 11 or $Spl_cd == 12 or $Spl_cd == 13 or $Spl_cd == 14 or $Spl_cd == 16 or $Spl_cd == 17 or $Spl_cd == 24 or $Spl_cd == 8 or $Spl_cd == 15 or $Spl_cd == 9  or $Spl_cd == 4   or $Spl_cd == 5  or $Spl_cd == 99 OR  $Spl_cd ==  55) 
 
         {
             $splName = getField($result,"result1");
@@ -85,10 +85,14 @@ else {
 
         }
         else 
-            $splName = getField($res,"spl_name");
+        {
+          $splName = getField($result,"spl_name");   
+        }
+           
 
-        echo('<center><span class="blink" style="font-size:25px; text-align:justified" > This Student Record is '. $splName . '.</br> '.$naration.'</span></center>');
-        echo('<center><span   style="font-size:25px; text-align:justified" > <input type="button" id="btn" name="btn" onclick="history.go(-1);"  value="Go Back" />  </span></center>');
+        echo('<center><span class="blink" style="font-size:25px; text-align:justified;    margin-bottom: 33px;
+    display: block;" > This Student Record is '. @$splName . '</span></center>');
+        
         return ;
     } 
     else {
@@ -117,12 +121,13 @@ else {
 
                     <!-- Roll No, Name, Institute/District -->
                     <tr align="left" height="28">
-                        <td colspan="5">Roll No:&nbsp;<b><?php echo getField($result,"RNo"); ?></b></td>
+                        <td colspan="3">&nbsp;Roll No:&nbsp;<b><?php echo getField($result,"RNo"); ?></b></td>
+                         <td colspan="2">&nbsp;Registration No:&nbsp;<b><?php echo  getField($result,"strRegNo"); ?></b></td>
                     </tr>
 
                     <tr align="left" height="28">
-                        <td colspan="3">Name:&nbsp;<?php echo getField($result,"Name"); ?></td>
-                        <td colspan="2"><?php echo "Group: " . mGroup(getField($result,"Grp_cd")); ?></td>
+                        <td colspan="3">&nbsp;Name:&nbsp;<?php echo getField($result,"Name"); ?></td>
+                        <td colspan="2">&nbsp;<?php echo "Group: " . mGroup(getField($result,"Grp_cd")); ?></td>
                     </tr>
 
                     <tr height="28">
@@ -132,7 +137,7 @@ else {
                             if ($mVar == "1"){
                                 $mVar=getField($result,"Sch_Cd");
                                 $name=getField($result,"sch_Name");
-                                echo "School: " . $mVar.'-'.$name;
+                                echo " School: " . $mVar.'-'.$name;
                             }
                             else
                                 if ($mVar == "2")
@@ -151,7 +156,7 @@ else {
                     <!-- Sub-1 (Urdu) -->
                     <tr height="28">
                         <td><?= $srno;?></td>
-                        <td align="left">URDU</td>
+                        <td align="left">&nbsp;&nbsp;URDU</td>
                         <td>
                             <?php 
                             $mark = '';
@@ -165,13 +170,13 @@ else {
                             ?>
 
                         </td>
-                        <td><?php echo getField($result,"S1MT1"); ?></td>
-                        <td><?php echo subRemarks(trim(getField($result,"S1PF1"))); ?></td>
+                        <td><?php if(getField($result,"sub1st1") == 2) echo'A' ; else echo getField($result,"S1MT1"); ?></td>
+                        <td><?php if(getField($result,"sub1st1") == 1) echo subRemarks(trim(getField($result,"S1PF1"))); ?></td>
                     </tr>
                     <!-- Sub-2 (English) -->            
                     <tr height="28">
                         <td><?= $srno+=1?></td>
-                        <td align="left">  ENGLISH</td>
+                        <td align="left">&nbsp;&nbsp;ENGLISH</td>
                         <td>
                             <?php 
                             // DebugBreak();
@@ -183,14 +188,14 @@ else {
 
                             $totalmarks = $totalmarks +$mark;?>
                         </td>
-                        <td><?php echo getField($result,"S2MT1"); ?></td>
-                        <td><?php echo subRemarks(trim(getField($result,"S2PF1"))); ?>	</td>
+                        <td><?php if(getField($result,"sub2st1") == 2) echo'A' ; else echo getField($result,"S2MT1"); ?></td>
+                        <td><?php if(getField($result,"sub2st1") == 1) echo subRemarks(trim(getField($result,"S2PF1"))); ?>	</td>
                     </tr>
                     <!-- Sub-3 (Islamiyat) -->
                     <tr height="28">
                         <td><?= $srno+=1?></td>
                         <!-- td align="left">Islamiyat (Compulsory)</td -->
-                        <td align="left">
+                        <td align="left">&nbsp;
                             <?php 
                             $mVar = getField($result,"S3");
                             echo ($mVar == "3") ? "ISLAMIYAT" : mSubName($mVar);
@@ -218,15 +223,15 @@ else {
 
 
                         </td>
-                        <td><?php echo getField($result,"S3MT1"); ?></td>
-                        <td><?php echo subRemarks(trim(getField($result,"S3PF1"))); ?>	</td>
+                        <td><?php if(getField($result,"sub3st1") == 2) echo'A' ; else echo getField($result,"S3MT1"); ?></td>
+                        <td><?php if(getField($result,"sub3st1") == 1) echo subRemarks(trim(getField($result,"S3PF1"))); ?>	</td>
                     </tr>
                     <?php if($_POST['year'] != 2011) {  
                         $totalmarks = $totalmarks +$mark;
                         ?>
                         <tr height="28">
                             <td><?= $srno+=1?></td>
-                            <td align="left">PAKISTAN STUDIES</td>
+                            <td align="left">&nbsp;&nbsp;PAKISTAN STUDIES</td>
                             <td>
                                 <?php 
 
@@ -244,14 +249,14 @@ else {
                                 ?>
 
                             </td>
-                            <td><?php echo getField($result,"S8MT1"); ?></td>
-                            <td><?php echo subRemarks(trim(getField($result,"S8PF1"))); ?>	</td>
+                            <td><?php if(getField($result,"sub8st1") == 2) echo 'A' ; else echo getField($result,"S8MT1"); ?></td>
+                            <td><?php if(getField($result,"sub8st1") == 1) echo subRemarks(trim(getField($result,"S8PF1"))); ?>	</td>
                         </tr>
                         <?php }?>
                     <!-- Sub-4 (Math) --> 
                     <tr height="28">
                         <td><?= $srno+=1?></td>
-                        <td align="left"><?php
+                        <td align="left">&nbsp;&nbsp;<?php
                             $mVar=getField($result,"S4");            
                             echo mSubName($mVar);
 
@@ -270,13 +275,13 @@ else {
 
                             $totalmarks = $totalmarks +$mark;?>
                         </td>
-                        <td><?php echo getField($result,"S4MT1"); ?></td>
-                        <td><?php echo subRemarks(trim(getField($result,"S4PF1"))); ?>	</td>
+                        <td><?php if(getField($result,"sub4st1") == 2) echo'A' ; else echo getField($result,"S4MT1"); ?></td>
+                        <td><?php if(getField($result,"sub4st1") == 1) echo subRemarks(trim(getField($result,"S4PF1"))); ?>	</td>
                     </tr>
                     <!-- Sub-5 (Phy/GSc) --> 
                     <tr height="28">
                         <td><?= $srno+=1?></td>
-                        <td align="left">
+                        <td align="left">&nbsp;
                             <?php
                             $mVar=getField($result,"S5");			
                             echo mSubName($mVar);
@@ -315,13 +320,13 @@ else {
                             $totalmarks = $totalmarks +$mark;
                             ?>
                         </td>
-                        <td><?php echo getField($result,"S5MT1"); ?></td>
-                        <td><?php echo subRemarks(trim(getField($result,"S5PF1"))); ?>	</td>
+                        <td><?php if(getField($result,"sub5st1") == 2) echo'A' ; else echo getField($result,"S5MT1"); ?></td>
+                        <td><?php if(getField($result,"sub5st1") == 1) echo subRemarks(trim(getField($result,"S5PF1"))); ?>	</td>
                     </tr>
                     <!-- Sub-6 (Ch/Opt) --> 
                     <tr height="28">
                         <td><?= $srno+=1?></td>
-                        <td align="left">
+                        <td align="left">&nbsp;
                             <?php
                             $mVar=getField($result,"S6");
                             echo mSubName($mVar);
@@ -354,13 +359,13 @@ else {
                             $totalmarks = $totalmarks +$mark;
                             ?>
                         </td>
-                        <td><?php echo getField($result,"S6MT1"); ?></td>
-                        <td><?php echo subRemarks(trim(getField($result,"S6PF1"))); ?>	</td>
+                        <td><?php if(getField($result,"sub6st1") == 2) echo'A' ; else echo getField($result,"S6MT1"); ?></td>
+                        <td><?php if(getField($result,"sub6st1") == 1) echo subRemarks(trim(getField($result,"S6PF1"))); ?>	</td>
                     </tr>
                     <!-- Sub-7 (Ch/Opt) --> 
                     <tr height="28">
                         <td><?= $srno+=1?></td>
-                        <td align="left">
+                        <td align="left">&nbsp;
                             <?php
                             $mVar=getField($result,"S7");
                             echo mSubName($mVar);
@@ -394,8 +399,8 @@ else {
                             $totalmarks = $totalmarks +$mark;
                             ?>
                         </td>
-                        <td><?php echo getField($result,"S7MT1"); ?></td>
-                        <td><?php echo subRemarks(trim(getField($result,"S7PF1"))); ?>	</td>
+                        <td><?php if(getField($result,"sub7st1") == 2) echo'A' ; else echo getField($result,"S7MT1"); ?></td>
+                        <td><?php if(getField($result,"sub7st1") == 1) echo subRemarks(trim(getField($result,"S7PF1"))); ?>	</td>
                     </tr>
                     <!-- Total and Grade --> 
                     <tr height="28">
@@ -420,19 +425,26 @@ else {
                     <!-- For Notification Detail --> 
                     <tr height="25" bgcolor="#D8D8D8">
                         <td colspan="2" align="right">Notification:</td>                
-                        <td colspan="3" align="left"><?php echo getField($result,"result1"); ?></td>
+                        <td colspan="3" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo getField($result,"result1"); ?></td>
                     </tr>            
                     <!-- Note -->
                     <tr height="28">
-                        <td colspan="5" align="left">
+                        <td colspan="5" align="left">&nbsp;
                             <?php
-                            echo "<u><b>Note:&nbsp;</b></u>This result gazette is issued provisionally, errors and omissions excepted, as a notice only. 
+                            echo "<u><b>&nbsp;Note:&nbsp;</b></u>This result gazette is issued provisionally, errors and omissions excepted, as a notice only. 
                             Any entry appearing in this notification does not in itself confer any right or privilege 
                             on a candidate for the grant of certificate which will be issued under the rules/regulations 
                             on the basis of the original record of the Board's office.";
                             ?>
                         </td>
                     </tr>
+                     <tr style="    height: 53px;">
+                    <td colspan="9" align="center">
+                    <img src="<?php echo base_url(); ?>assets/img/simple.JPG" alt="" style="    width: 660px;">
+                    <span style=" text-align: center;font-size: 16px;margin-left: 122px;margin-top: -8px;" ><a href="http://rechecking.bisegrw.com/" class="blink" style="    font-size: 25px" target="_blank" >Apply for Rechecking</a></span>        
+      
+                    </td>
+                </tr>    
                     <!-- Previous Page -->
                     <tr height="28">
                         <td colspan="5" align="center">

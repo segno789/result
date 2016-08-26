@@ -62,7 +62,14 @@ class Result extends CI_Controller {
 
 
     }
-
+public function servertime()
+{
+    DebugBreak();
+   $date = strtotime("August 22, 2016 11:58 AM");
+$remaining = $date - time();
+  echo  $date = date('H:i:s',$remaining);
+   exit(); 
+}
     public function dashboard9th()
     {
          $this->load->helper('url');
@@ -93,7 +100,6 @@ class Result extends CI_Controller {
         $isdownload = $this->uri->segment(4);
         $data = array(
             'isselected' => '4',
-
         );        
      
         $this->load->model('Result_model');
@@ -118,7 +124,8 @@ class Result extends CI_Controller {
         $data = array(
             'isselected' => '4',
 
-        );        
+        );  
+        DebugBreak();      
         $this->load->library('session');
         $Logged_In_Array = $this->session->all_userdata();
         $userinfo = $Logged_In_Array['logged_in'];
@@ -126,25 +133,32 @@ class Result extends CI_Controller {
         
         $this->load->model('Result_model');
         $info['data'] = $this->Result_model->getResultCardByGroupWise($keyword,$Inst_Id);
-
-        $this->load->library('PDFFWithOutPage');
-        $pdf=new PDFFWithOutPage('P','in',"A4");   
-        $pdf->SetAutoPageBreak(true,2);
-        $totalstd =  count($info['data']);
-        for($i =0 ; $i <$totalstd ; $i++)
+        if($info['data'] != -1)
         {
-            $pdf->AddPage();
-            $this->makeResultCard9th($pdf,$info['data'][$i]);
-           
+            $this->load->library('PDFFWithOutPage');
+            $pdf=new PDFFWithOutPage('P','in',"A4");   
+            $pdf->SetAutoPageBreak(true,2);
+
+            $totalstd =  count($info['data']);
+            for($i =0 ; $i <$totalstd ; $i++)
+            {
+                $pdf->AddPage();
+                $this->makeResultCard9th($pdf,$info['data'][$i]);
+
+            }
+
+
+
+
+            if($isdownload ==  1)
+                $pdf->Output('Result.pdf', 'D'); 
+            else  if($isdownload ==  2)  
+                $pdf->Output('Result.pdf', 'I');  
         }
-        
-        
-        
-       
-        if($isdownload ==  1)
-        $pdf->Output('Result.pdf', 'D'); 
-        else  if($isdownload ==  2)  
-        $pdf->Output('Result.pdf', 'I');  
+        else
+        {
+           redirect('result/dashboard9th/'); 
+        }
     }
     
         public function dashboard12th()
@@ -212,8 +226,8 @@ class Result extends CI_Controller {
         
        /* if($info['Gender']==1) $Gender= 'MALE'; 
         else if($info['Gender']==2) $Gender= 'FEMALE';*/
-            $filepath = $info['picpath'];
-        //$filepath = 'assets/img/download.jpg';
+         //   $filepath = $info['picpath'];
+        $filepath = 'assets/img/download.jpg';
 
 
         $fontSize = 10; 
@@ -445,6 +459,10 @@ class Result extends CI_Controller {
                 if($subremarks == NULL)
                 {
                     $subremarks = ' ';
+                }
+                 if($subremarks == 'Absent')
+                {
+                  $submarks = 'A';  
                 }
                 $subname = $this->GetSubNameHere($subcd) ;
                 $subtoltal = $this->Get9thSubMarks($subcd) ;

@@ -67,9 +67,9 @@ function get_domain($url)
         <div class="left-sidebar">
             <div id="header">
                 <div class="inHeaderLogin">
-                    <a href="" title="BISE Gujranwala" rel="home"><img style="margin-top: 9px;text-align:left;width:150px;float: left;margin-left: 25%;" src="<?php echo base_url(); ?>assets/img/icon.png" alt="Logo BISE GRW"></a>
+                    <a href="" title="BISE Gujranwala" rel="home"><img style="margin-top: 9px;text-align:left;width:150px;float: left;margin-left: 22%;" src="<?php echo base_url(); ?>assets/img/icon.png" alt="Logo BISE GRW"></a>
                     <!--Intimation-->
-                    <p style="color: wheat;text-align: center;font-size: 23px;margin-left: 28px;float: left;  margin-top:55px;">Board of Intermediate & Secondary Education, Gujranwala </br></br> <?= CURRENT_SESS_YEAR?> </p>
+                    <p style="color: wheat;text-align: center;font-size: 23px;margin-left: 8px;float: left;  margin-top:55px;">Board of Intermediate & Secondary Education, Gujranwala </br></br> <?= CURRENT_SESS_YEAR?> </p>
                 </div>
             </div> 
             
@@ -83,8 +83,10 @@ function get_domain($url)
                 </div>
             </div>
              <!--<a href="http://results.bisegrw.com/" target="_blank" style="    margin-left: 829px;margin-top: 5px;float: left;font-size: 25px;font-weight: bold;"> Result Link 2</a>-->
+              <a href="http://result.bisegrw.com/" target="_blank" style="margin-left: 637px;;margin-top: 5px;float: left;font-size: 25px;font-weight: bold;"> Result Link 2</a>
             <div id="page" class="countdown" style="display: none;">
                
+                <div style="  color: #246785;font-size: 20px;    text-align: center;margin-bottom: 1px;margin-left: 27px;margin-top: 48px;"> Gazette & CD Password: <b style="color: red;font-size: 22px;" >CS.ma$16@</b></div>
                 <div style="width: 422px;float: left;">
 
                     <form id="searchForm"  class="searchForm" method="post">
@@ -135,7 +137,7 @@ function get_domain($url)
                     </form>
                 </div>
                 <div id="resultsDiv" style="margin-bottom: 40px;min-height: 473px;">
-                    <div style="  color: #246785;font-size: 20px;     margin-bottom:  35px;     display: inline-block;    margin-left: 75px;"> Gazette & CD Password: <b style="color: red;font-size: 22px;" >CS.ma$16@</b></div>
+                   
                     <?php 
                     //  DebugBreak();
                     // echo  $callback['check'];
@@ -234,9 +236,26 @@ function get_domain($url)
 
         <script type="text/javascript">
         
-            $('#yEa').countdown('2016/08/18 11:30:56')
+               
+         var date = '<?= date('2016/08/22 12:10:56')?>';  
+           
+           // console.log(date)      
+           var $clock = $('#yEa').countdown(date)
             .on('update.countdown', function(event) {
-                var format =  '<span style="color:#003399;font-family:arial,sans-serif;font-size:350px;font-weight:bold">%M<span style="color:#cccccc;position:relative;top:-33px">:</span>%S</span>';
+               
+
+                $.get("http://localhost:86/result/index.php/result/servertime", function(data) {
+                   console.log(data)
+                    var serverTimeOffset = new Date(data);
+                    console.log(serverTimeOffset)
+                    $clock.countdown(serverTimeOffset);
+                });
+                
+                
+              //  var serverTimeOffset = new Date(data);
+             //   $clock.countdown(serverTimeOffset);
+
+                var format =  '<span style="color:#003399;font-family:arial,sans-serif;font-size:280px;font-weight:bold">%M<span style="color:#cccccc;position:relative;top:-33px">:</span>%S</span>';
 
                 if(event.offset.totalDays > 0) {
                     format = '%-d day%!d ' + format;
