@@ -46,6 +46,7 @@
                                         </div>
                                         <div class="span12">
                                             <p>Fill out the form below to login.</p>
+                                            <p style="color: red;">9th Result Card Webiste Active Till <b>10-09-2016</b>. Please downlaod your result cards before this date.</p>
                                             <?php 
 
                                            if($user_status == 1)

@@ -237,41 +237,77 @@ function get_domain($url)
         <script type="text/javascript">
         
                
-         var date = '<?= date('2016/08/22 12:10:56')?>';  
-           
-           // console.log(date)      
-           var $clock = $('#yEa').countdown(date)
+         var datetime = new Date(2016,08,26,3,40,56);  
+           console.log(datetime)
+         //   console.log(new Date(2016,08,26,3,15,56))      
+           var $clock = $('#yEa').countdown(datetime)
             .on('update.countdown', function(event) {
-               
+             
+              var objthis = $(this)
+             
+               $.get("http://results.bisegrw.com/result/index.php/result/servertime", function(data) {
+                   var times  = data.split(':');
+                 //  var dates = datetime[0].split('-');
+                   //var times = datetime[1].split(':');
+                 //  var serverTimeOffset = new Date(dates[0],dates[1],dates[2],times[0],times[1],times[2]);
+                  // console.log(serverTimeOffset)
+                 //  console.log(dates)
+                 //  console.log(times)
+                 //  $clock.countdown(serverTimeOffset);
+                 //  $('#yEa').countdown({ until: new Date(dates[0],dates[1],dates[2],times[0],times[1],times[2])});
+                // console.log(times.length)
+                 if(times.length > 1)
+                 {
+                     event.offset.days= 0;
+                     event.offset.weeks= 0;
+                     event.offset.hours= 0;
+                     event.offset.totalHours= 0;
+                     event.offset.daysToWeek= 0; 
+                     event.offset.daysToMonth= 0; 
+                     event.offset.minutes= times[1]; 
+                     event.offset.seconds= times[2]; 
+                     event.offset.totalDays= 0; 
+                     event.offset.totalMinutes= 30; 
+                     event.offset.totalSeconds= 30*60; 
+                     event.offset.months= 0; 
 
-                $.get("http://localhost:86/result/index.php/result/servertime", function(data) {
-                   console.log(data)
-                    var serverTimeOffset = new Date(data);
-                    console.log(serverTimeOffset)
-                    $clock.countdown(serverTimeOffset);
-                });
+
+                     var format =  '<span style="color:#003399;font-family:arial,sans-serif;font-size:280px;font-weight:bold">'+times[1]+'<span style="color:#cccccc;position:relative;top:-33px">:</span>'+times[2]+'</span>';
+
+                     if(event.offset.totalDays > 0) {
+                         format = '%-d day%!d ' + format;
+                     }
+                     if(event.offset.weeks > 0) {
+                         format = '%-w week%!w ' + format;
+                     }
+
+                     console.log(event.offset )
+
+                     objthis.html(format);
+                     $('.headershow').hide();
+                     $('#page').hide();   
+                 }
+                 else
+                 {
+                     $('#yEa').countdown('2016/08/26 10:10:58')
+                     $('#cnthide').hide();
+                     $('.headershow').show();
+                     $('#page').show();   
+                 }
+
+
+               });
                 
                 
               //  var serverTimeOffset = new Date(data);
              //   $clock.countdown(serverTimeOffset);
-
-                var format =  '<span style="color:#003399;font-family:arial,sans-serif;font-size:280px;font-weight:bold">%M<span style="color:#cccccc;position:relative;top:-33px">:</span>%S</span>';
-
-                if(event.offset.totalDays > 0) {
-                    format = '%-d day%!d ' + format;
-                }
-                if(event.offset.weeks > 0) {
-                    format = '%-w week%!w ' + format;
-                }
-
-
-                $(this).html(event.strftime(format));
-                 $('.headershow').hide();
-                $('#page').hide();
+             
+              
             })
             .on('finish.countdown', function(event) {
+              
                 $('#cnthide').hide();
-               $('.headershow').show();
+                $('.headershow').show();
                 $('#page').show();
 
             });
