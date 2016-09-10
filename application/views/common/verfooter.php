@@ -9,23 +9,57 @@
 <script type="text/javascript" src="<?php echo base_url();?>assets/contents/jquery-1.10.2.min.js"></script>   
 <link href="<?php echo base_url();?>assets/contents/bootstrap.min.css" rel="stylesheet" />
 <script type="text/javascript" src="<?php echo base_url();?>assets/contents/bootstrap.min.js"></script>
-
-
+<script src="<?php echo base_url(); ?>assets/js/jquery-ui.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/alertify.min.js"></script>
 
 
 
 <script>
+    jQuery.fn.ForceNumericOnly =
+    function()
+    {
+        return this.each(function()
+            {
+                $(this).keydown(function(e)
+                    {
+                        var key = e.charCode || e.keyCode || 0;
+                        // allow backspace, tab, delete, enter, arrows, numbers and keypad numbers ONLY
+                        // home, end, period, and numpad decimal
+                        return (
+                            key == 8 || 
+                            key == 9 ||
+                            key == 13 ||
+                            key == 46 ||
+                            key == 110 ||
+                            key == 190 ||
+                            (key >= 35 && key <= 40) ||
+                            (key >= 48 && key <= 57) ||
+                            (key >= 96 && key <= 105));
+                });
+        });
+    };
     $(document).ready(function () {
 
+        $body = $("body");
+
+$(document).on({
+    ajaxStart: function() { $body.addClass("loading");    },
+     ajaxStop: function() { $body.removeClass("loading"); }    
+});
+
+
+
+        $("#sscrno, #Hsscrno").ForceNumericOnly();       
         function hideall() {
             $('#divSSC').hide();
             $('#divHSSC').hide();
             $('#divOtherinfo').hide();
         }
-
+        $( "#sscdob" ).datepicker({ dateFormat: 'dd-mm-yy',changeMonth: true, changeYear: true, maxDate: new Date(2003, 7,1),yearRange: '1970:2003'}).val();
+        //$("#sscdob").datepicker({ dateFormat: 'dd-mm-yy',changeMonth: true, changeYear: true, startDate:new Date() }).val();
 
         $('input[type=radio][name=verFor]').change(function () {
-            debugger;
+            // debugger;
             var option = $('input[type=radio][name=verFor]:checked').val();
             if (option == 1) {
                 hideall();
@@ -48,116 +82,116 @@
 
     });
     function verifyRollNo(vClass,RollNO, vYear ,sess){
-                
+
         jQuery.ajax({                    
-                    type: "POST",
-                    url: "<?php echo base_url(); ?>" + "Verification/VerifyRollNo",
-                    dataType: 'json',
-                    data: {vClass: vClass, RollNO: RollNO, vYear: vYear, sess: sess},                            
-                    success: function(json) {
-                        //var listitems;
-                        //alert('Hi i am success' );
-                        //console.log(json.retData[0].name); 
-                        //console.log(json.retData[0].obt_mrk); 
-                        
-                        if(vClass == 10) {
-                        $('#txtsscName').show();
-                        $('#txtsscObtMarks').show();
-                        $('#lblDisplyNameSSC').show();
-                        $('#lblDisplyObtMarksSSC').show();
-                        }
-                        
-                        if(vClass == 12) {
-                            $('#txtHsscName').show();
-                            $('#txtHsscObtMarks').show();
-                            $('#lblDisplyNameHSSC').show();
-                            $('#lblDisplyObtMarksHSSC').show();
-                        }
-                        
-                        if(json.retData.length > 0)
-                        {   
-                            if(vClass == 10) {                                               
-                                $('#txtsscName').val(json.retData[0].name);                          
-                                $('#txtsscObtMarks').val(json.retData[0].obt_mrk);                          
-                                $('#txtsscName').attr('readonly', true);
-                                $('#txtsscObtMarks').attr('readonly', true);
-                                //$('#lblDisplyMessage').show();
-                            }
-                            if(vClass == 12) {                                               
-                                $('#txtHsscName').val(json.retData[0].name);                          
-                                $('#txtHsscObtMarks').val(json.retData[0].obt_mrk);                          
-                                $('#txtHsscName').attr('readonly', true);
-                                $('#txtHsscObtMarks').attr('readonly', true);
-                                //$('#lblDisplyMessage').show();
-                            }
-                        }
-                        else{
-                            $('#txtsscName').val('');                          
-                            $('#txtsscObtMarks').val('');                   
-                            $('#txtHsscName').val('');                          
-                            $('#txtHsscObtMarks').val('');   
+            type: "POST",
+            url: "<?php echo base_url(); ?>" + "Verification/VerifyRollNo",
+            dataType: 'json',
+            data: {vClass: vClass, RollNO: RollNO, vYear: vYear, sess: sess},                            
+            success: function(json) {
+                //var listitems;
+                //alert('Hi i am success' );
+                //console.log(json.retData[0].name); 
+                //console.log(json.retData[0].obt_mrk); 
 
-                            $('#txtsscName').attr('readonly', false);
-                            $('#txtsscObtMarks').attr('readonly', false);  
-                            $('#txtHsscName').attr('readonly', false);
-                            $('#txtHsscObtMarks').attr('readonly', false);                                                        
-                        }
+                if(vClass == 10) {
+                    $('#txtsscName').show();
+                    $('#txtsscObtMarks').show();
+                    $('#lblDisplyNameSSC').show();
+                    $('#lblDisplyObtMarksSSC').show();
+                }
 
-                        if(vYear == 2000){                            
-                            $('#rowAttachPicture').show();
-                        }    
-                        
-                        
-                        
-                        // console.log(url);
-                        //$('#pvtZone').empty();
-                        //$('#pvtZone').append('<option value="0">SELECT ZONE</option>');
-                        //$.each(json, function (key, data) {
+                if(vClass == 12) {
+                    $('#txtHsscName').show();
+                    $('#txtHsscObtMarks').show();
+                    $('#lblDisplyNameHSSC').show();
+                    $('#lblDisplyObtMarksHSSC').show();
+                }
 
-                            //console.log(key)
-
-                          /*  $.each(data, function (index, data) {
-
-                                // console.log('Zone Name :', data.zone_name , ' Zone Code : ' ,data.zone_cd)
-                                listitems +='<option value=' + data.zone_cd + '>' + data.zone_name + '</option>';
-                                //$('#pvtZone').append('<option value=' + data.zone_cd + '>' + data.zone_name + '</option>');
-                                //console.log('Zone Name :', data.zone_cd)
-                                //console.log('Zone Name :', data)
-                            })*/
-                        //})
-                        //$('#pvtZone').append(listitems)
-                        /*console.log(data.length);
-                        for (var i = 0; i < data.length; i++) {
-
-                        console.log(" Thesil : "+ data[i].zone_name);
-                        // var checkBox = "<input type='checkbox' data-price='" + data[i].Price + "' name='" + data[i].Name + "' value='" + data[i].ID + "'/>" + data[i].Name + "<br/>";
-                        // $(checkBox).appendTo('#modifiersDiv');
-                        }*/
-                        //if (json)
-                        //{
-                        //var obj = jQuery.parseJSON(json);
-                        //  console.log(json.teh[0].zone_name);
-                        //alert( obj['teh']['Class']);
-                        //   alert(res.Sess);
-                        //   alert(res.Class);
-                        //   //debugger;
-                        //   Show Entered Value
-                        //   jQuery("div#result").show();
-                        //   jQuery("div#value").html(res.username);
-                        //   jQuery("div#value_pwd").html(res.pwd);
-                        //}
-
-                    },                        
-                    error: function(request, status, error){
-                        alert(request.responseText);
+                if(json.retData.length > 0)
+                {   
+                    if(vClass == 10) {                                               
+                        $('#txtsscName').val(json.retData[0].name);                          
+                        $('#txtsscObtMarks').val(json.retData[0].obt_mrk);                          
+                        $('#txtsscName').attr('readonly', true);
+                        $('#txtsscObtMarks').attr('readonly', true);
+                        //$('#lblDisplyMessage').show();
                     }
-                });
-                
+                    if(vClass == 12) {                                               
+                        $('#txtHsscName').val(json.retData[0].name);                          
+                        $('#txtHsscObtMarks').val(json.retData[0].obt_mrk);                          
+                        $('#txtHsscName').attr('readonly', true);
+                        $('#txtHsscObtMarks').attr('readonly', true);
+                        //$('#lblDisplyMessage').show();
+                    }
+                }
+                else{
+                    $('#txtsscName').val('');                          
+                    $('#txtsscObtMarks').val('');                   
+                    $('#txtHsscName').val('');                          
+                    $('#txtHsscObtMarks').val('');   
+
+                    $('#txtsscName').attr('readonly', false);
+                    $('#txtsscObtMarks').attr('readonly', false);  
+                    $('#txtHsscName').attr('readonly', false);
+                    $('#txtHsscObtMarks').attr('readonly', false);                                                        
+                }
+
+                if(vYear == 2000){                            
+                    $('#rowAttachPicture').show();
+                }    
+
+
+
+                // console.log(url);
+                //$('#pvtZone').empty();
+                //$('#pvtZone').append('<option value="0">SELECT ZONE</option>');
+                //$.each(json, function (key, data) {
+
+                //console.log(key)
+
+                /*  $.each(data, function (index, data) {
+
+                // console.log('Zone Name :', data.zone_name , ' Zone Code : ' ,data.zone_cd)
+                listitems +='<option value=' + data.zone_cd + '>' + data.zone_name + '</option>';
+                //$('#pvtZone').append('<option value=' + data.zone_cd + '>' + data.zone_name + '</option>');
+                //console.log('Zone Name :', data.zone_cd)
+                //console.log('Zone Name :', data)
+                })*/
+                //})
+                //$('#pvtZone').append(listitems)
+                /*console.log(data.length);
+                for (var i = 0; i < data.length; i++) {
+
+                console.log(" Thesil : "+ data[i].zone_name);
+                // var checkBox = "<input type='checkbox' data-price='" + data[i].Price + "' name='" + data[i].Name + "' value='" + data[i].ID + "'/>" + data[i].Name + "<br/>";
+                // $(checkBox).appendTo('#modifiersDiv');
+                }*/
+                //if (json)
+                //{
+                //var obj = jQuery.parseJSON(json);
+                //  console.log(json.teh[0].zone_name);
+                //alert( obj['teh']['Class']);
+                //   alert(res.Sess);
+                //   alert(res.Class);
+                //   //debugger;
+                //   Show Entered Value
+                //   jQuery("div#result").show();
+                //   jQuery("div#value").html(res.username);
+                //   jQuery("div#value_pwd").html(res.pwd);
+                //}
+
+            },                        
+            error: function(request, status, error){
+                alert(request.responseText);
+            }
+        });
+
     }   
     //------------------------file upload review-------------------------------
 
     function ValidateFileUpload(a,inputFile,fileReview) { 
-                  debugger;                                                                                         
+        debugger;                                                                                         
         var fuData = document.getElementById(inputFile);
         var FileUploadPath = fuData.value;
         if (FileUploadPath == '') {
@@ -192,11 +226,158 @@
         } 
     } 
     //------------------------end, file upload review-------------------------------
+
+    // --------- validation of Info -------------------
+    function check_validate()
+    {
+
+        debugger;   
+        var NOC_class = $("input[name='verFor']:checked").val();
+        var matric_rno = $("#sscrno").val();  
+        var inter_rno = $("#hsscrno").val();   
+        var dob = $("#sscdob").val();   
+        var ddlsscYear = $("#ddlsscYear").val();   
+        var ddlsscSess = $("#ddlsscSess").val();   
+        var ddlsscBrd = $("#ddlsscBrd").val();   
+        if($('#terms').prop('checked')== true)
+        {
+            //  alert("Thank You");
+            check_ssc_NOC(matric_rno,ddlsscYear,ddlsscSess,ddlsscBrd);
+
+        }
+        else
+        {
+            alertify.error("Please Accept the terms and Conditions Frist");
+        }
+
+
+        //alert('NOC_class'+NOC_class+'matric_rno'+matric_rno+'inter_rno'+inter_rno+'dob'+dob+'ddlsscYear'+ddlsscYear+'ddlsscSess'+ddlsscSess+'ddlsscBrd'+ddlsscBrd);
+
+
+    }
+    function activateButton(element) {
+
+        if(element.checked) {
+            $("input[type=submit]").attr("disabled", "enabled");
+            document.getElementById("submit").disabled = false;
+        }
+        else  {
+            $("input[type=submit]").attr("disabled", "disabled");
+            // $("#btnVerifySSCRollNo")
+            document.getElementById("submit").disabled = true;
+        }
+
+    }
+    function check_ssc_NOC(rno,year,sess,migto)
+    {
+
+        // debugger;
+
+
+        var noc_html = "";
+          var Mesg = "";
+
+
+        var alldata ;
+        jQuery.ajax({                    
+            type: "POST",
+            url: "<?php echo base_url(); ?>" + "Verification/get_ssc_data",
+            dataType: 'json',
+            data: {rno: rno, year: year, sess: sess},                            
+            success: function(json) {
+
+                Mesg = json[0][0]['Mesg'];
+              //  alert(Mesg);
+               
+                //  alert(json[0][0]['name']);
+                // alert('into the success zone');
+                noc_html = "";
+                noc_html += "<div class='row'> <div class='col-sm-3' style='text-align:right;'>Name :</div><div class='col-sm-6' style='text-align:left;'>"+json[0][0]['name'];+"";
+                noc_html += "</div></div><div class='row'> <div class='col-sm-3' style='text-align:right;'>Father Name :</div><div class='col-sm-6' style='text-align:left;'>"+json[0][0]['Fname']+"</div></div>" ;
+                noc_html += "<div class='row'> <div class='col-sm-3' style='text-align:right;'>DOB :</div><div class='col-sm-6' style='text-align:left;'>"+json[0][0]['dob']+"</div></div>";
+                 if(Mesg == "")
+                 {
+                $( "#dialog-confirm" ).html(noc_html);  
+                     $( "#dialog-confirm" ).dialog({
+            resizable: false,
+            height: "auto",
+            width: 800,
+            modal: true,
+            buttons: {
+                      
+                //  $(this).dialog( "close" );
+                "Confirm and Apply": function() { 
+                    //noc_html;
+                    // $('#terms').val();
+                    //if()
+                   // $("input[type=submit]").attr("disabled", "enabled");
+                    //$( "#noc_form" ).submit();
+                       jQuery.ajax({                    
+                        type: "POST",
+                        url: "<?php echo base_url(); ?>" + "Verification/Insert_ssc_data",
+                        dataType: 'json',
+                        data: {rno: rno, year: year, sess: sess, migto: migto},                            
+                        success: function(json) {
+                           // alert('Your Application is submitted Successfully');
+                           
+                            $( "#dialog-confirm" ).append('<div style="color:Green; font-weight:bold; font-size:16px;">Your Application is submitted Successfully</div>'); 
+                             $(".ui-button-text").css("display", "none");
+                        },
+                         error: function(request, status, error){
+                               $( "#dialog-confirm" ).append('<div style="color:RED; font-weight:bold; font-size:16px;">Your Application is NOT submitted. Please Try again later.</div>');
+                            alert(request.responseText);
+                        }
+                                   });
+                    
+                
+
+                }, 
+                Cancel: function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+        });   
+                 }
+                 else
+                 {
+                   //  alert('error ');
+                $( "#dialog-message" ).html(Mesg);
+                 
+                  $( "#dialog-message" ).dialog({
+                        modal: true,
+                        height: "auto",
+                        width: 500,
+                        buttons: {
+                            Ok: function() {
+                                
+                                $( this ).dialog( "close" );
+                            }
+                        }
+                    });
+                    return;
+                    
+                 }
+                
+                
+                
+            },                        
+            error: function(request, status, error){
+                alert(request.responseText);
+            }
+        });
+
+       
+   
+                
+        //alert(alldata);  
+    }
+    
+
 </script>        
 
 
 
-
+     <div class="modal"><!-- Place at bottom of page --></div>
 </body>
 </html>
 

@@ -10,8 +10,8 @@
 <meta name="author" content="">
 <link href="<?php echo base_url(); ?>assets/css_matric/main.css" rel="stylesheet">
 <link href="<?php echo base_url(); ?>assets/css/vermain.css" rel="stylesheet">
-
-
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/jquery-ui.css">
+ <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/alertify.core.css">
 
    <link href="<?php echo base_url();?>assets/contents/bootstrap.min.css" rel="stylesheet" />
   

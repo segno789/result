@@ -42,6 +42,8 @@ define('CURRENT_SESS', 'Online Result Card 9th Annual 2016');
 define('CURRENT_SESS_YEAR', 'Result SSC (Part-I) Annual 2016');
 
 define('VERIFICATION_TITLE', 'Online NOC System');
+define('NOC_APP_NO', '400000');
+
 
 
 

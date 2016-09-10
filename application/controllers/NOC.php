@@ -31,7 +31,8 @@ class NOC extends CI_Controller {
     }
     public function index()
     {
-      /* // DebugBreak();
+       // DebugBreak();
+      /* // 
         $this->load->helper('url');
 
         $data = array(); 
