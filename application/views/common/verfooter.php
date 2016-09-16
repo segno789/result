@@ -281,7 +281,7 @@ $(document).on({
         var alldata ;
         jQuery.ajax({                    
             type: "POST",
-            url: "<?php echo base_url(); ?>" + "Verification/get_ssc_data",
+            url: "<?php echo base_url(); ?>" + "NOC/get_ssc_data",
             dataType: 'json',
             data: {rno: rno, year: year, sess: sess},                            
             success: function(json) {
@@ -314,17 +314,20 @@ $(document).on({
                     //$( "#noc_form" ).submit();
                        jQuery.ajax({                    
                         type: "POST",
-                        url: "<?php echo base_url(); ?>" + "Verification/Insert_ssc_data",
+                        url: "<?php echo base_url(); ?>" + "NOC/Insert_ssc_data",
                         dataType: 'json',
                         data: {rno: rno, year: year, sess: sess, migto: migto},                            
                         success: function(json) {
                            // alert('Your Application is submitted Successfully');
                            
-                            $( "#dialog-confirm" ).append('<div style="color:Green; font-weight:bold; font-size:16px;">Your Application is submitted Successfully</div>'); 
+                            $( "#dialog-confirm" ).html('<div style="color:Green; font-weight:bold; font-size:16px;">Your Application is submitted Successfully</div>'); 
+                            // window.location.href = '<?php echo base_url(); ?>NOC/Download_NOC/'+json[0][0]['app_No']+'/';
+                             window.location.href = '<?php echo base_url(); ?>NOC/Print_challan_Form/'+json[0][0]['app_No']+'/';
+                             
                              $(".ui-button-text").css("display", "none");
                         },
                          error: function(request, status, error){
-                               $( "#dialog-confirm" ).append('<div style="color:RED; font-weight:bold; font-size:16px;">Your Application is NOT submitted. Please Try again later.</div>');
+                               $( "#dialog-confirm" ).html('<div style="color:RED; font-weight:bold; font-size:16px;">Your Application is NOT submitted. Please Try again later.</div>');
                             alert(request.responseText);
                         }
                                    });

@@ -147,7 +147,6 @@ public function servertime()
             $this->load->library('PDFFWithOutPage');
             $pdf=new PDFFWithOutPage('P','in',"A4");   
             $pdf->SetAutoPageBreak(true,2);
-
             $totalstd =  count($info['data']);
             for($i =0 ; $i <$totalstd ; $i++)
             {

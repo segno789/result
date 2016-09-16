@@ -23,7 +23,7 @@ class Verification extends CI_Controller {
         else{
             $error = "";
         }
-
+         debugbreak();
         $this->load->view('common/commonheader_Verification.php');
         $mydata = array('error'=>$error);
 
@@ -57,29 +57,8 @@ class Verification extends CI_Controller {
         $value = array('retData'=> $this->Verification_model->VerifyRollNo($this->input->post('vClass'),$this->input->post('RollNO'),$this->input->post('vYear'),$this->input->post('sess') )) ;
         echo json_encode($value);
     }
-    public function get_ssc_data()
+
     
-    {
-        //debugBreak();
-       $rno= $_POST['rno'];
-       $year= $_POST['year'];
-      $sess=  $_POST['sess'];
-        $this->load->model('Verification_model');
-        $value = array($this->Verification_model->getresult_matric($rno,$year,$sess)) ;
-        echo json_encode($value);
-    }
-    public function Insert_ssc_data()
-    {
-         // debugbreak();
-       $rno= $_POST['rno'];
-       $year= $_POST['year'];
-       $sess=  $_POST['sess'];
-       $migto = $_POST['migto'];
-       $this->load->model('Verification_model');
-       $value = array($this->Verification_model->insert_DATA_matric($rno,$year,$sess,$migto)) ;
-       echo json_encode($value);
-      
-    }
     
 }
 ?>
