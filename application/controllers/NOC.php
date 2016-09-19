@@ -124,7 +124,7 @@ class NOC extends CI_Controller {
         $pdf->Cell(0, 0.2, $info['Serial_No'], 0.25, "C");
         
         //barcode
-        $mybar = $info['Rno']."@".$info['class']."@".$info['sess'].$info['iyear'];
+        $mybar = $info['Rno']."@".$info['class']."@".$info['sess']."@".$info['iyear'];
         $Barcode = $mybar;
            
         $bardata = Barcode::fpdf($pdf, $black, $bx, $by, $angle, $type, array('code'=>$Barcode), $width, $height);
@@ -1884,6 +1884,69 @@ class NOC extends CI_Controller {
        
       
     }
+    public function downloadPage()
+    {
+        $info['app_No'] = $appno = $this->uri->segment(3);
+      $this->load->view('common/commonheader_Verification.php');
+       $this->load->view('NOC/FormDownloaded.php',$info);
+       $this->load->view('common/verfooter.php');    
+    }
+    public function statusPage()
+    {
+        // DebugBreak();
+        $this->load->library('session');
+         if($this->session->flashdata('noc_status'))
+                        {
+                        $alldata = $this->session->flashdata('noc_status'); 
+                        $alldata = $alldata[0][0];
+                        }
+                        else{
+                                $alldata = "";
+                        }
+                        
+        $this->load->view('common/commonheader_Verification.php',$alldata);
+       $this->load->view('NOC/default.php',$alldata);
+       $this->load->view('common/verfooter.php');    
+    }
+    public function statusPage_server()
+    {
+        //DebugBreak();
+      $appno = $_POST['appNo'];
+      if(!isset($appno))
+      {
+          return ;
+      }
+      $this->load->model('Verification_model');
+      if(isset($_POST['btnchk']))
+      {
+      $this->load->library('session');  
+     
+      $info = array($this->Verification_model->check_status($appno)) ; 
+      if($info[0][0]['ismigrated'] == 1)
+      {
+         redirect('noc/Download_NOC/'.$appno);
+        return;  
+      }
+      else
+      {
+      $this->session->set_flashdata('noc_status',$info);
+      redirect('noc/statusPage');
+      return;    
+      }
+      
+      }
+      if(isset($_POST['btnDownloadForm']))
+      {
+        redirect('noc/Print_challan_Form/'.$appno);
+        return;   
+      }
+     
+     
+      
+       
+       
+      
+    }
     public function Download_NOC()
     {
        // DebugBreak();
@@ -1902,7 +1965,7 @@ class NOC extends CI_Controller {
     {
 
 
-        DebugBreak();
+       // DebugBreak();
         $formno = $this->uri->segment(3);
         
         $this->load->model('Verification_model');
@@ -1921,7 +1984,11 @@ class NOC extends CI_Controller {
         //   $result = array('data'=>$this->NinthCorrection_model->Print_challan_Form($fetch_data));
         
         $this->load->library('pdf_rotate');
-        // $pdf = new PDF_Rotate('P','in',"A4");
+      //   $pdf = new PDF_Rotate('P','in',"A4"); 
+        // $this->load->library('PDFFWithOutPage'); 
+        //$pdf=new PDFFWithOutPage();   
+       // $pdf->SetAutoPageBreak(true,2);
+        //$pdf->AddPage('L',"A4");
         //for each type of correction total 7 types of corrections are now
         $ctid=1;  //correction type of id starts from one and multiples by 2 for next type of correction id
         //   $displayfeetitle=array(1=>'Name Correction', 2=>'Father Name Correction', 3=>'DOB Correction', 4=>'FNIC Correction', 5=>'B-Form Correction', 6=>'Picture Change', 7=>'Group Change', 8=>'Subject Change');
@@ -1931,7 +1998,7 @@ class NOC extends CI_Controller {
         // DebugBreak();
         if($result[0]['isother'] ==1)
         {
-            $feestructure[]    =  "1650/-";    
+            $feestructure[]    =  "1650";    
             $displayfeetitle[] =  'NOC For Other Board';    
         }
        
@@ -1964,8 +2031,9 @@ class NOC extends CI_Controller {
             $challanDueDate  = date('d-m-Y',strtotime($rule_fee[0]['End_Date'] )) ;
         }
            */
+         //  DebugBreak();
         $obj    = new NumbertoWord();
-        $obj->toWords($feestructure,"Only.","");
+        $obj->toWords($feestructure[0],"Only.","");
         // $pdf->Cell( 0.5,0.5,ucwords($obj->words),0,'L');
         $feeInWords = ucwords($obj->words);//strtoupper(cNum2Words($totalfee)); 
 
@@ -1979,10 +2047,10 @@ class NOC extends CI_Controller {
        
         $Barcode = $temp;
            
-        $bardata = Barcode::fpdf($pdf, $black, $bx, $by, $angle, $type, array('code'=>$Barcode), $width, $height);
+       // $bardata = Barcode::fpdf($pdf, $black, $bx, $by, $angle, $type, array('code'=>$Barcode), $width, $height);
 
-        $len = $pdf->GetStringWidth($bardata['hri']);
-        Barcode::rotate(-$len / 2, ($bardata['height'] / 2) + $fontSize + $marge, $angle, $xt, $yt);
+        //$len = $pdf->GetStringWidth($bardata['hri']);
+       // Barcode::rotate(-$len / 2, ($bardata['height'] / 2) + $fontSize + $marge, $angle, $xt, $yt);
        // $temp =  $this->set_barcode($temp);
 
         $yy = 0.05;
@@ -2062,7 +2130,7 @@ class NOC extends CI_Controller {
             $pdf->Cell(0.5,0.25, "Particulars Of Depositor",0,2,'L');
             $pdf->SetX(4.0);
             $pdf->SetFont('Arial','B',8);
-
+              //DebugBreak();
             if(intval($result[0]['sex'])==1){$sodo="S/O ";}else{$sodo="D/O ";}
             $pdf->Cell(0.5,0.25,$result[0]['name'].'    '.$sodo.$result[0]['fname'],0,2,'L');
             // $pdf->Cell(0.5,0.25,,0,2,'L');
@@ -2095,7 +2163,7 @@ class NOC extends CI_Controller {
             $ctid *= 2;
             $y += 0.18;
             }*/
-             DebugBreak();
+//             DebugBreak();
             $total =  count($feestructure);
             for ($k = 0; $k<count($feestructure); $k++){
 
@@ -2162,7 +2230,7 @@ class NOC extends CI_Controller {
                 $pdf->Image( base_url().'assets/img/cut_line.png' ,0.3,$y+$dy, 7.5,0.15, "PNG");   
                 // $pdf->Image("images/cut_line.png",0.3,$y+$dy, 7.5,0.15, "PNG");
             }
-                       
+           // break;             
         }  
         if ($generatingpdf==true)
         {
@@ -2171,7 +2239,7 @@ class NOC extends CI_Controller {
             $containsError=true;
             $errorMessage = "<br />Your Application is not found in accordance with given Application No.";
         }  
-         break; 
+        
         //======================================================================================
         //  }
 

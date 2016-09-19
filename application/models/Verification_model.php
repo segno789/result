@@ -130,6 +130,26 @@ public function insert_DATA_matric($rno,$year,$sess,$migratedto)
                    return $query->result_array();
              }   
     }
+    
+    public function check_status ($appNo)
+    {
+        $this->reg_db = $this->load->database('Registration', true);
+        $this->reg_db->select('ismigrated, BiseAdminMsg');
+        //$this->reg_db->order_by("app_No", "DESC");
+        $formno = $this->reg_db->get_where('Registration..tblMig_testing_purpose',array('app_No'=>$appNo));
+        $rowcount = $formno->num_rows();
+        //  DebugBreak();
+        if($rowcount > 0 )
+        {
+            return $formno->result_array();
+           // return $formno;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
 
 
 }

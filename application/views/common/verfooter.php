@@ -49,7 +49,7 @@ $(document).on({
 
 
 
-        $("#sscrno, #Hsscrno").ForceNumericOnly();       
+        $("#sscrno, #Hsscrno, #appNo").ForceNumericOnly();       
         function hideall() {
             $('#divSSC').hide();
             $('#divHSSC').hide();
@@ -255,6 +255,28 @@ $(document).on({
 
 
     }
+    function check_downloand()
+    {
+         var appno = $("#appNo").val(); 
+         if(appno == "")
+         {
+             alertify.error("Please Provide Application No.");
+             return false;
+         }
+         else if(appno <5)
+         {
+                 alertify.error("Please Provide Correct Application No.");
+                 return false;
+         }
+         else
+         {
+          alertify.log("Please Wait for a while...")   
+          return true;
+         }
+         
+         
+        
+    }
     function activateButton(element) {
 
         if(element.checked) {
@@ -292,7 +314,7 @@ $(document).on({
                 //  alert(json[0][0]['name']);
                 // alert('into the success zone');
                 noc_html = "";
-                noc_html += "<div class='row'> <div class='col-sm-3' style='text-align:right;'>Name :</div><div class='col-sm-6' style='text-align:left;'>"+json[0][0]['name'];+"";
+                noc_html += "<div class='row'> <div class='col-sm-3' style='text-align:right;'>Name :</div><div class='col-sm-6' style='text-align:left;'>"+json[0][0]['name']+"</div><div class='col-sm-3' style='text-align:left;'> <img style='width:80px; height: 80px;'  src ='<?php echo base_url(); ?>assets/img/download.jpg'></div>";
                 noc_html += "</div></div><div class='row'> <div class='col-sm-3' style='text-align:right;'>Father Name :</div><div class='col-sm-6' style='text-align:left;'>"+json[0][0]['Fname']+"</div></div>" ;
                 noc_html += "<div class='row'> <div class='col-sm-3' style='text-align:right;'>DOB :</div><div class='col-sm-6' style='text-align:left;'>"+json[0][0]['dob']+"</div></div>";
                  if(Mesg == "")
@@ -322,7 +344,7 @@ $(document).on({
                            
                             $( "#dialog-confirm" ).html('<div style="color:Green; font-weight:bold; font-size:16px;">Your Application is submitted Successfully</div>'); 
                             // window.location.href = '<?php echo base_url(); ?>NOC/Download_NOC/'+json[0][0]['app_No']+'/';
-                             window.location.href = '<?php echo base_url(); ?>NOC/Print_challan_Form/'+json[0][0]['app_No']+'/';
+                             window.location.href = '<?php echo base_url(); ?>NOC/downloadPage/'+json[0][0]['app_No']+'/';
                              
                              $(".ui-button-text").css("display", "none");
                         },
@@ -374,6 +396,7 @@ $(document).on({
                 
         //alert(alldata);  
     }
+    
     
 
 </script>        
