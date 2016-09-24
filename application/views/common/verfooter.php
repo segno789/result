@@ -238,17 +238,42 @@ $(document).on({
         var dob = $("#sscdob").val();   
         var ddlsscYear = $("#ddlsscYear").val();   
         var ddlsscSess = $("#ddlsscSess").val();   
-        var ddlsscBrd = $("#ddlsscBrd").val();   
-        if($('#terms').prop('checked')== true)
+        var ddlsscBrd = $("#ddlsscBrd").val(); 
+        /*if(matric_rno == "")
         {
-            //  alert("Thank You");
-            check_ssc_NOC(matric_rno,ddlsscYear,ddlsscSess,ddlsscBrd);
-
+         alertify.error("Please Select Migrated Board First.");
+        }
+        else*/
+        if(dob == "")
+        {
+         alertify.error("Please Select DOB First.");
+           
+        } 
+        else
+        if(ddlsscYear == 0)
+        {
+         alertify.error("Please Select Year First.");   
+        } 
+        else
+        if(ddlsscSess == 0)
+        {
+         alertify.error("Please Select Session First.");    
+        }
+        else
+         if(ddlsscBrd == "0")
+        {
+         alertify.error("Please Select Migrated Board First.");
+        }
+        else
+        if($('#terms').prop('checked')== false)
+        {
+         alertify.error("Please Accept the terms and Conditions Frist");
         }
         else
         {
-            alertify.error("Please Accept the terms and Conditions Frist");
+           check_ssc_NOC(matric_rno,ddlsscYear,ddlsscSess,ddlsscBrd,dob); 
         }
+        
 
 
         //alert('NOC_class'+NOC_class+'matric_rno'+matric_rno+'inter_rno'+inter_rno+'dob'+dob+'ddlsscYear'+ddlsscYear+'ddlsscSess'+ddlsscSess+'ddlsscBrd'+ddlsscBrd);
@@ -290,33 +315,32 @@ $(document).on({
         }
 
     }
-    function check_ssc_NOC(rno,year,sess,migto)
+    function check_ssc_NOC(rno,year,sess,migto,dob)
     {
-
-        // debugger;
-
-
         var noc_html = "";
-          var Mesg = "";
-
-
+        var Mesg = "";
+        var Mesg_server = "";
         var alldata ;
-        jQuery.ajax({                    
+        jQuery.ajax({ 
+                           
             type: "POST",
             url: "<?php echo base_url(); ?>" + "NOC/get_ssc_data",
             dataType: 'json',
-            data: {rno: rno, year: year, sess: sess},                            
+            data: {rno: rno, year: year, sess: sess, brd:migto, dob:dob},                            
             success: function(json) {
 
                 Mesg = json[0][0]['Mesg'];
-              //  alert(Mesg);
-               
-                //  alert(json[0][0]['name']);
-                // alert('into the success zone');
+                Mesg_server = json[0][0]['Mesg_server'];
+                if(Mesg_server != "")
+                {
+                    alertify.error(Mesg_server);
+                }
+                else
+                {
                 noc_html = "";
-                noc_html += "<div class='row'> <div class='col-sm-3' style='text-align:right;'>Name :</div><div class='col-sm-6' style='text-align:left;'>"+json[0][0]['name']+"</div><div class='col-sm-3' style='text-align:left;'> <img style='width:80px; height: 80px;'  src ='<?php echo base_url(); ?>assets/img/download.jpg'></div>";
-                noc_html += "</div></div><div class='row'> <div class='col-sm-3' style='text-align:right;'>Father Name :</div><div class='col-sm-6' style='text-align:left;'>"+json[0][0]['Fname']+"</div></div>" ;
-                noc_html += "<div class='row'> <div class='col-sm-3' style='text-align:right;'>DOB :</div><div class='col-sm-6' style='text-align:left;'>"+json[0][0]['dob']+"</div></div>";
+                noc_html += "<div class='row'> <div class='col-sm-3' style='text-align:right; font-weight: bold;'>Name :</div><div class='col-sm-6' style='text-align:left; margin-bottom: -50px;'>"+json[0][0]['name']+"  <img style='width:80px; height: 80px;' class='pull-right'  src ='<?php echo base_url(); ?>assets/img/download.jpg'></div>";
+                noc_html += "</div><div class='row'> <div class='col-sm-3' style='text-align:right; font-weight: bold;'>Father Name :</div><div class='col-sm-6' style='text-align:left;'>"+json[0][0]['Fname']+"</div></div>" ;
+                noc_html += "<div class='row' style='    margin-top: 5px;'> <div class='col-sm-3' style='text-align:right; font-weight: bold;'>DOB :</div><div class='col-sm-6' style='text-align:left;'>"+json[0][0]['dob']+"</div></div>";
                  if(Mesg == "")
                  {
                 $( "#dialog-confirm" ).html(noc_html);  
@@ -381,20 +405,15 @@ $(document).on({
                     });
                     return;
                     
-                 }
-                
-                
-                
+                 }  
+                }
+             
             },                        
             error: function(request, status, error){
                 alert(request.responseText);
             }
         });
-
-       
-   
-                
-        //alert(alldata);  
+        
     }
     
     

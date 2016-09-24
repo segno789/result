@@ -286,10 +286,7 @@
 <img source ='<?php echo base_url(); ?>assets/img/download.jpg'>
 <hr class="hr">
 <br>
-<div class="dashboard-wrapper">
-    <div class="left-sidebar">
-        <div class="row-fluid">
-            <div class="span12">
+
                 <div class="widget">
                     <div class="widget-header">
                         <div class="title" style="float: none !important;">
@@ -362,12 +359,9 @@
                             <div class="clearfix">
                             </div>
                         </div>
-                    </div>
+                    </div>             
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
+           
 <style type="text/css">
 .modal {
     display:    none;

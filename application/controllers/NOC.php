@@ -1853,17 +1853,55 @@ class NOC extends CI_Controller {
           public function get_ssc_data()
     
     {
-        //debugBreak();
-       $rno= $_POST['rno'];
-       $year= $_POST['year'];
+      //  debugBreak();
+      $rno= $_POST['rno'];
+      $year= $_POST['year'];
       $sess=  $_POST['sess'];
+      $dob = $_POST['dob'];
+      $migto = $_POST['brd'];
+      
+      if($rno == "" || $rno == 0 || $rno.string.strlen < 5)
+      {
+        $value[0][0]['Mesg_server']  = "Please Provide Correct Roll No. ";
+         echo json_encode($value);
+      }
+      else
+      if($year == "" || $year == 0)
+      {
+        $value[0][0]['Mesg_server']  = "Please Select Year. If you do so, Refresh the Web Page.";
+        echo json_encode($value);  
+      }
+      else
+      if($sess == "" || $sess == 0)
+      {
+        $value[0][0]['Mesg_server']  = "Please Select Session.";  
+        echo json_encode($value);  
+      }
+      else
+      if($dob == "" || $dob == 0)
+      {
+        $value[0][0]['Mesg_server']  = "Please Select DOB. ";
+        echo json_encode($value);  
+      }
+      else
+      if($migto == "" || $migto == 0)
+      {
+        $value[0][0]['Mesg_server']  = "Please Select Migrated Board.";
+        echo json_encode($value);  
+      }
+      
+      else
+      {
         $this->load->model('Verification_model');
         $value = array($this->Verification_model->getresult_matric($rno,$year,$sess)) ;
-        echo json_encode($value);
+        echo json_encode($value);    
+      }
+      
+      
     }
     public function Insert_ssc_data()
     {
-          //debugbreak();
+          debugbreak();
        $rno= $_POST['rno'];
        $year= $_POST['year'];
        $sess=  $_POST['sess'];
