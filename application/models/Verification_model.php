@@ -6,21 +6,19 @@ public function __construct()    {
     $this->load->database(); 
 }
 
-public function getresult_matric($rno,$year,$sess)
+public function getresult_matric($rno,$year,$sess,$dob)
 {
 
-    // debugBreak();
-    // $reg=$this->load->database('Registration',TRUE);
-    $this->reg_db = $this->load->database('Registration', true);
-    //$query = $this->reg_db->query("Registration..Prev_Get_Student_Matric $rno,$year,$sess,0");
-   // $query = $this->reg_db->query("Registration..NOC_GET_STD_MATRIC 447058,1,2014,'12-08-1998'"); //Already appeared candidated.
-    $query = $this->reg_db->query("Registration..NOC_GET_STD_MATRIC 100002,2,2016,'24-01-2000'");
+     
+    
+    
+    
+    $query = $this->db->query("Registration..NOC_GET_STD_MATRIC $rno,$sess,$year,'$dob'");
     $rowcount = $query->num_rows();
     if($rowcount > 0)
     {
         return $query->result_array();
-        /*  $myresult =  $query->result_array();
-        $multiquery = $myresult;*/
+       
 
     }
     else
@@ -28,25 +26,60 @@ public function getresult_matric($rno,$year,$sess)
         return  -1;
     }
 }
+public function Pre_Matric_data($rno,$year,$sess,$matrno)
+{
 
-public function insert_DATA_matric($rno,$year,$sess,$migratedto)
+DebugBreak();
+      $query = $this->db->query("Registration..NOC_GET_Inter_STD_MAINFO $rno,12,$year,$sess");
+      
+      $rowcount = $query->num_rows();
+      if($rowcount > 0)
+      {
+          $info =  $query->result_array();
+          
+             $matrno =    $info[0]['matrno'];
+             $sscsess =    $info[0]['sessofpass'];
+             $ssiyear =    $info[0]['yearofpass'];
+          $query = $this->db->query("Registration..NOC_GET_STD_INTER 0,$matrno,$ssiyear,$sscsess,$rno,$year,$sess");
+
+          $rowcount = $query->num_rows();
+          if($rowcount > 0)
+          {
+              return $query->result_array();
+          }
+          else
+          {
+              return  false;
+          }
+          
+      }
+      else
+      {
+          return  false;
+      }
+      
+      
+    // DebugBreak();
+    
+}
+public function insert_DATA_matric($rno,$year,$sess,$dob,$migratedto)
 {
 
      //debugBreak();
     // $reg=$this->load->database('Registration',TRUE);
-    $this->reg_db = $this->load->database('Registration', true);
-    //$query = $this->reg_db->query("Registration..Prev_Get_Student_Matric $rno,$year,$sess,0");
-    //  $query = $this->reg_db->query("Registration..NOC_GET_STD_MATRIC 447058,1,2014,'12-08-1998'"); //Already appeared candidated.
-    $query = $this->reg_db->query("Registration..NOC_GET_STD_MATRIC 100002,2,2016,'24-01-2000'");
+  //  $this->db = $this->load->database('Registration', true);
+    //$query = $this->db->query("Registration..Prev_Get_Student_Matric $rno,$year,$sess,0");
+    //  $query = $this->db->query("Registration..NOC_GET_STD_MATRIC 447058,1,2014,'12-08-1998'"); //Already appeared candidated.
+    $query = $this->db->query("Registration..NOC_GET_STD_MATRIC $rno,$sess,$year,'$dob'");
 
     $rowcount = $query->num_rows();
     if($rowcount > 0)
     {
         $myresult =  $query->result_array();
         $multiquery = $myresult;  
-        $this->reg_db->select('app_No');
-        $this->reg_db->order_by("app_No", "DESC");
-        $formno = $this->reg_db->get_where('Registration..tblMig_testing_purpose');
+        $this->db->select('app_No');
+        $this->db->order_by("app_No", "DESC");
+        $formno = $this->db->get_where('Registration..tblMig_testing_purpose');
         $rowcount = $formno->num_rows();
         //  DebugBreak();
         if($rowcount == 0 )
@@ -96,7 +129,7 @@ public function insert_DATA_matric($rno,$year,$sess,$migratedto)
         $picpath = '';
         
        // debugbreak();
-        $query_2 = $this->reg_db->query("Registration..Insert_NOC_RECORD $app_no,'$formno',$rno,$sess,$iyear,$class,'$name','$Fname','$fnic',$gender,'$strregno',$migratedto,'$picpath',$status,$result1");
+        $query_2 = $this->db->query("Registration..Insert_NOC_RECORD $app_no,'$formno',$rno,$sess,$iyear,$class,'$name','$Fname','$fnic',$gender,'$strregno',$migratedto,'$picpath',$status,$result1");
         $rowcount = $query_2->num_rows();
         if($rowcount > 0)
         {
@@ -104,7 +137,7 @@ public function insert_DATA_matric($rno,$year,$sess,$migratedto)
         }
         else
         {   
-          $query = $this->reg_db->query("Registration..NOC_GET_INFO $app_no");
+          $query = $this->db->query("Registration..NOC_GET_INFO $app_no");
             $rowcount = $query->num_rows();
              if($rowcount > 0)
              {
@@ -122,8 +155,7 @@ public function insert_DATA_matric($rno,$year,$sess,$migratedto)
     }
     public function Downolad_data ($app_no)
     {
-      $this->reg_db = $this->load->database('Registration', true);
-      $query = $this->reg_db->query("Registration..NOC_GET_INFO $app_no");
+      $query = $this->db->query("Registration..NOC_GET_INFO $app_no");
       $rowcount = $query->num_rows();
              if($rowcount > 0)
              {
@@ -133,10 +165,9 @@ public function insert_DATA_matric($rno,$year,$sess,$migratedto)
     
     public function check_status ($appNo)
     {
-        $this->reg_db = $this->load->database('Registration', true);
-        $this->reg_db->select('ismigrated, BiseAdminMsg');
-        //$this->reg_db->order_by("app_No", "DESC");
-        $formno = $this->reg_db->get_where('Registration..tblMig_testing_purpose',array('app_No'=>$appNo));
+        $this->db->select('ismigrated, BiseAdminMsg');
+        //$this->db->order_by("app_No", "DESC");
+        $formno = $this->db->get_where('Registration..tblMig_testing_purpose',array('app_No'=>$appNo));
         $rowcount = $formno->num_rows();
         //  DebugBreak();
         if($rowcount > 0 )

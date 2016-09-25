@@ -43,6 +43,7 @@ define('CURRENT_SESS_YEAR', 'Result SSC (Part-I) Annual 2016');
 
 define('VERIFICATION_TITLE', 'Online NOC System');
 define('NOC_APP_NO', '400000');
+define('DIRPATH','F:\xampp\htdocs\adminbise\oldPics'); 
 
 
 
