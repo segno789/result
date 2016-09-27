@@ -74,7 +74,7 @@ class NOC extends CI_Controller {
         $info = $info[0][0];
         $Session= 'ANNUAL';  
         //$info['iyear'] = 2016;     
-DebugBreak();
+
         $filepath = $this->generatepath($info['Rno'],$info['class'],$info['iyear'],$info['sess']);
         
         
@@ -751,19 +751,29 @@ DebugBreak();
 
                         else
                         {
+                        //    DebugBreak();
                             $this->load->model('Verification_model');
                             $displaydob =  $dob;
                             $dob = date('Y-m-d',strtotime($dob));
                             $value = array($this->Verification_model->getresult_matric($rno,$year,$sess,$dob)) ;
-                            $value[0][0]['Mesg_server'] = '';
-                           // DebugBreak();
-                            $path = $this->generatepath($value[0][0]['SSC_RNo'],$value[0][0]['SSC_CLASS'],$value[0][0]['SSC_Year'],$value[0][0]['SSC_Sess']);
-                            $type = pathinfo($path, PATHINFO_EXTENSION);
-                            $data = file_get_contents($path);
-                            $value[0][0]['PicPath'] = 'data:image/' . $type . ';base64,' . base64_encode($data);
-                            $value[0][0]['dob'] = $displaydob;
-                            echo json_encode($value);    
+                            if($value[0] != -1)
+                            {
+                                $value[0][0]['Mesg_server'] = '';
+                                $path = $this->generatepath($value[0][0]['SSC_RNo'],$value[0][0]['SSC_CLASS'],$value[0][0]['SSC_Year'],$value[0][0]['SSC_Sess']);
+                                $type = pathinfo($path, PATHINFO_EXTENSION);
+                                $data = file_get_contents($path);
+                                $value[0][0]['PicPath'] = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                                $value[0][0]['dob'] = $displaydob;
+                                 echo json_encode($value); 
+
                             }
+                            else
+                            {
+                                $temp[0][0]['Mesg_server']  = "Record Not Found.";
+                               echo json_encode($temp);    
+                            }
+                           
+        }
 
 
     }
@@ -814,7 +824,7 @@ DebugBreak();
                            
                             $value = array($this->Verification_model->Pre_Matric_data($rno,$year,$sess,$matrno)) ;
                             $value[0][0]['Mesg_server'] = '';
-                            DebugBreak();
+                           // DebugBreak();
                            /* $path = $this->generatepath($value[0][0]['SSC_RNo'],$value[0][0]['SSC_CLASS'],$value[0][0]['SSC_Year'],$value[0][0]['SSC_Sess']);
                             $type = pathinfo($path, PATHINFO_EXTENSION);
                             $data = file_get_contents($path);
@@ -868,7 +878,7 @@ DebugBreak();
     public function statusPage_server()
     {
         //DebugBreak();
-        $appno = $_POST['appNo'];
+        $appno = @$_POST['appNo'];
         if(!isset($appno))
         {
             return ;

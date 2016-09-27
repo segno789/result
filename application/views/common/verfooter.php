@@ -359,7 +359,7 @@
         }
 
     }
-    function check_ssc_NOC(matrno,rno,year,sess,migto)
+    function check_ssc_NOC(rno,year,sess,migto,dob)
     {
         var noc_html = "";
         var Mesg = "";
