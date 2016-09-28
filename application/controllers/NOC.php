@@ -781,12 +781,13 @@ class NOC extends CI_Controller {
     public function get_hssc_data()
 
     {
-         debugBreak();
+        // debugBreak();
         $rno= $_POST['rno'];
         $year= $_POST['year'];
         $sess=  $_POST['sess'];
         $matrno = $_POST['matrno'];
         $migto = $_POST['brd'];
+        $intclass = $_POST['int_class'];
 
         if($rno == "" || $rno == 0 || strlen($rno) < 5)
         {
@@ -810,6 +811,12 @@ class NOC extends CI_Controller {
                     $value[0][0]['Mesg_server']  = "Please Select Session.";  
                     echo json_encode($value);  
                 }
+                 else
+                if($intclass == "" || $intclass == 0)
+                {
+                    $value[0][0]['Mesg_server']  = "Please Select Inter Class.";  
+                    echo json_encode($value);  
+                }
               
                     else
                         if($migto == "" || $migto == 0)
@@ -822,8 +829,18 @@ class NOC extends CI_Controller {
                         {
                             $this->load->model('Verification_model');
                            
-                            $value = array($this->Verification_model->Pre_Matric_data($rno,$year,$sess,$matrno)) ;
+                            $value = array($this->Verification_model->Pre_Matric_data($rno,$year,$sess,$matrno,$intclass)) ;
+                            if($value[0] == false)
+                            {
+                            $value[0][0]['Mesg_server'] = 'No Record Found Against Your Given Information.';
+                            }
+                            else
+                            {
                             $value[0][0]['Mesg_server'] = '';
+                            }
+                            
+                            
+                             echo json_encode($value);
                            // DebugBreak();
                            /* $path = $this->generatepath($value[0][0]['SSC_RNo'],$value[0][0]['SSC_CLASS'],$value[0][0]['SSC_Year'],$value[0][0]['SSC_Sess']);
                             $type = pathinfo($path, PATHINFO_EXTENSION);
@@ -846,6 +863,22 @@ class NOC extends CI_Controller {
         $migto = $_POST['migto'];
         $this->load->model('Verification_model');
         $info = array($this->Verification_model->insert_DATA_matric($rno,$year,$sess,date('Y-m-d',strtotime($dob)),$migto)) ;
+        echo json_encode($info);
+
+
+
+    }
+        public function Insert_hssc_data()
+    {
+       // DebugBreak();
+        $rno= $_POST['rno'];
+        $year= $_POST['year'];
+        $sess=  $_POST['sess'];
+        $matrno = $_POST['matrno'];
+        $intclass = $_POST['intclass'];
+        $migto = $_POST['migto'];
+        $this->load->model('Verification_model');
+        $info = array($this->Verification_model->insert_DATA_inter($rno,$year,$sess,$matrno,$intclass,$migto)) ;
         echo json_encode($info);
 
 
