@@ -49,7 +49,7 @@
 
 
 
-        $("#sscrno, #Hsscrno, #appNo").ForceNumericOnly();       
+        $("#sscrno, #appNo").ForceNumericOnly();       
         function hideall() {
             $('#divSSC').hide();
             $('#divHSSC').hide();
@@ -284,6 +284,7 @@
         var ddlsscYear = $("#ddlHsscYear").val();   
         var ddlsscSess = $("#ddlHsscSess").val();   
         var ddlsscBrd = $("#ddlHsscBrd").val(); 
+        var ddlclass = $("#ddlHsscClass").val();
         if(matric_rno == "")
         {
             alertify.error("Please First Enter Matric Roll Number.");
@@ -309,13 +310,18 @@
                             alertify.error("Please Select Migrated Board First.");
                         }
                         else
+                        if(ddlclass == "0")
+                        {
+                            alertify.error("Please Select Inter Class First.");
+                        }
+                        else
                             if($('#termshssc').prop('checked')== false)
                             {
                                 alertify.error("Please Accept the terms and Conditions Frist");
                             }
                             else
                             {
-                                check_hssc_NOC(matric_rno,inter_rno,ddlsscYear,ddlsscSess,ddlsscBrd); 
+                                check_hssc_NOC(matric_rno,inter_rno,ddlsscYear,ddlsscSess,ddlsscBrd,ddlclass); 
                             }
 
 
@@ -460,8 +466,11 @@
         });
 
     }
-    function check_hssc_NOC(matric_rno,rno,year,sess,migto)
+    function check_hssc_NOC(matric_rno,rno,year,sess,migto,intclass)
     {
+    
+    console.log("matrno " + matric_rno + "  rno " + rno)
+    
         var noc_html = "";
         var Mesg = "";
         var Mesg_server = "";
@@ -471,22 +480,56 @@
             type: "POST",
             url: "<?php echo base_url(); ?>" + "NOC/get_hssc_data",
             dataType: 'json',
-            data: {rno: rno, year: year, sess: sess, brd:migto, matrno:matric_rno},                            
+            data: {rno: rno, year: year, sess: sess, brd:migto, matrno:matric_rno, int_class:intclass},                            
             success: function(json) {
 
+            console.log("My Data  "+json);
 
                 Mesg = json[0][0]['Mesg'];
                 Mesg_server = json[0][0]['Mesg_server'];
+                Matched = json[0][0]['matched']; 
+                
+                //alert(Mesg);
+              //  alert(Matched);
+                
                 if(Mesg_server != "")
                 {
                     alertify.error(Mesg_server);
                 }
-                else
+                else if(Matched == 0)
                 {
+                   $( "#dialog-message" ).html(Mesg);
+
+                        $( "#dialog-message" ).dialog({
+                            modal: true,
+                            height: "auto",
+                            width: 500,
+                            buttons: {
+                                Ok: function() {
+
+                                    $( this ).dialog( "close" );
+                                }
+                            }
+                        });
+                        return; 
+                }
+                    else if(Matched == 1)
+                {
+                 
+                      var gend = json[0][0]['Gender'];
+                      var lblgend = "";
+                      if (gend == 1 || gend == 0)
+                      {
+                          lblgend = "MALE";
+                      }
+                      else 
+                      {
+                          lblgend = "FEMALE";
+                      }
                     noc_html = "";
                     noc_html += "<div class='row'> <div class='col-sm-3' style='text-align:right; font-weight: bold;'>Name :</div><div class='col-sm-6' style='text-align:left; margin-bottom: -50px;'>"+json[0][0]['name']+"  <img style='width:80px; height: 80px;' class='pull-right'  src ='"+json[0][0]['PicPath']+"'></div>";
                     noc_html += "</div><div class='row'> <div class='col-sm-3' style='text-align:right; font-weight: bold;'>Father Name :</div><div class='col-sm-6' style='text-align:left;'>"+json[0][0]['Fname']+"</div></div>" ;
-                    noc_html += "<div class='row' style='    margin-top: 5px;'> <div class='col-sm-3' style='text-align:right; font-weight: bold;'>DOB :</div><div class='col-sm-6' style='text-align:left;'>"+json[0][0]['dob']+"</div></div>";
+                    noc_html += "<div class='row' style='    margin-top: 5px;'> <div class='col-sm-3' style='text-align:right; font-weight: bold;'>Gender :</div><div class='col-sm-6' style='text-align:left;'>"+lblgend+"</div></div>";
                     if(Mesg == "")
                     {
                         $( "#dialog-confirm" ).html(noc_html);  
@@ -506,9 +549,9 @@
                                     //$( "#noc_form" ).submit();
                                     jQuery.ajax({                    
                                         type: "POST",
-                                        url: "<?php echo base_url(); ?>" + "NOC/Insert_ssc_data",
+                                        url: "<?php echo base_url(); ?>" + "NOC/Insert_hssc_data",
                                         dataType: 'json',
-                                        data: {rno: rno, year: year, sess: sess, migto: migto,dob:dob},                            
+                                        data: {rno: rno, year: year, sess: sess, migto: migto,matrno:matric_rno,intclass:intclass},                            
                                         success: function(json) {
                                             // alert('Your Application is submitted Successfully');
 
@@ -556,7 +599,7 @@
 
             },                        
             error: function(request, status, error){
-                alert(request.responseText);
+                alert("an Error occoured : " + request.responseText);
             }
         });
 
