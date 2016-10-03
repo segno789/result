@@ -74,7 +74,11 @@ if(isset($files)){
     {
         window.location.href = '<?=base_url()?>index.php/result/resultcard12th/'+rno+'/2'
     }
-
+function downloadslip_Inter1(rno,val)
+    {
+        window.location.href = '<?=base_url()?>index.php/result/resultcard11th/'+rno+'/'+val
+    }
+    
     function downloadgroupwise()
     {
         window.location.href = '<?=base_url()?>index.php/result/MatricRollNoGroupwise/'+$("#std_group").val()

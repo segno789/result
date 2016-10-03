@@ -51,3 +51,4 @@ define('DIRPATH','F:\xampp\htdocs\adminbise\oldPics');
 
 
 
+

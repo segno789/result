@@ -48,6 +48,11 @@
                             12th Result Cards
                         </a>
                     </li>
+                    <li>
+                        <a href="<?php echo base_url(); ?>Result/dashboard11th">
+                            11th Result Cards
+                        </a>
+                    </li>
                    <?php }?>
                    
                  
