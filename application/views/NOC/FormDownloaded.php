@@ -12,7 +12,7 @@
                         <div id="dt_example" class="example_alt_pagination">
                             <div class="info"  style="position:relative;margin:0;padding:0;overflow:hidden;">
                                 <!--FORM START-->
-                                <form enctype="multipart/form-data" id="ReturnStatus" name="ReturnStatus" method="post" action="<?php echo base_url(); ?>NOC/Print_challan_Form/<?php echo $app_No; ?>" >
+                                <form enctype="multipart/form-data" id="ReturnStatus" name="ReturnStatus" method="post" action="<?php echo base_url(); ?>index.php/NOC/Print_challan_Form/<?php echo $app_No; ?>" >
                             </div>
                             <label style="color: green; font-size: 32px;">Your Application is Submitted Successfully.</label>
                             <p>  <strong style=" font-size: 24px;"> Your Application No.<?php echo $app_No; ?> </strong></p>
@@ -37,7 +37,7 @@
         alertify.confirm(msg, function (e) {
             if (e) {
                 // user clicked "ok"
-                window.location.href ='<?php echo base_url(); ?>noc';
+                window.location.href ='<?php echo base_url(); ?>index.php/noc';
             } else {
                 // user clicked "cancel"
             }
