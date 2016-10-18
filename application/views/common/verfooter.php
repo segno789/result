@@ -49,7 +49,7 @@
 
 
 
-        $("#sscrno, #Hsscrno, #appNo").ForceNumericOnly();       
+        $("#sscrno, #appNo").ForceNumericOnly();       
         function hideall() {
             $('#divSSC').hide();
             $('#divHSSC').hide();
@@ -85,7 +85,7 @@
 
         jQuery.ajax({                    
             type: "POST",
-            url: "<?php echo base_url(); ?>" + "index.php/Verification/VerifyRollNo",
+            url: "<?php echo base_url(); ?>" + "Verification/VerifyRollNo",
             dataType: 'json',
             data: {vClass: vClass, RollNO: RollNO, vYear: vYear, sess: sess},                            
             success: function(json) {
@@ -284,6 +284,7 @@
         var ddlsscYear = $("#ddlHsscYear").val();   
         var ddlsscSess = $("#ddlHsscSess").val();   
         var ddlsscBrd = $("#ddlHsscBrd").val(); 
+        var ddlclass = $("#ddlHsscClass").val();
         if(matric_rno == "")
         {
             alertify.error("Please First Enter Matric Roll Number.");
@@ -309,13 +310,18 @@
                             alertify.error("Please Select Migrated Board First.");
                         }
                         else
+                        if(ddlclass == "0")
+                        {
+                            alertify.error("Please Select Inter Class First.");
+                        }
+                        else
                             if($('#termshssc').prop('checked')== false)
                             {
                                 alertify.error("Please Accept the terms and Conditions Frist");
                             }
                             else
                             {
-                                check_hssc_NOC(matric_rno,inter_rno,ddlsscYear,ddlsscSess,ddlsscBrd); 
+                                check_hssc_NOC(matric_rno,inter_rno,ddlsscYear,ddlsscSess,ddlsscBrd,ddlclass); 
                             }
 
 
@@ -368,110 +374,9 @@
         jQuery.ajax({ 
 
             type: "POST",
-            url: "<?php echo base_url(); ?>" + "index.php/NOC/get_ssc_data",
+            url: "<?php echo base_url(); ?>" + "NOC/get_ssc_data",
             dataType: 'json',
             data: {rno: rno, year: year, sess: sess, brd:migto, dob:dob},                            
-            success: function(json) {
-
-
-                Mesg = json[0][0]['Mesg'];
-                Mesg_server = json[0][0]['Mesg_server'];
-                if(Mesg_server != "")
-                {
-                    alertify.error(Mesg_server);
-                }
-                else
-                {
-                    noc_html = "";
-                    noc_html += "<div class='row'> <div class='col-sm-3' style='text-align:right; font-weight: bold;'>Name :</div><div class='col-sm-6' style='text-align:left; margin-bottom: -50px;'>"+json[0][0]['name']+"  <img style='width:80px; height: 80px;' class='pull-right'  src ='"+json[0][0]['PicPath']+"'></div>";
-                    noc_html += "</div><div class='row'> <div class='col-sm-3' style='text-align:right; font-weight: bold;'>Father Name :</div><div class='col-sm-6' style='text-align:left;'>"+json[0][0]['Fname']+"</div></div>" ;
-                    noc_html += "<div class='row' style='    margin-top: 5px;'> <div class='col-sm-3' style='text-align:right; font-weight: bold;'>DOB :</div><div class='col-sm-6' style='text-align:left;'>"+json[0][0]['dob']+"</div></div>";
-                    if(Mesg == "")
-                    {
-                        $( "#dialog-confirm" ).html(noc_html);  
-                        $( "#dialog-confirm" ).dialog({
-                            resizable: false,
-                            height: "auto",
-                            width: 800,
-                            modal: true,
-                            buttons: {
-
-                                //  $(this).dialog( "close" );
-                                "Confirm and Apply": function() { 
-                                    //noc_html;
-                                    // $('#terms').val();
-                                    //if()
-                                    // $("input[type=submit]").attr("disabled", "enabled");
-                                    //$( "#noc_form" ).submit();
-                                    jQuery.ajax({                    
-                                        type: "POST",
-                                        url: "<?php echo base_url(); ?>" + "index.php/NOC/Insert_ssc_data",
-                                        dataType: 'json',
-                                        data: {rno: rno, year: year, sess: sess, migto: migto,dob:dob},                            
-                                        success: function(json) {
-                                            // alert('Your Application is submitted Successfully');
-
-                                            $( "#dialog-confirm" ).html('<div style="color:Green; font-weight:bold; font-size:16px;">Your Application is submitted Successfully</div>'); 
-                                            // window.location.href = '<?php //echo base_url(); ?>NOC/Download_NOC/'+json[0][0]['app_No']+'/';
-                                            window.location.href = '<?php echo base_url(); ?>index.php/NOC/downloadPage/'+json[0][0]['app_No']+'/';
-
-                                            $(".ui-button-text").css("display", "none");
-                                        },
-                                        error: function(request, status, error){
-                                            $( "#dialog-confirm" ).html('<div style="color:RED; font-weight:bold; font-size:16px;">Your Application is NOT submitted. Please Try again later.</div>');
-                                            alert(request.responseText);
-                                        }
-                                    });
-
-
-
-                                }, 
-                                Cancel: function() {
-                                    $( this ).dialog( "close" );
-                                }
-                            }
-                        });   
-                    }
-                    else
-                    {
-                        //  alert('error ');
-                        $( "#dialog-message" ).html(Mesg);
-
-                        $( "#dialog-message" ).dialog({
-                            modal: true,
-                            height: "auto",
-                            width: 500,
-                            buttons: {
-                                Ok: function() {
-
-                                    $( this ).dialog( "close" );
-                                }
-                            }
-                        });
-                        return;
-
-                    }  
-                }
-
-            },                        
-            error: function(request, status, error){
-                alert(request.responseText);
-            }
-        });
-
-    }
-    function check_hssc_NOC(matric_rno,rno,year,sess,migto)
-    {
-        var noc_html = "";
-        var Mesg = "";
-        var Mesg_server = "";
-        var alldata ;
-        jQuery.ajax({ 
-
-            type: "POST",
-            url: "<?php echo base_url(); ?>" + "index.php/NOC/get_hssc_data",
-            dataType: 'json',
-            data: {rno: rno, year: year, sess: sess, brd:migto, matrno:matric_rno},                            
             success: function(json) {
 
 
@@ -557,6 +462,144 @@
             },                        
             error: function(request, status, error){
                 alert(request.responseText);
+            }
+        });
+
+    }
+    function check_hssc_NOC(matric_rno,rno,year,sess,migto,intclass)
+    {
+    
+    console.log("matrno " + matric_rno + "  rno " + rno)
+    
+        var noc_html = "";
+        var Mesg = "";
+        var Mesg_server = "";
+        var alldata ;
+        jQuery.ajax({ 
+
+            type: "POST",
+            url: "<?php echo base_url(); ?>" + "NOC/get_hssc_data",
+            dataType: 'json',
+            data: {rno: rno, year: year, sess: sess, brd:migto, matrno:matric_rno, int_class:intclass},                            
+            success: function(json) {
+
+            console.log("My Data  "+json);
+
+                Mesg = json[0][0]['Mesg'];
+                Mesg_server = json[0][0]['Mesg_server'];
+                Matched = json[0][0]['matched']; 
+                
+                //alert(Mesg);
+              //  alert(Matched);
+                
+                if(Mesg_server != "")
+                {
+                    alertify.error(Mesg_server);
+                }
+                else if(Matched == 0)
+                {
+                   $( "#dialog-message" ).html(Mesg);
+
+                        $( "#dialog-message" ).dialog({
+                            modal: true,
+                            height: "auto",
+                            width: 500,
+                            buttons: {
+                                Ok: function() {
+
+                                    $( this ).dialog( "close" );
+                                }
+                            }
+                        });
+                        return; 
+                }
+                    else if(Matched == 1)
+                {
+                 
+                      var gend = json[0][0]['Gender'];
+                      var lblgend = "";
+                      if (gend == 1 || gend == 0)
+                      {
+                          lblgend = "MALE";
+                      }
+                      else 
+                      {
+                          lblgend = "FEMALE";
+                      }
+                    noc_html = "";
+                    noc_html += "<div class='row'> <div class='col-sm-3' style='text-align:right; font-weight: bold;'>Name :</div><div class='col-sm-6' style='text-align:left; margin-bottom: -50px;'>"+json[0][0]['name']+"  <img style='width:80px; height: 80px;' class='pull-right'  src ='"+json[0][0]['PicPath']+"'></div>";
+                    noc_html += "</div><div class='row'> <div class='col-sm-3' style='text-align:right; font-weight: bold;'>Father Name :</div><div class='col-sm-6' style='text-align:left;'>"+json[0][0]['Fname']+"</div></div>" ;
+                    noc_html += "<div class='row' style='    margin-top: 5px;'> <div class='col-sm-3' style='text-align:right; font-weight: bold;'>Gender :</div><div class='col-sm-6' style='text-align:left;'>"+lblgend+"</div></div>";
+                    if(Mesg == "")
+                    {
+                        $( "#dialog-confirm" ).html(noc_html);  
+                        $( "#dialog-confirm" ).dialog({
+                            resizable: false,
+                            height: "auto",
+                            width: 800,
+                            modal: true,
+                            buttons: {
+
+                                //  $(this).dialog( "close" );
+                                "Confirm and Apply": function() { 
+                                    //noc_html;
+                                    // $('#terms').val();
+                                    //if()
+                                    // $("input[type=submit]").attr("disabled", "enabled");
+                                    //$( "#noc_form" ).submit();
+                                    jQuery.ajax({                    
+                                        type: "POST",
+                                        url: "<?php echo base_url(); ?>" + "NOC/Insert_hssc_data",
+                                        dataType: 'json',
+                                        data: {rno: rno, year: year, sess: sess, migto: migto,matrno:matric_rno,intclass:intclass},                            
+                                        success: function(json) {
+                                            // alert('Your Application is submitted Successfully');
+
+                                            $( "#dialog-confirm" ).html('<div style="color:Green; font-weight:bold; font-size:16px;">Your Application is submitted Successfully</div>'); 
+                                            // window.location.href = '<?php echo base_url(); ?>NOC/Download_NOC/'+json[0][0]['app_No']+'/';
+                                            window.location.href = '<?php echo base_url(); ?>NOC/downloadPage/'+json[0][0]['app_No']+'/';
+
+                                            $(".ui-button-text").css("display", "none");
+                                        },
+                                        error: function(request, status, error){
+                                            $( "#dialog-confirm" ).html('<div style="color:RED; font-weight:bold; font-size:16px;">Your Application is NOT submitted. Please Try again later.</div>');
+                                            alert(request.responseText);
+                                        }
+                                    });
+
+
+
+                                }, 
+                                Cancel: function() {
+                                    $( this ).dialog( "close" );
+                                }
+                            }
+                        });   
+                    }
+                    else
+                    {
+                        //  alert('error ');
+                        $( "#dialog-message" ).html(Mesg);
+
+                        $( "#dialog-message" ).dialog({
+                            modal: true,
+                            height: "auto",
+                            width: 500,
+                            buttons: {
+                                Ok: function() {
+
+                                    $( this ).dialog( "close" );
+                                }
+                            }
+                        });
+                        return;
+
+                    }  
+                }
+
+            },                        
+            error: function(request, status, error){
+                alert("an Error occoured : " + request.responseText);
             }
         });
 

@@ -185,7 +185,7 @@
                 <label style="margin-left: -34px;" >Matric Roll No:</label>
             </div>
             <div class="col-sm-2 ">
-                <input type="text" id="tsscrno" name="sscrno" maxlength="6"  class="form-textbox"/>
+                <input type="text" id="tsscrno" name="sscrno" maxlength="6" class="form-textbox"/>
             </div>
             <div class="col-sm-1"></div>
             <div class="col-sm-1 text-right " >
@@ -198,12 +198,12 @@
         <br />
         <div class="row">
             <div class="col-sm-1  text-right">
-                <label >Year:</label>
+                <label style=" margin-left: -12px;" >Inter Year:</label>
             </div>
             <div class="col-sm-2">
                 <select id="ddlHsscYear" class="form-dropdown" name="ddlHsscYear" >
                     <option value="0">SELECT YEAR</option>
-                    <option value="2016">2016</option>
+                    <option  value="2016">2016</option>
                     <option value="2015">2015</option>
                     <option value="2014">2014</option>
                     <option value="2013">2013</option>
@@ -226,14 +226,27 @@
             </div>
             <div class="col-sm-1"></div>
             <div class="col-sm-1 " >
-                <label class="control-label text-right" >Session:</label>
+                <label class="control-label text-right" style=" margin-left: -29px;" >Inter Session:</label>
             </div>
 
             <div class="col-sm-2">
                 <select id="ddlHsscSess" class="form-dropdown" name="ddlHsscSess">
                     <option value="0">SELECT SESSION</option>
-                    <option value="1">ANNUAL</option>
+                    <option value="1" selected="selected">ANNUAL</option>
                     <option value="2">SUPPLEMANTARY</option>
+                </select>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+             <div class="col-sm-1  text-right">
+                <label style=" margin-left: -12px;">Inter Class:</label>
+            </div>
+            <div class="col-sm-2">
+                <select id="ddlHsscClass" class="form-dropdown" name="ddlHsscSess">
+                    <option value="0">SELECT CLASS</option>
+                    <option value="11">INTER PART-I</option>
+                    <option value="12">INTER PART-II</option>
                 </select>
             </div>
         </div>
@@ -262,7 +275,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12" style="    text-align: left;    font-weight: bold; text-transform: uppercase;">
-                <input type='checkbox'  style='    width: 24px;        height: 24px;' name='terms' id='termshssc' onchange='activateButton(this)'>  I accept all the terms & conditions of BISE,Gujranwala.
+                <input  type='checkbox'  style='    width: 24px;        height: 24px;' name='terms' id='termshssc' onchange='activateButton(this)'>  I accept all the terms & conditions of BISE,Gujranwala.
             </div>
         </div>
         <br />
@@ -302,7 +315,7 @@
         <div id="dt_example" class="example_alt_pagination">
             <div class="info"  style="position:relative;margin:0;padding:0;overflow:hidden;">
                 <!--FORM START-->
-                <form enctype="multipart/form-data" method="post" action="<?php echo base_url(); ?>index.php/NOC/statusPage_server" >
+                <form enctype="multipart/form-data" method="post" action="<?php echo base_url(); ?>NOC/statusPage_server" >
             </div>
             <div class="row" >
                 <div class="col-sm-12">
