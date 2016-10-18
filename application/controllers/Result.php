@@ -232,7 +232,7 @@ class Result extends CI_Controller {
         $data = array(
             'isselected' => '4',
         );
-        //  DebugBreak();
+       //   DebugBreak();
 
 
 
@@ -292,6 +292,51 @@ class Result extends CI_Controller {
             redirect('result/dashboard9th/'); 
         }
     }
+    public function resultcard11thgroupwise()
+    {
+        $this->load->helper('url');
+        $keyword = $this->uri->segment(3);
+        $isdownload = $this->uri->segment(4);
+        $data = array(
+            'isselected' => '4',
+
+        );  
+
+        $this->load->library('session');
+        $Logged_In_Array = $this->session->all_userdata();
+        $userinfo = $Logged_In_Array['logged_in'];
+        $Inst_Id = $userinfo['Inst_Id'];
+
+        $this->load->model('Result_model');
+        $info['data'] = $this->Result_model->get11thResultCardByGroupWise($keyword,$Inst_Id);
+        if($info['data'] != -1)
+        {
+            $this->load->library('PDFFWithOutPage');
+            $pdf=new PDFFWithOutPage('P','in',"A4");   
+            $pdf->SetAutoPageBreak(true,2);
+
+            $totalstd =  count($info['data']);
+            for($i =0 ; $i <$totalstd ; $i++)
+            {
+                $pdf->AddPage();
+                $this->makeResultCard12th($pdf,$info['data'][$i]);
+
+            }
+
+
+
+
+            if($isdownload ==  1)
+                $pdf->Output('Result.pdf', 'D'); 
+            else  if($isdownload ==  2)  
+                $pdf->Output('Result.pdf', 'I');  
+        }
+        else
+        {
+            redirect('result/dashboard9th/'); 
+        }
+    }
+
     public function resultcard12th()
     {
         $this->load->helper('url');
@@ -316,29 +361,30 @@ class Result extends CI_Controller {
             $pdf->Output('Result.pdf', 'I');  
     }
 
-       public function dashboard11th()
+    public function dashboard11th()
     {
-         $this->load->helper('url');
+        $this->load->helper('url');
         $data = array(
             'isselected' => '4',
         );
-       //  DebugBreak();
-        
-        
-        
+        //  DebugBreak();
+
+
+
         $this->load->library('session');
         $Logged_In_Array = $this->session->all_userdata();
         $userinfo = $Logged_In_Array['logged_in'];
         $Inst_Id = $userinfo['Inst_Id'];
         $this->load->model('Result_model');
-        $info['data'] = $this->Result_model->getresult12std($Inst_Id,11,2015);
+        $info['data'] = $this->Result_model->getresult12std($Inst_Id,11,2016);
+        $info['NOCdata'] = $this->Result_model->getresultNocstd($Inst_Id);
 
         $this->load->view('common/header.php',$userinfo);
         $this->load->view('common/menu.php',$data);
         $this->load->view('result/dashboard11th.php',$info);
         $this->load->view('common/footer.php'); 
     }
-     public function resultcard11th()
+    public function resultcard11th()
     {
         $this->load->helper('url');
         $rno = $this->uri->segment(3);
@@ -349,7 +395,7 @@ class Result extends CI_Controller {
         );        
 
         $this->load->model('Result_model');
-        $info['data'] = $this->Result_model->getResultCardByRNO($rno,11,2015);
+        $info['data'] = $this->Result_model->getResultCardByRNO($rno,11,2016);
 
         $this->load->library('PDFFWithOutPage');
         $pdf=new PDFFWithOutPage('P','in',"A4");   
@@ -754,7 +800,7 @@ class Result extends CI_Controller {
 
 
     }
-     private function makeResultCard11th($pdf,$info)
+    private function makeResultCard11th($pdf,$info)
     {
         //
         //DebugBreak();
@@ -762,7 +808,7 @@ class Result extends CI_Controller {
         $Session= 'ANNUAL';  
         $info['Year'] = 2016;     
 
-       if($info['grp_cd'] == 1)  $grp_cd = 'PRE-MEDICAL';
+        if($info['grp_cd'] == 1)  $grp_cd = 'PRE-MEDICAL';
         else if($info['grp_cd'] == 2) $grp_cd='PRE-ENGINEERING';
             else if($info['grp_cd'] == 3) $grp_cd='HUMANITIES';
                 else if($info['grp_cd'] == 4) $grp_cd='GENERAL SCIENCE';
@@ -774,16 +820,16 @@ class Result extends CI_Controller {
                                         else if($info['grp_cd'] == 10) $grp_cd='KHASA';
                                             else if($info['grp_cd'] == 11) $grp_cd='FAZAL';
 
-                                          //      $filepath = $info['picpath'];
+                                                //  $filepath = $info['picpath'];
 
-       
-        $filepath = 'assets/img/download1.jpg';
+
+                                                $filepath = 'assets/img/download1.jpg';
 
 
         $fontSize = 10; 
         $marge    = .95;   // between barcode and hri in pixel
         $bx        = 35.6;  // barcode center
-        $by        = 23.75;  // barcode center
+        $by        = 26.75;  // barcode center
         $height   = 5.7;   // barcode height in 1D ; module size in 2D
         $width    = .26;  // barcode height in 1D ; not use in 2D
         $angle    = 0;   // rotation in degrees
@@ -837,7 +883,7 @@ class Result extends CI_Controller {
         $pdf->Image("assets/img/icon2.png",75,10, 53,45, "PNG");
 
         //Picture
-        $pdf->Image($filepath,170.0,21.1, 30.65,30.65, "jpg");  
+        $pdf->Image($filepath,167.0,25.8, 30.65,30.65, "jpg");  
 
 
         $pdf->SetFont('Arial','B',14);
@@ -850,8 +896,8 @@ class Result extends CI_Controller {
 
 
         $pdf->SetFont('Arial','B',12);
-        $pdf->SetXY(41,57);
-        $pdf->Cell(0, 0.2, "INTERMEDIATE Part (I) (   Annual   )  Examination, ". $info['Year'], 0.25, "C"); 
+        $pdf->SetXY(56,57);
+        $pdf->Cell(0, 0.2, "INTERMEDIATE Part- I ANNUAL Examination, ". $info['Year'], 0.25, "C"); 
 
         $pdf->SetFont('Arial','B',12);
         $pdf->SetXY(73,64);
@@ -899,20 +945,20 @@ class Result extends CI_Controller {
 
         //$pdf->Cell(0, 0.2, "".$info['Sch_cd'].' - '.$info['sch_name'], 0.25, "L");
 
- $fontsize = 10;
+        $fontsize = 10;
         //DebugBreak();
         $distTile = '';
         if($info['regpvt'] == 1)
         {
-             $instnfo =  $info['coll_cd'].' - '.$info['sch_name'];
-             $distTile = 'INSTITUTION:';
+            $instnfo =  $info['coll_cd'].' - '.$info['sch_name'];
+            $distTile = 'INSTITUTION:';
         }
         else
         {
             $instnfo =  $this->mDistrict($info['dist_cd']);
             $distTile = 'DISTRICTS:';
         }
-       
+
 
 
         $valig = 85;
@@ -927,7 +973,7 @@ class Result extends CI_Controller {
         }
         $pdf->SetFont('Arial','B',9);
         $pdf->SetXY(10.2,89);
-        
+
         $pdf->Cell(0, 0.2, $distTile, 0.25, "C");
 
         $pdf->SetFont('Arial','',$fontsize);
@@ -948,7 +994,7 @@ class Result extends CI_Controller {
 
         $pdf->SetFont('Arial','B',9);
         $pdf->SetXY(10.2,95);
-        $pdf->Cell(0, 0.2, "Has secured the marks as detailed below against each subject.", 0.25, "C");
+        $pdf->Cell(0, 0.2, "He/She has obtained the marks as detailed below against each subject.", 0.25, "C");
 
 
         $countter = 0;
@@ -985,43 +1031,41 @@ class Result extends CI_Controller {
 
             $pdf->SetFont('Arial','B',$font);
             $pdf->SetXY(120.1,55.2+ $Y);
-            $pdf->Cell(27,$cellheight,'Marks Obtained',1,0,'C',1);
+            $pdf->Cell(27,$cellheight,'Obtained Marks',1,0,'C',1);
 
             $pdf->SetFont('Arial','B',$font);
             $pdf->SetXY(147,55.2+ $Y);
-            $pdf->Cell(58,$cellheight,'Remarks',1,0,'C',1);
+            $pdf->Cell(58,$cellheight,'Status',1,0,'C',1);
 
             $subctn = 1;
             $totalmarks = '';
             $cnt = 6;
             if($info['grp_cd'] == 5)
             {
-               $cnt =  7; 
+                $cnt =  7; 
             }
-            
+
             for($l = 0; $l<$cnt; $l++) { 
                 $Y = $Y + $cellheight;
                 $subcd = $info['sub'.$subctn];
                 $submarks = $info['sub'.$subctn.'mt1'];
                 $subremarks =  $info['sub'.$subctn.'pf1'];
-                if($subremarks == NULL)
-                {
-                    $subremarks = ' ';
-                }
-               
-                 if($subremarks == '2')
-                {
-                    $subremarks = 'Less than Pass Marks';  
-                } 
-                else if($subremarks == '5')
+                $subst =  $info['sub'.$subctn.'st1'];
+
+                if($subst == '2')
                 {
                     $submarks = 'A';  
                     $subremarks = ' ';
                 }
+                else  if($subremarks == '2')
+                {
+                    $subremarks = 'Less than Pass Marks';  
+                } 
+
                 else
                 {
                     $subremarks = '';
-                }
+                }    
                 $subname = $this->GetiSubNameHere($subcd) ;
                 $subtoltal = $this->Get11thSubMarks($subcd) ;
                 $totalmarks = $totalmarks + $subtoltal;
@@ -1084,67 +1128,79 @@ class Result extends CI_Controller {
         $pdf->SetAlpha(1);
         $nextyear= $info["Year"] +1;
 
-        $pdf->SetFont('Arial','',11);
-        $pdf->SetXY(9.2,196);
-        $pdf->MultiCell(195, 5, 'The candidate may appear in subject(s) having less than pass marks along with Higher Secondary School Part-II (Annual) Examination, '.$nextyear.' otherwise his/her final result (Pass/Fail) in subjects(s) will be determined on the basis of total marks obtained by him/her Higher Secondary School Part-I & Part-II.', 0, "J",0);
+        $pdf->SetFont('Arial','',10);
+        $pdf->SetXY(9.2,195);
+        $pdf->MultiCell(195, 5, 'The candidate may appear in subject(s) having less than pass marks along with Part-II (Annual) Examination, 2017 otherwise his/her final result (Pass/Fail) in subjects(s) will be determined on the basis of total marks obtained by him/her in Part-I & II ,except paper of Islamic Education, which is held only in Part-I Examination.', 0, "J",0);
 
-        $pdf->Image("assets/img/result_note.jpg",45.2,211, 153,10, "jpg"); 
+
+        $pdf->SetFont('Arial','B',$font+2);
+        $pdf->SetXY(10,211);
+        $pdf->MultiCell(195,6,'Note:-',0,'L');
 
         $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(10.2,223);
+        $pdf->SetXY(22,211.8);
+        $pdf->MultiCell(196,4,'(I)   This Provisional result intimation is issued as a notice only.',0,'J');
+
+        $pdf->SetFont('Arial','',9);
+        $pdf->SetXY(22,215.8);
+        $pdf->MultiCell(180,4,"(II)   If the result intimation is lost, an interim result intimation can be obtained by the candidate on payment of prescribed fee.",0,'J');
+        $pdf->SetFont('Arial','',9);
+        $pdf->SetXY(22,219.8);
+        $pdf->MultiCell(180,4,"(III) There is no practical examination in intermediate Part-I, however combined practical of Part-I & II will be conducted in Intermediate Part-II Examination.",0,'J');
+
+
+        $pdf->SetFont('Arial','B',9);
+        $pdf->SetXY(22.2,229);
+        $pdf->Cell(0, 0.2, "(Errors & Omissions are excepted)", 0.25, "C");
+
+        $pdf->Image("assets/img/result_note.jpg",45.2,231, 163,10, "jpg"); 
+
+        $pdf->SetFont('Arial','',9);
+        $pdf->SetXY(10.2,243);
         $pdf->Cell(0, 0.2, "Dealing Official:", 0.25, "C");
 
         $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(32.2,223);
-        $pdf->Cell(0, 0.2, "_______________________________________________________________________________________", 0.25, "C");
+        $pdf->SetXY(32.2,243);
+        $pdf->Cell(0, 0.2, "________________________________________________________________________", 0.25, "C");
 
         $pdf->SetFont('Arial','',10);
-        $pdf->SetXY(32.2,222.8);
+        $pdf->SetXY(32.2,242.8);
         $pdf->Cell(0, 0.2, "            ".$info['Emp_Rslt'].'-'.$info['emp_name'], 0.25, "C") ;
 
 
         $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(100.2,233);
+        $pdf->SetXY(100.2,252);
         $pdf->Cell(0, 0.2, "Printing Date:", 0.25, "C");
 
         $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(120.2,233);
+        $pdf->SetXY(120.2,252);
         $pdf->Cell(0, 0.2, "_____________________________________", 0.25, "C");
 
         $pdf->SetFont('Arial','',10);
-        $pdf->SetXY(120.2,232.8);
-        $pdf->Cell(0, 0.2, "               ".date('d-m-Y h:i a'), 0.25, "C");
+        $pdf->SetXY(120.2,251.8);
+        $pdf->Cell(0, 0.2, "   ".date('d-m-Y h:i a'), 0.25, "C");
 
-        /*$pdf->SetFont('Arial','',9);
-        $pdf->SetXY(10.2,233);
-        $pdf->Cell(0, 0.2, "Checked By:", 0.25, "C");
 
         $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(29.2,233);
-        $pdf->Cell(0, 0.2, "_____________________________________", 0.25, "C");*/
-
-        $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(10.2,233);
+        $pdf->SetXY(10.2,252);
         $pdf->Cell(0, 0.2, "Result Date:", 0.25, "C");
 
         $pdf->SetFont('Arial','',9);
-        $pdf->SetXY(27,233);
+        $pdf->SetXY(27,252);
         $pdf->Cell(0, 0.2, "_____________________________________", 0.25, "C");
 
         $pdf->SetFont('Arial','',10);
-        $pdf->SetXY(20.2,232.8);
+        $pdf->SetXY(20.2,251.8);
         $pdf->Cell(0, 0.2, '                    10-10-2016', 0.25, "C");
 
-        $pdf->SetFont('Arial','B',9);
-        $pdf->SetXY(35.2,238);
-        $pdf->Cell(0, 0.2, "(Errors & Omissions are excepted)", 0.25, "C");
 
-        $pdf->SetFont('Arial','B',10);
-        $pdf->SetXY(10.2,245);
+
+        $pdf->SetFont('Arial','B',9);
+        $pdf->SetXY(10.2,258);
         $pdf->Cell(0, 0.2, " HOME ADDRESS:", 0.25, "C");
 
-        $pdf->SetFont('Arial','u',10);
-        $pdf->SetXY(41.6,242);
+        $pdf->SetFont('Arial','u',9);
+        $pdf->SetXY(39.6,255.5);
         $pdf->MultiCell(125, 5, $info['addr'], 0, "L",0);
 
 
@@ -1154,7 +1210,7 @@ class Result extends CI_Controller {
         $pdf->SetXY(145,284);
         $pdf->Cell(0, 0.2, "CONTROLLER OF EXAMINATIONS", 0.25, "C");
 
-        $pdf->Image("assets/img/headsign.jpg",28.0,255, 72,24, "JPG"); 
+        $pdf->Image("assets/img/headsign.jpg",28.0,267, 72,24, "JPG"); 
 
 
     }
@@ -1174,7 +1230,7 @@ class Result extends CI_Controller {
                                     else if($info['grp_cd'] == 9) $grp_cd='ALOOM-E-SHARQIA';
                                         else if($info['grp_cd'] == 10) $grp_cd='KHASA';
                                             else if($info['grp_cd'] == 11) $grp_cd='FAZAL';
-
+                                              
                                                 $filepath = $info['picpath'];
 
         //  $filepath = 'assets/img/229628.jpg';
@@ -1767,7 +1823,7 @@ class Result extends CI_Controller {
                 {
                     $notification =  ' P-II: '.$info['result2'].' ';
                 }
-
+                  
             }
             else if($info['status'] == 3)
             {
@@ -2099,80 +2155,81 @@ private function get_grade($percentage) {
     
      private function Get11thSubMarks($_sub_cd)
     {
-        if($_sub_cd ==1)  $ret_val = "100";
-else if($_sub_cd ==2)  $ret_val = "100";
-else if($_sub_cd ==3)  $ret_val = "100";
-else if($_sub_cd ==4)  $ret_val = "100";
-else if($_sub_cd ==5)  $ret_val = "100";
-else if($_sub_cd ==6)  $ret_val = "100";
-else if($_sub_cd ==7)  $ret_val = "100";
-else if($_sub_cd ==8)  $ret_val = "85";
-else if($_sub_cd ==9)  $ret_val = "100";
-else if($_sub_cd ==10)  $ret_val = "100";
-else if($_sub_cd ==11)  $ret_val = "100";
-else if($_sub_cd ==12)  $ret_val = "85";
-else if($_sub_cd ==13)  $ret_val = "100";
-else if($_sub_cd ==14)  $ret_val = "100";
-else if($_sub_cd ==15)  $ret_val = "100";
-else if($_sub_cd ==16)  $ret_val = "85";
-else if($_sub_cd ==17)  $ret_val = "100";
-else if($_sub_cd ==18)  $ret_val = "85";
-else if($_sub_cd ==19)  $ret_val = "100";
-else if($_sub_cd ==20)  $ret_val = "100";
-else if($_sub_cd ==21)  $ret_val = "85";
-else if($_sub_cd ==22)  $ret_val = "40";
-else if($_sub_cd ==23)  $ret_val = "40";
-else if($_sub_cd ==24)  $ret_val = "100";
-else if($_sub_cd ==26)  $ret_val = "100";
-else if($_sub_cd ==27)  $ret_val = "100";
-else if($_sub_cd ==28)  $ret_val = "100";
-else if($_sub_cd ==29)  $ret_val = "100";
-else if($_sub_cd ==30)  $ret_val = "100";
-else if($_sub_cd ==32)  $ret_val = "100";
-else if($_sub_cd ==33)  $ret_val = "100";
-else if($_sub_cd ==34)  $ret_val = "100";
-else if($_sub_cd ==35)  $ret_val = "100";
-else if($_sub_cd ==36)  $ret_val = "100";
-else if($_sub_cd ==37)  $ret_val = "100";
-else if($_sub_cd ==38)  $ret_val = "100";
-else if($_sub_cd ==39)  $ret_val = "75";
-else if($_sub_cd ==42)  $ret_val = "85";
-else if($_sub_cd ==43)  $ret_val = "100";
-else if($_sub_cd ==44)  $ret_val = "75";
-else if($_sub_cd ==45)  $ret_val = "100";
-else if($_sub_cd ==46)  $ret_val = "85";
-else if($_sub_cd ==47)  $ret_val = "85";
-else if($_sub_cd ==48)  $ret_val = "85";
-else if($_sub_cd ==51)  $ret_val = "50";
-else if($_sub_cd ==52)  $ret_val = "100";
-else if($_sub_cd ==53)  $ret_val = "100";
-else if($_sub_cd ==54)  $ret_val = "100";
-else if($_sub_cd ==55)  $ret_val = "100";
-else if($_sub_cd ==56)  $ret_val = "100";
-else if($_sub_cd ==57)  $ret_val = "100";
-else if($_sub_cd ==58)  $ret_val = "100";
-else if($_sub_cd ==70)  $ret_val = "100";
-else if($_sub_cd ==71)  $ret_val = "75";
-else if($_sub_cd ==72)  $ret_val = "50";
-else if($_sub_cd ==75)  $ret_val = "100";
-else if($_sub_cd ==76)  $ret_val = "100";
-else if($_sub_cd ==79)  $ret_val = "85";
-else if($_sub_cd ==80)  $ret_val = "50";
-else if($_sub_cd ==81)  $ret_val = "100";
-else if($_sub_cd ==82)  $ret_val = "100";
-else if($_sub_cd ==83)  $ret_val = "75";
-else if($_sub_cd ==84)  $ret_val = "100";
-else if($_sub_cd ==85)  $ret_val = "100";
-else if($_sub_cd ==86)  $ret_val = "100";
-else if($_sub_cd ==87)  $ret_val = "100";
-else if($_sub_cd ==88)  $ret_val = "100";
-else if($_sub_cd ==90)  $ret_val = "85";
-else if($_sub_cd ==92)  $ret_val = "50";
-else if($_sub_cd ==93)  $ret_val = "50";
-else if($_sub_cd ==94)  $ret_val = "75";
-else if($_sub_cd ==95)  $ret_val = "75";
-else if($_sub_cd ==97)  $ret_val = "50";
-else if($_sub_cd ==99)  $ret_val = "100";
+       if( $_sub_cd ==1)  $ret_val =100;
+else if( $_sub_cd ==2)  $ret_val =100;
+else if( $_sub_cd ==3)  $ret_val =100;
+else if( $_sub_cd ==4)  $ret_val =100;
+else if( $_sub_cd ==5)  $ret_val =100;
+else if( $_sub_cd ==6)  $ret_val =100;
+else if( $_sub_cd ==7)  $ret_val =100;
+else if( $_sub_cd ==8)  $ret_val =85;
+else if( $_sub_cd ==9)  $ret_val =100;
+else if( $_sub_cd ==10)  $ret_val =100;
+else if( $_sub_cd ==11)  $ret_val =100;
+else if( $_sub_cd ==12)  $ret_val =85;
+else if( $_sub_cd ==13)  $ret_val =100;
+else if( $_sub_cd ==14)  $ret_val =100;
+else if( $_sub_cd ==15)  $ret_val =100;
+else if( $_sub_cd ==16)  $ret_val =85;
+else if( $_sub_cd ==17)  $ret_val =100;
+else if( $_sub_cd ==18)  $ret_val =85;
+else if( $_sub_cd ==19)  $ret_val =100;
+else if( $_sub_cd ==20)  $ret_val =100;
+else if( $_sub_cd ==21)  $ret_val =85;
+else if( $_sub_cd ==22)  $ret_val =40;
+else if( $_sub_cd ==23)  $ret_val =40;
+else if( $_sub_cd ==24)  $ret_val =100;
+else if( $_sub_cd ==26)  $ret_val =100;
+else if( $_sub_cd ==27)  $ret_val =100;
+else if( $_sub_cd ==28)  $ret_val =100;
+else if( $_sub_cd ==29)  $ret_val =100;
+else if( $_sub_cd ==30)  $ret_val =100;
+else if( $_sub_cd ==32)  $ret_val =100;
+else if( $_sub_cd ==33)  $ret_val =100;
+else if( $_sub_cd ==34)  $ret_val =100;
+else if( $_sub_cd ==35)  $ret_val =100;
+else if( $_sub_cd ==36)  $ret_val =100;
+else if( $_sub_cd ==37)  $ret_val =100;
+else if( $_sub_cd ==38)  $ret_val =100;
+else if( $_sub_cd ==39)  $ret_val =75;
+else if( $_sub_cd ==42)  $ret_val =85;
+else if( $_sub_cd ==43)  $ret_val =100;
+else if( $_sub_cd ==44)  $ret_val =75;
+else if( $_sub_cd ==45)  $ret_val =100;
+else if( $_sub_cd ==46)  $ret_val =85;
+else if( $_sub_cd ==47)  $ret_val =85;
+else if( $_sub_cd ==48)  $ret_val =85;
+else if( $_sub_cd ==51)  $ret_val =50;
+else if( $_sub_cd ==52)  $ret_val =100;
+else if( $_sub_cd ==53)  $ret_val =100;
+else if( $_sub_cd ==54)  $ret_val =100;
+else if( $_sub_cd ==55)  $ret_val =100;
+else if( $_sub_cd ==56)  $ret_val =100;
+else if( $_sub_cd ==57)  $ret_val =100;
+else if( $_sub_cd ==58)  $ret_val =100;
+else if( $_sub_cd ==70)  $ret_val =100;
+else if( $_sub_cd ==71)  $ret_val =75;
+else if( $_sub_cd ==72)  $ret_val =35;
+else if( $_sub_cd ==73)  $ret_val =35;
+else if( $_sub_cd ==75)  $ret_val =85;
+else if( $_sub_cd ==76)  $ret_val =85;
+else if( $_sub_cd ==79)  $ret_val =85;
+else if( $_sub_cd ==80)  $ret_val =50;
+else if( $_sub_cd ==81)  $ret_val =100;
+else if( $_sub_cd ==82)  $ret_val =100;
+else if( $_sub_cd ==83)  $ret_val =75;
+else if( $_sub_cd ==84)  $ret_val =100;
+else if( $_sub_cd ==85)  $ret_val =100;
+else if( $_sub_cd ==86)  $ret_val =100;
+else if( $_sub_cd ==87)  $ret_val =100;
+else if( $_sub_cd ==88)  $ret_val =100;
+else if( $_sub_cd ==90)  $ret_val =85;
+else if( $_sub_cd ==92)  $ret_val =50;
+else if( $_sub_cd ==93)  $ret_val =50;
+else if( $_sub_cd ==94)  $ret_val =75;
+else if( $_sub_cd ==95)  $ret_val =75;
+else if( $_sub_cd ==97)  $ret_val =50;
+else if( $_sub_cd ==99)  $ret_val =100;
    return $ret_val;
     }
     

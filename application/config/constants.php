@@ -37,9 +37,9 @@ define('FOPEN_WRITE_CREATE_STRICT',                'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',        'x+b');
 
 define('PRIVATE_IMAGE_PATH', 'uploads/2016/private/');
-define('REGULAR_IMAGE_PATH', 'http://ssc.bisegrw.com/');
+define('REGULAR_IMAGE_PATH', '/');
 define('CURRENT_SESS', 'Online Result Card 9th Annual 2016');
-define('CURRENT_SESS_YEAR', 'Result SSC (Part-I) Annual 2016');
+define('CURRENT_SESS_YEAR', 'Result HSSC (Part-I) Annual 2016');
 
 define('VERIFICATION_TITLE', 'Online NOC System');
 define('NOC_APP_NO', '400000');

@@ -32,7 +32,7 @@ class Login extends CI_Controller {
 
             $this->load->model('login_model'); 
             $logedIn = $this->login_model->auth($_POST['username'],$_POST['password']);
-//DebugBreak();
+          //  DebugBreak();
             if($logedIn != false)
             {  
               

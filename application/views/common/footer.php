@@ -50,11 +50,20 @@ if(isset($files)){
             $('.mPageloader').hide();
         }
     }
-
-    function downloadgroupwise12(isdownload)
+     function downloadgroupwise12(isdownload)
     {
         $('.mPageloader').show();
-        window.location.href = '<?=base_url()?>index.php/result/InterRollNoGroupwise/'+$("#std_group").val()+'/'+isdownload
+        window.location.href = '<?=base_url()?>index.php/result/resultcard12thgroupwise/'+$("#std_group").val()+'/'+isdownload
+
+        if(isdownload == 1)
+        {
+            $('.mPageloader').hide();
+        }
+    }
+       function downloadgroupwise11(isdownload)
+    {
+        $('.mPageloader').show();
+        window.location.href = '<?=base_url()?>index.php/result/resultcard11thgroupwise/'+$("#std_group").val()+'/'+isdownload
 
         if(isdownload == 1)
         {

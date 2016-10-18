@@ -185,14 +185,14 @@
                 <label style="margin-left: -34px;" >Matric Roll No:</label>
             </div>
             <div class="col-sm-2 ">
-                <input type="text" id="tsscrno" name="sscrno" maxlength="6" value='447058' class="form-textbox"/>
+                <input type="text" id="tsscrno" name="sscrno" maxlength="6" class="form-textbox"/>
             </div>
             <div class="col-sm-1"></div>
             <div class="col-sm-1 text-right " >
                 <label style="margin-left: -34px;" >Inter Roll No:</label>
             </div>
             <div class="col-sm-2 ">
-                <input type="text" id="Hsscrno" name="Hsscrno" maxlength="6" value ='100002' class="form-textbox"/>
+                <input type="text" id="Hsscrno" name="Hsscrno" maxlength="6"  class="form-textbox"/>
             </div>
         </div>
         <br />
@@ -203,7 +203,7 @@
             <div class="col-sm-2">
                 <select id="ddlHsscYear" class="form-dropdown" name="ddlHsscYear" >
                     <option value="0">SELECT YEAR</option>
-                    <option selected="selected" value="2016">2016</option>
+                    <option  value="2016">2016</option>
                     <option value="2015">2015</option>
                     <option value="2014">2014</option>
                     <option value="2013">2013</option>
@@ -246,7 +246,7 @@
                 <select id="ddlHsscClass" class="form-dropdown" name="ddlHsscSess">
                     <option value="0">SELECT CLASS</option>
                     <option value="11">INTER PART-I</option>
-                    <option value="12" selected="selected">INTER PART-II</option>
+                    <option value="12">INTER PART-II</option>
                 </select>
             </div>
         </div>
@@ -258,7 +258,7 @@
             <div class="col-sm-6">
                 <select id="ddlHsscBrd" class="form-dropdown" name="ddlHsscBrd">
                     <option value="0">PLEASE SELECT ONE</option>
-                    <option value="2" selected="selected">BISE,  LAHORE</option><option value="3">BISE,  RAWALPINDI</option><option value="4">BISE,  MULTAN</option><option value="5">BISE,  FAISALABAD</option><option value="6">BISE,  BAHAWALPUR</option><option value="7">BISE,  SARGODHA</option><option value="8">BISE,  DERA GHAZI KHAN</option><option value="9">FBISE, ISLAMABAD</option><option value="10">BISE, MIRPUR</option><option value="11">BISE, ABBOTTABAD</option><option value="12">BISE, PESHAWAR</option><option value="13">BSE, KARACHI</option><option value="14">BISE, QUETTA</option><option value="15">BISE, MARDAN</option><option value="16">FBISE, ISLAMABAD</option><option value="17">CAMBRIDGE</option><option value="18">AIOU, ISLAMABAD</option><option value="19">BISE, KOHAT</option><option value="20">KARAKURUM</option><option value="21">MALAKAN</option><option value="22">BISE, BANNU</option><option value="23">BISE, D.I.KHAN</option><option value="24">AKUEB, KARACHI</option><option value="25">BISE, HYDERABAD</option><option value="26">BISE, LARKANA</option><option value="27">BISE, MIRPUR(SINDH)</option><option value="28">BISE, SUKKUR</option><option value="29">BISE, SWAT</option><option value="30">SBTE KARACHI</option><option value="31">PBTE, LAHORE</option><option value="32">AFBHE RAWALPINDI</option><option value="33">BIE, KARACHI</option><option value="34">BISE SAHIWAL</option>
+                    <option value="2">BISE,  LAHORE</option><option value="3">BISE,  RAWALPINDI</option><option value="4">BISE,  MULTAN</option><option value="5">BISE,  FAISALABAD</option><option value="6">BISE,  BAHAWALPUR</option><option value="7">BISE,  SARGODHA</option><option value="8">BISE,  DERA GHAZI KHAN</option><option value="9">FBISE, ISLAMABAD</option><option value="10">BISE, MIRPUR</option><option value="11">BISE, ABBOTTABAD</option><option value="12">BISE, PESHAWAR</option><option value="13">BSE, KARACHI</option><option value="14">BISE, QUETTA</option><option value="15">BISE, MARDAN</option><option value="16">FBISE, ISLAMABAD</option><option value="17">CAMBRIDGE</option><option value="18">AIOU, ISLAMABAD</option><option value="19">BISE, KOHAT</option><option value="20">KARAKURUM</option><option value="21">MALAKAN</option><option value="22">BISE, BANNU</option><option value="23">BISE, D.I.KHAN</option><option value="24">AKUEB, KARACHI</option><option value="25">BISE, HYDERABAD</option><option value="26">BISE, LARKANA</option><option value="27">BISE, MIRPUR(SINDH)</option><option value="28">BISE, SUKKUR</option><option value="29">BISE, SWAT</option><option value="30">SBTE KARACHI</option><option value="31">PBTE, LAHORE</option><option value="32">AFBHE RAWALPINDI</option><option value="33">BIE, KARACHI</option><option value="34">BISE SAHIWAL</option>
                 </select>
             </div>
         </div>
@@ -275,7 +275,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12" style="    text-align: left;    font-weight: bold; text-transform: uppercase;">
-                <input checked="checked" type='checkbox'  style='    width: 24px;        height: 24px;' name='terms' id='termshssc' onchange='activateButton(this)'>  I accept all the terms & conditions of BISE,Gujranwala.
+                <input  type='checkbox'  style='    width: 24px;        height: 24px;' name='terms' id='termshssc' onchange='activateButton(this)'>  I accept all the terms & conditions of BISE,Gujranwala.
             </div>
         </div>
         <br />

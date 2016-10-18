@@ -121,6 +121,45 @@
                 return  -1;
             }
         }
+        
+          public function get11thResultCardByGroupWise($keyword,$Inst_Id)
+        {
+            // DebugBreak();
+
+            $where = "grp_cd = $keyword AND coll_cd = $Inst_Id";
+
+
+            $query = $this->db->query("SELECT * FROM matric_new..tbl11thresultcards where $where");
+            $rowcount = $query->num_rows();
+            if($rowcount > 0)
+            {
+                return $query->result_array();
+
+            }
+            else
+            {
+                return  -1;
+            }
+        }
+         public function getresultNocstd($Inst_Id)
+        {
+            // DebugBreak();
+
+            $where = "isactive = 0 AND inst_cd = $Inst_Id";
+
+
+            $query = $this->db->query("SELECT rno FROM  Registration..tblRegular_Inter_IA1p16_NOC  where $where");
+            $rowcount = $query->num_rows();
+            if($rowcount > 0)
+            {
+                return $query->result_array();
+
+            }
+            else
+            {
+                return  -1;
+            }
+        }
       
   }
 ?>

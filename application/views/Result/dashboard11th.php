@@ -90,14 +90,45 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    //DebugBreak();
+                                   // 
                                     if($data != false)
                                     {
+                                               ;
                                         $n=0;  
-                                        $grp_name='';                             
+                                        $grp_name='';
+                                        $disables =  '';                             
                                         foreach($data as $key=>$vals):
                                         $n++;
+                                        
+                                         $noctxt = '';
+                                        
                                         $roll_no = !empty($vals["rno"])?$vals["rno"]:"N/A";
+                                          // DebugBreak();
+                                          if($NOCdata != -1)
+                                          {
+                                              foreach($NOCdata as $key1=>$vals1):
+
+                                                  if($roll_no == $vals1['rno'])
+                                                  {   
+                                                      $noctxt = 'Submit Your NOC to Online Registration Branch at B.I.S.E Gujranwala';  
+                                                      break;
+                                                  }
+
+                                                  endforeach;
+                                          }
+                                        
+                                        
+                                        if($vals["status"] == 4 || $noctxt != '')
+                                        {
+                                             $disables = '';
+                                        }
+                                        else
+                                        {
+                                              $disables = '<button type="button" class="btn btn-info" value="'.$roll_no.'" onclick="downloadslip_Inter1('.$roll_no.',1)">Download Result Card</button>
+                                        <button type="button" class="btn btn-info" value="'.$roll_no.'" onclick="downloadslip_Inter1('.$roll_no.',2)">View Result Card</button>'; 
+                                        }
+                                        
+                                        
                                         $grp_name = $vals["grp_cd"];
                                         switch ($grp_name) {
                                             case '1':
@@ -137,10 +168,7 @@
                                         '; 
                                         
 
-                                        echo'<td>
-                                        <button type="button" class="btn btn-info" value="'.$roll_no.'" onclick="downloadslip_Inter1('.$roll_no.',1)">Download Result Card</button>
-                                        <button type="button" class="btn btn-info" value="'.$roll_no.'" onclick="downloadslip_Inter1('.$roll_no.',2)">View Result Card</button>
-                                        </td>
+                                        echo'<td>'.$disables.$noctxt.'</td>
                                         </tr>';
                                         endforeach;
 
