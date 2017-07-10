@@ -39,6 +39,14 @@ if(isset($files)){
 </script>
 <script type="">
 
+   var error =  '<?= @$error?>' ;
+  
+   if(error.length >1)
+   {
+       alertify.error("Record Not Found.");
+       $('#rno').focus();
+      // return false; 
+   }
 
 
     function downloadslip9th(rno,isdownload)
@@ -50,20 +58,20 @@ if(isset($files)){
             $('.mPageloader').hide();
         }
     }
-     function downloadgroupwise12(isdownload)
+     function downloadgroupwise11(isdownload)
     {
         $('.mPageloader').show();
-        window.location.href = '<?=base_url()?>index.php/result/resultcard12thgroupwise/'+$("#std_group").val()+'/'+isdownload
+        window.location.href = '<?=base_url()?>index.php/result/resultcard11thgroupwise/'+$("#std_group").val()+'/'+isdownload
 
         if(isdownload == 1)
         {
             $('.mPageloader').hide();
         }
     }
-       function downloadgroupwise11(isdownload)
+    function downloadgroupwise12(isdownload)
     {
         $('.mPageloader').show();
-        window.location.href = '<?=base_url()?>index.php/result/resultcard11thgroupwise/'+$("#std_group").val()+'/'+isdownload
+        window.location.href = '<?=base_url()?>index.php/result/resultcard12thgroupwise/'+$("#std_group").val()+'/'+isdownload
 
         if(isdownload == 1)
         {
@@ -83,17 +91,16 @@ if(isset($files)){
     {
         window.location.href = '<?=base_url()?>index.php/result/resultcard12th/'+rno+'/2'
     }
-function downloadslip_Inter1(rno,val)
+     function downloadslip_Inter1(rno,val)
     {
         window.location.href = '<?=base_url()?>index.php/result/resultcard11th/'+rno+'/'+val
     }
-    
     function downloadgroupwise()
     {
         window.location.href = '<?=base_url()?>index.php/result/MatricRollNoGroupwise/'+$("#std_group").val()
     }
 
-
+   
     function logout(){
         var msg = "Are you Sure You want to LOGOUT?"
 

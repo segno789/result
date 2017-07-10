@@ -140,8 +140,6 @@
         }
     }
     //---------------------------------------------------------------------    
-    
-    
     function  mSubName($_sub_cd)
     {
 $ret_val = "";
@@ -307,6 +305,8 @@ else if($_sub_cd == 93)$ret_val = "30";
 else if($_sub_cd == 94)$ret_val = "30";
 return $ret_val;
     }
+    //------------------------------------------------------------------
+
 function get_gradeMA_oldSch($marks,$status) {
 if($status == 1)    
 {
@@ -420,6 +420,36 @@ return "";
             }else if($marks == 8 or $marks ==9 ) {
                 return "(E)";
             }else if($marks < 8) {
+                return "(F)";
+            }
+    }
+    else 
+     return "";
+}
+
+function get_gradeMAPrac_new_ma2016($marks,$st,$mSub_cd, $SubPrSt) {
+
+if($st != 2 && ($marks ==0 || $marks == null))
+return "";
+
+   if ($mSub_cd ==6 || $mSub_cd==7 || $mSub_cd==8 || $mSub_cd==78 || $mSub_cd==27 || $mSub_cd==43 || $mSub_cd==83 || $mSub_cd==48 || $mSub_cd==79 || $mSub_cd==18 || $mSub_cd==84 || $mSub_cd==40 || $mSub_cd==30 || $mSub_cd==89 || $mSub_cd==90 )
+    {
+            if($marks >= 18) 
+            {
+                return "(A+)";
+            }else if($marks == 16 or $marks ==17 ) {
+                return "(A)";
+            }else if($marks == 14 or $marks ==15 ) {
+                return "(B)";
+            }else if($marks == 12 or $marks ==13 ) {
+                return "(C)";
+            }else if($marks == 10 or $marks ==11 ) {
+                return "(D)";
+            }else if($marks == 8 or $marks ==9 ) {
+                return "(E)";
+            }else if($marks < 8 and $SubPrSt == 2) {
+                return "(E)";
+            } else if($marks < 8 ) {
                 return "(F)";
             }
     }

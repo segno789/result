@@ -2,34 +2,44 @@
 /*define('MSG_NO_ACCESS_INDEX', '<img src="assets/img/noaccess.jpg" style="width:100%;  height: 100%;">');
 error_reporting (0 )    ;
 $acceptedDomains = array('bisegrw.com','google.com.pk','google.com','yahoo.com','www.bisegrw.com');
- // print_r($_SERVER['HTTP_REFERER'])  ;
+// print_r($_SERVER['HTTP_REFERER'])  ;
 if($_SERVER['HTTP_REFERER'] != null)
 {
-    $referer=get_domain($_SERVER['HTTP_REFERER']);
-    if(!$referer || !in_array($referer,$acceptedDomains))
-    {
-        header('HTTP/1.0 403 Forbidden');
-       exit(MSG_NO_ACCESS_INDEX);
-    }
+$referer=get_domain($_SERVER['HTTP_REFERER']);
+if(!$referer || !in_array($referer,$acceptedDomains))
+{
+header('HTTP/1.0 403 Forbidden');
+exit(MSG_NO_ACCESS_INDEX);
+}
 }
 function get_domain($url)
 {
-    $pieces = parse_url($url);
-    $domain = isset($pieces['host']) ? $pieces['host'] : '';
-    if (preg_match('/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i', $domain, $regs)) 
-    {
-        return $regs['domain'];
-    }
-    return false;
+$pieces = parse_url($url);
+$domain = isset($pieces['host']) ? $pieces['host'] : '';
+if (preg_match('/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i', $domain, $regs)) 
+{
+return $regs['domain'];
+}
+return false;
 } */           
 
+date_default_timezone_set('Asia/Karachi');
+$hour = 14; 
+$minute = 57; 
+$month = 7; 
+$day = 9; 
+$year = 2017; 
+$event = 'Christmas'; 
 
+$remaining = date('U', mktime($hour, $minute, 0, $month, $day, $year)) - date('U'); 
+
+$days = floor($remaining / 60 / 60 / 24); 
+$hours = $remaining / 60 / 60 % 24; 
+$minutes = $remaining / 60 % 60; 
+$seconds = $remaining % 60; 
 
 
 ?>
-
-
-
 
 <html lang="en"><!--
     <![endif]--><head>
@@ -52,18 +62,18 @@ function get_domain($url)
         <script src="css/icomoon-font/lte-ie7.js">
         </script>
         <![endif]-->
-       <style type="">
-       #data-table_length label, .dataTables_filter  label{
-               color: #333 !important;
-       }
-       </style>
+        <style type="">
+            #data-table_length label, .dataTables_filter  label{
+                color: #333 !important;
+            }
+        </style>
     </head>
     <body style="background-color: white !important;">                               
-      
 
-       
-       
-       
+
+
+
+
         <div class="left-sidebar">
             <div id="header">
                 <div class="inHeaderLogin">
@@ -72,21 +82,21 @@ function get_domain($url)
                     <p style="color: wheat;text-align: center;font-size: 23px;margin-left: 8px;float: left;  margin-top:55px;">Board of Intermediate & Secondary Education, Gujranwala </br></br> <?= CURRENT_SESS_YEAR?> </p>
                 </div>
             </div> 
-            
+
             <div style="width: 60%; margin: 60px 235px 0 auto;" id="cnthide">
                 <div id="yEa" >
-                   
 
-                    
-                    
-                    
+
+
+
+
                 </div>
             </div>
-             <!--<a href="http://results.bisegrw.com/" target="_blank" style="    margin-left: 829px;margin-top: 5px;float: left;font-size: 25px;font-weight: bold;"> Result Link 2</a>-->
-              <a href="http://result.bisegrw.com/" target="_blank" style="margin-left: 637px;;margin-top: 5px;float: left;font-size: 25px;font-weight: bold;"> Result Link 2</a>
+            <!--<a href="http://results.bisegrw.com/" target="_blank" style="    margin-left: 829px;margin-top: 5px;float: left;font-size: 25px;font-weight: bold;"> Result Link 2</a>-->
+            <a href="http://results.bisegrw.com/" target="_blank" style="margin-left: 46%;;margin-top: 5px;float: left;font-size: 25px;font-weight: bold;" style="display: none;" id="secondlink"> Result Link 2</a>
             <div id="page" class="countdown" style="display: none;">
-               
-                <div style="  color: #246785;font-size: 20px;    text-align: center;margin-bottom: 1px;margin-left: 27px;margin-top: 48px;"> Gazette & CD Password: <b style="color: red;font-size: 22px;" >CS.ma$16@</b></div>
+
+                <div style="  color: #246785;font-size: 20px;    text-align: center;margin-bottom: 1px;margin-left: 27px;margin-top: 48px;"> Gazette & CD Password: <b style="color: red;font-size: 22px;" >grwbise_11th</b></div>
                 <div style="width: 422px;float: left;">
 
                     <form id="searchForm"  class="searchForm" method="post">
@@ -101,7 +111,6 @@ function get_domain($url)
 
                             <div id="searchInContainer">
                                 <input type="hidden" name="check" value="2" id="searchSite" class="radio-button" >
-
 
                             </div>
 
@@ -137,20 +146,40 @@ function get_domain($url)
                     </form>
                 </div>
                 <div id="resultsDiv" style="margin-bottom: 40px;min-height: 473px;">
-                   
+
                     <?php 
-                    //  DebugBreak();
+                    // DebugBreak();
                     // echo  $callback['check'];
                     if(@$isfound == -1)
                     {
-                        echo "<p style='color: red;font-size: 24px;font-weight: bold;    text-align: center;    margin-bottom: 20px;'>Record Not Found. Please Enter Valid Roll Numnber/Institute Code.</p>";
+                        echo "<p style='color: red;font-size: 24px;font-weight: bold;text-align: center;margin-bottom: 20px;'>Record Not Found. Please Enter Valid Roll Numnber/Institute Code.</p>";
+                    }
+                    else if(@$isfound == -2)
+                    {
+                        echo "<p style='color: red;font-size: 24px;font-weight: bold;text-align: center;margin-bottom: 20px;'>Result Will be declared 10:10 A.M</p>";
                     }
 
-                    else if( @$callback['check'] ==2)
+                    else if( @$callback['check'] ==2 && MCLASS == 10)
                     {
-
+                        //DebugBreak();
+                        include "ma10presult.php";  
+                    }
+                    else if( @$callback['check'] ==2 && MCLASS == 9)
+                    {
+                        //  DebugBreak();
                         include "ma9presult.php";  
-                    }   ?>
+                    }
+                    else if( @$callback['check'] ==2 && MCLASS == 11)
+                    {
+                        //  DebugBreak();
+                        include "ia11presult.php";  
+                    }
+                    else if( @$callback['check'] ==2 && MCLASS == 12)
+                    {
+                        //  DebugBreak();
+                        include "ia12presult.php";  
+                    }
+                    ?>
 
 
 
@@ -181,7 +210,7 @@ function get_domain($url)
                             <tbody>
 
                                 <?php
-                                //  DebugBreak();
+                                // DebugBreak();
 
                                 if(@$result!= false)
                                 {
@@ -190,11 +219,39 @@ function get_domain($url)
                                     foreach($Inst_Cd = $result as $key=>$vals):
                                         $n++;
                                         //$formno = !empty($vals["formNo"])?$vals["formNo"]:"N/A";
+                                        $resdata = '' ;
+                                        if($vals['Class'] == 12 || $vals['Class'] == 10)
+                                        {
+                                            if($vals['status'] == 2)
+                                            {
+                                                if($vals['result1'] != '')
+                                                {
+                                                    $resdata = 'Part1: '.$vals['result1']  ;
+                                                }
+                                                if($resdata != '')
+                                                {
+                                                    $resdata.=  ', Part2: '. $vals['result2'];   
+                                                }
+                                                else
+                                                {
+                                                    $resdata =  'Part2: '. $vals['result2'];  
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                $resdata =   $vals['result2'];
+                                            }
+                                        }
+                                        else if($vals['Class'] == 11 || $vals['Class'] == 9)
+                                        {
+                                            $resdata =  $vals['result1'];  
+                                        }
                                         echo '<tr  >
                                         <td style="width: 5%;">'.$vals['RNo'].'</td>
                                         <td style="width:15%">'.$vals['Name'].'</td>
-                                        <td style="width:15%">'.$vals['FName'].'</td>
-                                        <td style="width:15%">'.$vals['result1'].'</td>
+                                        <td style="width:15%">'.$vals['Fname'].'</td>
+                                        <td style="width:15%">'.$resdata.'</td>
                                         <td style="width:13%" class="hidden-phone"> <button type="button" class="btn-info" style="height: 32px;width: 107px;font-size: 17px;font-weight: bold;"  value="'.$vals['RNo'].'" onclick="Result_Print('.$vals['RNo'].')">View Result</button></td></tr>';
                                         endforeach;
                                 }
@@ -211,7 +268,7 @@ function get_domain($url)
 
             </div>
 
-                     
+
 
             <div id="header" class="headershow" style=" position: absolute;left: 50%;transform: translate(-50%, -50%);margin: 0 auto;display: none;">
 
@@ -230,89 +287,80 @@ function get_domain($url)
         <script src="<?php echo base_url(); ?>assets/resjs/bootstrap.js"></script>
         <script src="<?php echo base_url(); ?>assets/resjs/script.js"></script>
         <script src="<?php echo base_url(); ?>assets/resjs/bttz.js"></script>
-        <script src="<?php echo base_url(); ?>assets/resjs/jquery.countdown.js"></script>
-        <script src="<?php echo base_url(); ?>assets/resjs/jquery.countdown.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/resjs/jquery.dataTables.js"></script>
 
-        <script type="text/javascript">
-        
-               
-         var datetime = new Date(2016,08,26,3,40,56);  
-           console.log(datetime)
-         //   console.log(new Date(2016,08,26,3,15,56))      
-           var $clock = $('#yEa').countdown(datetime)
-            .on('update.countdown', function(event) {
-             
-              var objthis = $(this)
-             
-               $.get("http://results.bisegrw.com/result/index.php/result/servertime", function(data) {
-                   var times  = data.split(':');
-                 //  var dates = datetime[0].split('-');
-                   //var times = datetime[1].split(':');
-                 //  var serverTimeOffset = new Date(dates[0],dates[1],dates[2],times[0],times[1],times[2]);
-                  // console.log(serverTimeOffset)
-                 //  console.log(dates)
-                 //  console.log(times)
-                 //  $clock.countdown(serverTimeOffset);
-                 //  $('#yEa').countdown({ until: new Date(dates[0],dates[1],dates[2],times[0],times[1],times[2])});
-                // console.log(times.length)
-                 if(times.length > 1)
-                 {
-                     event.offset.days= 0;
-                     event.offset.weeks= 0;
-                     event.offset.hours= 0;
-                     event.offset.totalHours= 0;
-                     event.offset.daysToWeek= 0; 
-                     event.offset.daysToMonth= 0; 
-                     event.offset.minutes= times[1]; 
-                     event.offset.seconds= times[2]; 
-                     event.offset.totalDays= 0; 
-                     event.offset.totalMinutes= 30; 
-                     event.offset.totalSeconds= 30*60; 
-                     event.offset.months= 0; 
+        <script type="text/javascript"> 
+           
+             $('#cnthide').show();
+            $('#secondlink').hide();
+            $('.headershow').hide();
+            $('#page').hide();   
+          
+           
+            var days = '<?php echo $days; ?>'; 
+            var hours = '<?php echo $hours; ?>'; 
+            var minutes = '<?php echo $minutes; ?>'; 
+            var seconds = '<?php echo $seconds; ?>'; 
+            var finished = false; 
+            var zerotxtm = ''
+            var zerotxts = ''
+            function updatecountdown(){ 
+                 zerotxtm = ''
+                 zerotxts = ''
+                seconds--; 
+                if(seconds < 0){ 
+                    seconds = 59; 
+                    minutes--; 
+                    if(minutes < 0){ 
+                        minutes = 59; 
+                        hours--; 
+                        if(hours < 0){ 
+                            hours = 23; 
+                            days--; 
+                            if(days < 0){ 
+                                finished = true; 
+                            } 
+                        } 
+                    } 
+                } 
 
-
-                     var format =  '<span style="color:#003399;font-family:arial,sans-serif;font-size:280px;font-weight:bold">'+times[1]+'<span style="color:#cccccc;position:relative;top:-33px">:</span>'+times[2]+'</span>';
-
-                     if(event.offset.totalDays > 0) {
-                         format = '%-d day%!d ' + format;
-                     }
-                     if(event.offset.weeks > 0) {
-                         format = '%-w week%!w ' + format;
-                     }
-
-                     console.log(event.offset )
-
-                     objthis.html(format);
+                if(!finished){ 
+                    var message = days + ' days<br />'; 
+                    message += hours + ' hours<br />'; 
+                    message += minutes + ' minutes<br />'; 
+                    message += seconds + ' seconds<br />'; 
+                    message += 'until <?php echo $event; ?>!'; 
+                  //  document.getElementById('countdown').innerHTML = message; 
+                  
+                  if(minutes >=0 && minutes<=9)
+                  {
+                      zerotxtm = 0;
+                  }
+                  if(seconds >= 0 && seconds<= 9)
+                  {
+                     zerotxts = 0
+                  }
+                     $('#yEa').html('<span style="color:#003399;font-family:arial,sans-serif;font-size:280px;font-weight:bold">'+zerotxtm+minutes+'<span style="color:#cccccc;position:relative;top:-33px">:</span>'+zerotxts+seconds+'</span>');
+                      $('#secondlink').hide();
                      $('.headershow').hide();
                      $('#page').hide();   
-                 }
-                 else
-                 {
-                     $('#yEa').countdown('2016/08/26 10:10:58')
+                    
+                } 
+                else{ 
                      $('#cnthide').hide();
+                     $('#secondlink').show();
                      $('.headershow').show();
                      $('#page').show();   
-                 }
+                     clearInterval(theInterval); 
+                } 
+            } 
+            var theInterval = setInterval("updatecountdown()", 1000); 
+        </script>
 
 
-               });
-                
-                
-              //  var serverTimeOffset = new Date(data);
-             //   $clock.countdown(serverTimeOffset);
-             
-              
-            })
-            .on('finish.countdown', function(event) {
-              
-                $('#cnthide').hide();
-                $('.headershow').show();
-                $('#page').show();
+        <script type="text/javascript">
 
-            });
-        
-        
+
             $("input").keypress(function(event) {
                 if (event.which == 13) {
                     event.preventDefault();
@@ -320,28 +368,28 @@ function get_domain($url)
                     var inst = $('#inst').val()
                     if(rno != '')
                     {
-                       $("#searchForm").submit();  
+                        $("#searchForm").submit();  
                     }
                     else if(inst != '')
                     {
-                      $("#searchForm1").submit();    
+                        $("#searchForm1").submit();    
                     }
-                   
+
                 }
             });
-        
-        
+
+
             $(document).ready(function () {
-            $('#data-table').dataTable({
-                "sPaginationType": "full_numbers",
-                "cache": false,
-                 "pageLength": 25
-            });   
+                $('#data-table').dataTable({
+                    "sPaginationType": "full_numbers",
+                    "cache": false,
+                    "pageLength": 25
+                });   
             });
             $("#btn-print").live("click", function () {
                 var divContents = $("#printres").html();
                 var printWindow = window.open('', '', 'height=400,width=800');
-                printWindow.document.write('<html><head><title>9th (Annual) Examination, 2016</title>');
+                printWindow.document.write('<html><head><title>12th (Annual) Examination, 2016</title>');
                 printWindow.document.write('</head><body >');
                 printWindow.document.write(divContents);
                 printWindow.document.write('</body></html>');
@@ -353,7 +401,7 @@ function get_domain($url)
                 if(e.ctrlKey && e.keyCode == 80){
                     var divContents = $("#resultsDiv").html();
                     var printWindow = window.open('', '', 'height=400,width=800');
-                    printWindow.document.write('<html><head><title>9th (Annual) Examination, 2016</title>');
+                    printWindow.document.write('<html><head><title>12th (Annual) Examination, 2016</title>');
                     printWindow.document.write('</head><body >');
                     printWindow.document.write(divContents);
                     printWindow.document.write('</body></html>');
@@ -368,11 +416,11 @@ function get_domain($url)
             }
             function setboxval(info)
             {
-              //  alert(info)
+                //  alert(info)
                 if(info == 1)
                 {
                     $('#rno').val('') 
-                    
+
                 }
                 else if(info == 2)
                 {

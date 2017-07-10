@@ -32,7 +32,7 @@ class Login extends CI_Controller {
 
             $this->load->model('login_model'); 
             $logedIn = $this->login_model->auth($_POST['username'],$_POST['password']);
-          //  DebugBreak();
+
             if($logedIn != false)
             {  
               
@@ -42,27 +42,37 @@ class Login extends CI_Controller {
                         'user_status' => 4,                     
                         'remarks' => $logedIn['flusers']['Remarks']                     
                     );
-                    $this->load->view('login/login.php',$data);
-                }
-                
-                else if($logedIn['flusers']['status'] == 0)
-                {
-                    $data = array(
-                        'user_status' => 3                     
-                    );
-                    $this->load->view('login/login.php',$data);
+                    
+                    if(($logedIn['tbl_inst']['edu_lvl'] == 1 && $logedIn['flusers']['class'] ==9 ) || ($logedIn['tbl_inst']['edu_lvl'] == 2 && $logedIn['flusers']['class'] ==12))
+                    {
+                        $this->load->view('login/login.php',$data);
+                        return ;
+                    }
+                    
+                           
                 }
                
-                else
-                {
-                      $grp =  $logedIn['tbl_inst']['allowed_mGrp'];
+                if($logedIn['tbl_inst']['edu_lvl'] == 3)
+                {       
+                    if($logedIn['flusers']['class'] ==9)
+                    {
+                        $logedIn['tbl_inst']['edu_lvl'] = 2;
+                    }
+                    else  if($logedIn['flusers']['class'] ==12)
+                    {
+                        $logedIn['tbl_inst']['edu_lvl'] = 1;
+                    }
+
+                }
+
+                $grp =  $logedIn['tbl_inst']['allowed_mGrp'];
                     $isdeaf = 0;
 
                     
                     $sess_array = array(
-                        'Inst_Id' => $logedIn['flusers']['inst_cd'] ,
+                        'Inst_Id' => $logedIn['tbl_inst']['Inst_cd'] ,
                         'edu_lvl' => $logedIn['tbl_inst']['edu_lvl'],
-                        'inst_Name' => $logedIn['flusers']['inst_name'],
+                        'inst_Name' => $logedIn['tbl_inst']['Name'],
                         'gender' => $logedIn['tbl_inst']['Gender'],
                         'isrural' => $logedIn['tbl_inst']['IsRural'],
                         'grp_cd' => $logedIn['tbl_inst']['allowed_mGrp'],
@@ -81,17 +91,12 @@ class Login extends CI_Controller {
 
                     $this->session->set_userdata('logged_in', $sess_array); 
                     
-                    if($logedIn['tbl_inst']['edu_lvl'] == 1 || $logedIn['tbl_inst']['edu_lvl'] == 3)
-                    redirect('result/dashboard9th','refresh');
-                    else if($logedIn['tbl_inst']['edu_lvl'] == 2 || $logedIn['tbl_inst']['edu_lvl']==3)
+                    if($logedIn['tbl_inst']['edu_lvl'] == 2 || $logedIn['tbl_inst']['edu_lvl']==3)
                     {
-                         redirect('result/dashboard12th','refresh'); 
+                         redirect('result/dashboard11th'); 
                     }
-
-
-                }
-
-
+                   else  if($logedIn['tbl_inst']['edu_lvl'] == 1 || $logedIn['tbl_inst']['edu_lvl'] == 3)
+                    redirect('result/dashboard9th');
 
 
             }
@@ -108,6 +113,64 @@ class Login extends CI_Controller {
         else
         {
             $this->load->view('login/login.php',$data);
+        }
+
+    }
+     public function biselogin()
+    {
+        // DebugBreak();
+        $this->load->helper('url');
+        $data = array(
+            'user_status' => ''                     
+
+        );
+
+
+        if(@$_POST['username'] != '' && @$_POST['password'] != '')
+        {   
+            if(@$_POST['username'] == 2222 || @$_POST['username'] == 2303 || @$_POST['username'] == 2229)
+            {
+
+
+
+                $this->load->model('login_model'); 
+                $logedIn = $this->login_model->biseauth($_POST['username'],$_POST['password']);
+                if($logedIn != false)
+                {  
+                    $sess_array = array(
+                        'Inst_Id' => $logedIn['Emp_cd'] ,
+                        'edu_lvl' => $logedIn['BS'],
+                        'inst_Name' => $logedIn['Name'],
+                        'isdeaf' => 0,
+                        'isboardoperator' => 1,
+                    );
+                    $this->load->library('session');
+                    $this->session->set_userdata('logged_in', $sess_array); 
+                    redirect('result/resultcards'); 
+                }
+                else
+                {  
+                    $data = array(
+                        'user_status' => 1                     
+                    );
+                    $this->load->view('login/biselogin.php',$data);
+
+                }
+            }
+            else
+            {
+                $data = array(
+                    'user_status' => '7'                     
+
+                );
+                $this->load->view('login/biselogin.php',$data);
+            }
+
+        }
+        else
+        {
+
+            $this->load->view('login/biselogin.php',$data);
         }
 
     }

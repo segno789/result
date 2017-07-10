@@ -9,9 +9,9 @@
         <meta name="author" content="">
         <!-- bootstrap css -->
 
-        <link href="<?php echo base_url(); ?>assets/css/icomoon/styleprivateslip.css" rel="stylesheet">
-        <link href="<?php echo base_url(); ?>assets/css/icomoon/style.css" rel="stylesheet">
-        <link href="<?php echo base_url(); ?>assets/css/main.css" rel="stylesheet"> <!-- Important. For Theming change primary-color variable in main.css  -->
+        <link href="<?php echo base_url(); ?>assets/rescss/icomoon/styleprivateslip.css" rel="stylesheet">
+        <link href="<?php echo base_url(); ?>assets/rescss/icomoon/style.css" rel="stylesheet">
+        <link href="<?php echo base_url(); ?>assets/rescss/main.css" rel="stylesheet"> <!-- Important. For Theming change primary-color variable in main.css  -->
         <!--[if lte IE 7]>
         <script src="css/icomoon-font/lte-ie7.js">
         </script>
@@ -27,9 +27,9 @@
             <div class="left-sidebar">
             <div id="header" style="width: 50%;">
                     <div class="inHeaderLogin" style="/* width: 50%; */">
-                        <a href="" rel="home" data-original-title="BISE Gujranwala" style=""><img style="margin-top: 9px;text-align:left;width:150px;/* float: left; */margin-left: 14px;" src="<?php echo base_url(); ?>assets/img/icon.png" alt="Logo BISE GRW"></a>
+                        <a href="" rel="home" data-original-title="BISE Gujranwala" style=""><img style="margin-top: 9px;text-align:left;width:150px;/* float: left; */margin-left: 14px;" src="../assets/img/icon.png" alt="Logo BISE GRW"></a>
                         <!--Intimation-->
-                        <p style="color: wheat;text-align: center;font-size: 20px;margin-left: 28px;margin-top: -129px;">Board of Intermediate &amp; Secondary Education, Gujranwala <br><br>  <?php echo CURRENT_SESS;?></p>
+                        <p style="color: wheat;text-align: center;    font-size: 18px;    margin-left: 120px;margin-top: -129px;">Board of Intermediate &amp; Secondary Education, Gujranwala <br><br>  <?php echo CURRENT_SESS;?></p>
                     </div>
                 </div>
            
@@ -46,7 +46,6 @@
                                         </div>
                                         <div class="span12">
                                             <p>Fill out the form below to login.</p>
-                                            <p style="color: red;">9th Result Card Webiste Active Till <b>10-09-2016</b>. Please downlaod your result cards before this date.</p>
                                             <?php 
 
                                            if($user_status == 1)
@@ -118,8 +117,8 @@
             </div>
             <!--/.fluid-container-->
         </div>
-        <script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/js/bootstrap.js"></script>
+        <script src="<?php echo base_url(); ?>assets/resjs/jquery.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/resjs/bootstrap.js"></script>
         <script type="text/javascript">
             $('a').tooltip('hide');
             $('.popover-pop').popover('hide');

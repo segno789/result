@@ -9,11 +9,11 @@
         <meta name="author" content="">
         <!-- bootstrap css -->
 
-        <link href="<?php echo base_url(); ?>assets/css/icomoon/styleprivateslip.css" rel="stylesheet">   
-        <link href="<?php echo base_url(); ?>assets/css/icomoon/style.css" rel="stylesheet">
-        <link href="<?php echo base_url(); ?>assets/css/styles.css" rel="stylesheet">
-        <link href="<?php echo base_url(); ?>assets/css/datatables.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/jquery-ui.css">
+        <link href="<?php echo base_url(); ?>assets/rescss/icomoon/styleprivateslip.css" rel="stylesheet">   
+        <link href="<?php echo base_url(); ?>assets/rescss/icomoon/style.css" rel="stylesheet">
+        <link href="<?php echo base_url(); ?>assets/rescss/styles.css" rel="stylesheet">
+        <link href="<?php echo base_url(); ?>assets/rescss/datatables.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/rescss/jquery-ui.css">
 
         <!--[if lte IE 7]>
         <script src="css/icomoon-font/lte-ie7.js">
@@ -31,26 +31,41 @@
                 <div class="inHeaderLogin">
                     <a href="" title="BISE Gujranwala" rel="home"><img style="margin-top: 9px;text-align:left;width:150px;float: left;margin-left: 25%;" src="<?php echo base_url(); ?>assets/img/icon.png" alt="Logo BISE GRW"></a>
                     <!--Intimation-->
-                    <p style="color: wheat;text-align: center;font-size: 23px;margin-left: 28px;float: left;  margin-top:55px;">Board of Intermediate & Secondary Education, Gujranwala </br></br> Matric Annual Result 2016 </p>
+                    <p style="color: wheat;text-align: center;font-size: 23px;margin-left: 28px;float: left;  margin-top:55px;">Board of Intermediate & Secondary Education, Gujranwala </br></br>  <?= CURRENT_SESS_YEAR?> </p>
                 </div>
             </div> 
             <div id="page">
                
              
                 <div id="resultsDiv" style="margin-bottom: 40px;min-height: 473px;">
-                    <div style="  color: #246785;font-size: 20px;     margin-bottom:  35px;     display: inline-block;    margin-left: 75px;"> Gazette & CD Password: <b style="color: red;font-size: 22px;" >Inter_Supply_2015</b></div>
+                    <div style="  color: #246785;font-size: 20px;     margin-bottom:  35px;     display: inline-block;    margin-left: 75px;"> Gazette & CD Password: <b style="color: red;font-size: 22px;" >grwbise_11th</b></div>
                     <?php 
                     //  DebugBreak();
                     if(@$isfound == -1)
                     {
                         echo "<p style='color: red;font-size: 24px;font-weight: bold;    text-align: center;    margin-bottom: 20px;'>Record Not Found. Please Enter Valid Roll Numnber/Name.</p>";
                     }
-
-                    else if( @$isfound ==1)
+                     else if(  @$isfound ==1 && MCLASS == 10)
                     {
-
+                          //DebugBreak();
+                        include "ma10presult.php";  
+                    }
+                      else if(  @$isfound ==1 && MCLASS == 9)
+                    {
+                        //  DebugBreak();
                         include "ma9presult.php";  
-                    }   ?>
+                    }
+                    else if(  @$isfound ==1 && MCLASS == 11)
+                    {
+                        //  DebugBreak();
+                        include "ia11presult.php";  
+                    }
+                    else if(  @$isfound ==1 && MCLASS == 12)
+                    {
+                        //  DebugBreak();
+                        include "ia12presult.php";  
+                    }
+                    ?>
                    
 
                
@@ -88,7 +103,7 @@
             $("#btn-print").live("click", function () {
                 var divContents = $("#printres").html();
                 var printWindow = window.open('', '', 'height=400,width=800');
-                printWindow.document.write('<html><head><title>Matric (Annual) Examination, 2016</title>');
+                printWindow.document.write('<html><head><title>Inter (Annual) Examination, 2016</title>');
                 printWindow.document.write('</head><body >');
                 printWindow.document.write(divContents);
                 printWindow.document.write('</body></html>');
@@ -100,7 +115,7 @@
                 if(e.ctrlKey && e.keyCode == 80){
                     var divContents = $("#resultsDiv").html();
                     var printWindow = window.open('', '', 'height=400,width=800');
-                    printWindow.document.write('<html><head><title>Matric (Annual) Examination, 2016</title>');
+                    printWindow.document.write('<html><head><title>Inter (Annual) Examination, 2016</title>');
                     printWindow.document.write('</head><body >');
                     printWindow.document.write(divContents);
                     printWindow.document.write('</body></html>');

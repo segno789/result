@@ -82,7 +82,7 @@ $(document).ready(function(){
     }
 	
 	$.backToTzine({
-            url        : 'http://www.bisegrw.com/',
+            url        : 'http://www.bisegrw.com/home.php',
             style    : 'silver'
         });
 });

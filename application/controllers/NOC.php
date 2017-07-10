@@ -76,11 +76,11 @@ class NOC extends CI_Controller {
         //$info['iyear'] = 2016;     
 
         $filepath = $this->generatepath($info['Rno'],$info['class'],$info['iyear'],$info['sess']);
-        
-        
-        
-      
-        
+
+
+
+
+
         //$filepath = base_url().'assets/img/download.jpg';
         $fontSize = 10; 
         $marge    = .95;   // between barcode and hri in pixel
@@ -120,19 +120,20 @@ class NOC extends CI_Controller {
         $pdf->SetXY(56.2,45);
         $pdf->Cell(0, 0.2, "(NOC)", 0.25, "C");
         $pdf->Image($filepath,90,33, 30,35, "jpg"); 
-     /*   if( $decodedImg!==false )
-        {
-            //  Save image to a temporary location
-            if( file_put_contents(TEMPIMGLOC,$decodedImg)!==false )
-            {
-                //  Open new PDF document and print image
-               
-
-                //  Delete image from server
-                unlink(TEMPIMGLOC);
-            }
-        }*/
         
+        /*   if( $decodedImg!==false )
+        {
+        //  Save image to a temporary location
+        if( file_put_contents(TEMPIMGLOC,$decodedImg)!==false )
+        {
+        //  Open new PDF document and print image
+
+
+        //  Delete image from server
+        unlink(TEMPIMGLOC);
+        }
+        }*/
+
 
 
         $pdf->SetFont('Arial','B',10);
@@ -222,7 +223,7 @@ class NOC extends CI_Controller {
                 $class_name = "HSSC-I";
                 break;
             case 12:
-                $class_name = "HSSC-I";
+                $class_name = "HSSC-II";
                 break;
             default:
             $class_name = "No Class Selected!";
@@ -284,7 +285,7 @@ class NOC extends CI_Controller {
 
         $pdf->SetFont('Arial','B',10);
         $pdf->SetXY($rx+30,157.8);
-        $pdf->MultiCell(100, 5,"Rs. 1650/-", '', "L",0);
+        $pdf->MultiCell(100, 5,"Rs. 1600/-", '', "L",0);
 
         $pdf->SetFont('Arial','',10);
         $pdf->SetXY(10.2,190);
@@ -301,6 +302,7 @@ class NOC extends CI_Controller {
         $pdf->SetFont('Arial','',12);
         $pdf->SetXY(48.2,190);
         $pdf->Cell(0, 0.2, "_______________", 0.25, "C");
+          $pdf->Image('assets/img/SignOfficial.jpg',49.2,166, 25,25, "jpg"); 
         $pdf->SetFont('Arial','',12);
         $pdf->SetXY(58.2,195);
         $pdf->Cell(0, 0.2, "Official", 0.25, "C");
@@ -311,7 +313,7 @@ class NOC extends CI_Controller {
         $pdf->SetFont('Arial','',12);
         $pdf->SetXY(88.2,195);
         $pdf->Cell(0, 0.2, "Superintendent", 0.25, "C");
-
+          $pdf->Image('assets/img/SignSup.jpg',89.2,165.5, 25,25, "jpg"); 
 
 
         //Right Side
@@ -325,7 +327,8 @@ class NOC extends CI_Controller {
         $pdf->SetXY(185.2,40);
         $pdf->Cell(0, 0.2, "MIGRATION CERTIFICATE", 0.25, "C");
 
-        $pdf->Image($filepath,250,30, 30,35, "jpg");
+        $pdf->Image($filepath,250,30, 30,35, "jpg");  
+        $pdf->Image('assets/img/Stamp.jpg',248,86, 35,35, "jpg"); 
         $pdf->SetFont('Arial','B',10);
         $pdf->SetXY(205.2,44);
         $pdf->Cell(0, 0.2, "(NOC)", 0.25, "C");
@@ -418,6 +421,8 @@ class NOC extends CI_Controller {
         $pdf->SetFont('Arial','',12);
         $pdf->SetXY(191.2,192);
         $pdf->Cell(0, 0.2, "_____________", 0.25, "C");
+        
+          $pdf->Image('assets/img/SignOfficial.jpg',191.2,168, 25,25, "jpg"); 
 
 
         $pdf->SetFont('Arial','',12);
@@ -426,7 +431,7 @@ class NOC extends CI_Controller {
         $pdf->SetFont('Arial','',12);
         $pdf->SetXY(254.2,192);
         $pdf->Cell(0, 0.2, "_____________", 0.25, "C"); 
-
+           $pdf->Image('assets/img/SignSup.jpg',255.2,168, 25,25, "jpg"); 
 
 
 
@@ -555,7 +560,7 @@ class NOC extends CI_Controller {
 
         $pdf->SetFont('Arial','B',10);
         $pdf->SetXY(50.2,157.8);
-        $pdf->MultiCell(100, 5,"Rs. 1650/-", '', "L",0);
+        $pdf->MultiCell(100, 5,"Rs. 1600/-", '', "L",0);
 
 
 
@@ -712,7 +717,7 @@ class NOC extends CI_Controller {
     public function get_ssc_data()
 
     {
-         // debugBreak();
+        //  debugBreak();
         $rno= $_POST['rno'];
         $year= $_POST['year'];
         $sess=  $_POST['sess'];
@@ -751,33 +756,51 @@ class NOC extends CI_Controller {
 
                         else
                         {
-                        //    DebugBreak();
                             $this->load->model('Verification_model');
                             $displaydob =  $dob;
-                            $dob = date('Y-m-d',strtotime($dob));
+                            $dob = date('d-m-Y',strtotime($dob));
                             $value = array($this->Verification_model->getresult_matric($rno,$year,$sess,$dob)) ;
                             if($value[0] != -1)
                             {
                                 $value[0][0]['Mesg_server'] = '';
-                                $path = $this->generatepath($value[0][0]['SSC_RNo'],$value[0][0]['SSC_CLASS'],$value[0][0]['SSC_Year'],$value[0][0]['SSC_Sess']);
-                                $type = pathinfo($path, PATHINFO_EXTENSION);
-                                $data = file_get_contents($path);
-                                $value[0][0]['PicPath'] = 'data:image/' . $type . ';base64,' . base64_encode($data);
-                                $value[0][0]['dob'] = $displaydob;
-                                 echo json_encode($value); 
+                                if(@$value[0][0]['Mesg'] == '')
+                                {
+                                    $path = $this->generatepath($value[0][0]['SSC_RNo'],$value[0][0]['SSC_CLASS'],$value[0][0]['SSC_Year'],$value[0][0]['SSC_Sess']);
+                                    $isexit = file_exists($path);
+                                    if(!file_exists($path))
+                                    {
+                                        $temp[0][0]['Mesg_server']  = 'Your Picture is missing' ;
+                                        echo json_encode($temp);   
+                                    }
+                                    else
+                                    {
+                                        $type = pathinfo($path, PATHINFO_EXTENSION);
+                                        $data = file_get_contents($path);
+                                        $value[0][0]['PicPath'] = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                                        $value[0][0]['dob'] = $displaydob;
+                                        echo json_encode($value);   
+                                    }
+
+                                }
+                                else
+                                {
+                                    $temp[0][0]['Mesg_server']  = $value[0][0]['Mesg'] ;
+                                    echo json_encode($temp);    
+                                }
+
 
                             }
                             else
                             {
                                 $temp[0][0]['Mesg_server']  = "Record Not Found.";
-                               echo json_encode($temp);    
+                                echo json_encode($temp);    
                             }
-                           
+
         }
 
 
     }
-    
+
     public function get_hssc_data()
 
     {
@@ -811,13 +834,13 @@ class NOC extends CI_Controller {
                     $value[0][0]['Mesg_server']  = "Please Select Session.";  
                     echo json_encode($value);  
                 }
-                 else
-                if($intclass == "" || $intclass == 0)
-                {
-                    $value[0][0]['Mesg_server']  = "Please Select Inter Class.";  
-                    echo json_encode($value);  
-                }
-              
+                else
+                    if($intclass == "" || $intclass == 0)
+                    {
+                        $value[0][0]['Mesg_server']  = "Please Select Inter Class.";  
+                        echo json_encode($value);  
+                    }
+
                     else
                         if($migto == "" || $migto == 0)
                         {
@@ -828,38 +851,47 @@ class NOC extends CI_Controller {
                         else
                         {
                             $this->load->model('Verification_model');
-                           
+
                             $value = array($this->Verification_model->Pre_Matric_data($rno,$year,$sess,$matrno,$intclass)) ;
                             if($value[0] == false)
                             {
-                            $value[0][0]['Mesg_server'] = 'No Record Found Against Your Given Information.';
+                                $value[0][0]['Mesg_server'] = 'No Record Found Against Your Given Information.';
                             }
                             else
                             {
-                            $value[0][0]['Mesg_server'] = '';
+                                // DebugBreak();
+                                $path = $this->generatepath($value[0][0]['rno'],$value[0][0]['class'],$value[0][0]['iyear'],$value[0][0]['sess']);
+                                $isexit = file_exists($path);
+                                if(!file_exists($path))
+                                {
+                                    $temp[0][0]['Mesg_server']  = 'Your Picture is missing' ;
+                                    echo json_encode($temp);   
+                                }
+                                else
+                                {
+                                    $type = pathinfo($path, PATHINFO_EXTENSION);
+                                    $data = file_get_contents($path);
+                                    $value[0][0]['PicPath'] = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+                                }  
+                                $value[0][0]['Mesg_server'] = '';
                             }
-                            
-                            
-                             echo json_encode($value);
-                           // DebugBreak();
-                           /* $path = $this->generatepath($value[0][0]['SSC_RNo'],$value[0][0]['SSC_CLASS'],$value[0][0]['SSC_Year'],$value[0][0]['SSC_Sess']);
-                            $type = pathinfo($path, PATHINFO_EXTENSION);
-                            $data = file_get_contents($path);
-                            $value[0][0]['PicPath'] = 'data:image/' . $type . ';base64,' . base64_encode($data);
-                            $value[0][0]['dob'] = $displaydob;
-                            echo json_encode($value);    */
-                            }
+
+
+                            echo json_encode($value);
+
+        }
 
 
     }
-    
+
     public function Insert_ssc_data()
-    {
-       
+    {  
+
         $rno= $_POST['rno'];
         $year= $_POST['year'];
         $sess=  $_POST['sess'];
-       $dob = $_POST['dob'];
+        $dob = $_POST['dob'];
         $migto = $_POST['migto'];
         $this->load->model('Verification_model');
         $info = array($this->Verification_model->insert_DATA_matric($rno,$year,$sess,date('Y-m-d',strtotime($dob)),$migto)) ;
@@ -868,9 +900,8 @@ class NOC extends CI_Controller {
 
 
     }
-        public function Insert_hssc_data()
+    public function Insert_hssc_data()
     {
-       // DebugBreak();
         $rno= $_POST['rno'];
         $year= $_POST['year'];
         $sess=  $_POST['sess'];
@@ -971,7 +1002,7 @@ class NOC extends CI_Controller {
         $this->load->model('Verification_model');
         //$this->load->library('session');
         $this->load->library('NumbertoWord');
-
+        //DebugBreak();
         $result = array($this->Verification_model->Downolad_data($formno)) ;
         $result = $result[0] ;
         //$Logged_In_Array = $this->session->all_userdata();
@@ -998,7 +1029,7 @@ class NOC extends CI_Controller {
         // DebugBreak();
         if($result[0]['isother'] ==1)
         {
-            $feestructure[]    =  "1650";    
+            $feestructure[]    =  "1600";    
             $displayfeetitle[] =  'NOC For Other Board';    
         }
 
@@ -1215,7 +1246,7 @@ class NOC extends CI_Controller {
             $pdf->Cell( 0.5,0.5,"Total Amount: ",0,'L');
             $pdf->SetFont('Arial','B',12);
             $pdf->SetXY(3,$y+$dy);
-            $pdf->Cell(0.8,0.5,'1650/-',0,'C');
+            $pdf->Cell(0.8,0.5,'1600/-',0,'C');
 
             //------------- Signature
             $y += 0.2;
@@ -1246,79 +1277,92 @@ class NOC extends CI_Controller {
         //  $pdf->Output($data["Sch_cd"].'.pdf', 'I');
     }
 
-     private function generatepath($rno,$class,$year,$sess)
+    private function generatepath($rno,$class,$year,$sess)
     {
-      $basepath = DIRPATH;
-      $clsvr = '';
-      $picyear= substr($year, -2);
-      $folderno = '';
-      if($class == 10  OR $class == 9)
-      {
-         $clsvr = 'MA'; 
-        
-      }
-      else if($class == 12  OR $class == 11)
-      {
-          $clsvr = 'IA';
-      }
+        $basepath = DIRPATH;
+        $clsvr = '';
+        $picyear= substr($year, -2);
+        $folderno = '';
+        if($class == 10  OR $class == 9)
+        {
+            $clsvr = 'MA'; 
 
-      if($rno>100001 && $rno<=150000)
-      {
-          $folderno = '1st';
-      }
-      else if($rno>150001 && $rno<=200000)
-      {
-          $folderno = '2nd';
-      }
-      else if($rno>200001 && $rno<=250000)
-      {
-          $folderno = '3rd';
-      }
-      else if($rno>250001 && $rno<=300000)
-      {
-          $folderno = '4th';
-      }
-      else if($rno>300001 && $rno<=350000)
-      {
-          $folderno = '5th';
-      }
-      else if($rno>350001 && $rno<400000)
-      {
-          $folderno = '6th';
-      }
-      else if($rno>400001 && $rno<=450000)
-      {
-          $folderno = '7th';
-      }
-      else if($rno>450001 && $rno<=450000)
-      {
-          $folderno = '8th';
-      }
-      else if($rno>450001 && $rno<500000)
-      {
-          $folderno = '9th';
-      }
-      else if($rno>500001 && $rno<550000)
-      {
-          $folderno = '10th';
-      }
-      else if($rno>550001 && $rno<600000)
-      {
-          $folderno = '11th';
-      }
-      
-      
-      $pic = 'Pic'.$picyear.'-'.$clsvr ;
-      
-      $foldername =   $clsvr.  $folderno .$picyear;
-      $basepath =  $basepath.'\\'.$pic.'\\'. $foldername.'\\';
+        }
+        else if($class == 12  OR $class == 11)
+        {
+            $clsvr = 'IA';
+        }
+
+        if($rno>=100001 && $rno<=150000)
+        {
+            $folderno = '1st';
+        }
+        else if($rno>=150001 && $rno<=200000)
+        {
+            $folderno = '2nd';
+        }
+        else if($rno>=200001 && $rno<=250000)
+        {
+            $folderno = '3rd';
+        }
+        else if($rno>=250001 && $rno<=300000)
+        {
+            $folderno = '4th';
+        }
+        else if($rno>=300001 && $rno<=350000)
+        {
+            if($class ==  10 OR $class ==  9)
+            $folderno = '5th';
+            else if($class ==  12 OR $class ==  11)
+            $folderno = '6th';
+        }
+        else if($rno>=350001 && $rno<400000)
+        {
+             if($class ==  10 OR $class ==  9)
+            $folderno = '6th';
+            else if($class ==  12 OR $class ==  11)
+            $folderno = '7th';
+        }
+        else if($rno>=400001 && $rno<=450000)
+        {
+            if($class ==  10 OR $class ==  9)
+            $folderno = '7th';
+            else if($class ==  12 OR $class ==  11)
+            $folderno = '8th';
+           
+        }
+        else if($rno>=450001 && $rno<=500000)
+        {
+             if($class ==  10 OR $class ==  9)
+            $folderno = '8th';
+            else if($class ==  12 OR $class ==  11)
+            $folderno = '9th';
+        }
+        else if($rno>=500001 && $rno<550000)
+        {
+            $folderno = '9th';
+        }
+        else if($rno>=550001 && $rno<600000)
+        {
+            $folderno = '10th';
+        }
+         else if($rno>=600001 && $rno<650000)
+        {
+            $folderno = '11th';
+        }
+
+
+        $pic = 'Pic'.$picyear.'-'.$clsvr ;
+
+        $foldername =   $clsvr.  $folderno .$picyear;
+        $basepath =  $basepath.'\\'.$pic.'\\'. $foldername.'\\';
         return  $basepath.$rno.".jpg";
     }
 
 
 
-  
-  
+
+
 
 
 

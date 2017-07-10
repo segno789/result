@@ -12,7 +12,7 @@
 			href	: settings.url,
 			target	: 'blank',
 			css		: {
-				background	: "url('../../assets/img/"+img+"') no-repeat",
+				background	: "url('../../../assets/img/"+img+"') no-repeat",
 				position	: 'fixed',
 				border		: 'none',
 				textDecoration	: 'none',

@@ -6,7 +6,7 @@
             $this->load->database(); 
         }
 
-         public function getresult($keyword,$isrno)
+       /*  public function getresult($keyword,$isrno)
         {
             //$query = $this->db->query("Registration..Current_Matric_Result_Announcement '$keyword',9,2016,1,$isrno");
             $query = $this->db->query("Registration..Current_Inter_Result_Announcement '$keyword',12,2016,1,$isrno");
@@ -20,7 +20,63 @@
             {
                 return  -1;
             }
+        }             */
+        
+           public function getresult($keyword,$isrno)
+        {
+            //$query = $this->db->query("Registration..Current_Matric_Result_Announcement '$keyword',9,2016,1,$isrno");
+           /* $query = $this->db->query("Registration..Current_Inter_Result_Announcement '$keyword',11,2016,1,$isrno");
+            $rowcount = $query->num_rows();
+            if($rowcount > 0)
+            {
+                return $query->result_array();
+
+            }
+            else
+            {
+                return  -1;
+            }              */
+            
+             if($isrno ==  2)
+            {
+                $where  =  "rno= $keyword" ;
+            }
+            else
+             {
+                 if(MCLASS ==  12 ||  MCLASS == 11)
+                 {
+                     $where  =  "coll_cd= $keyword" ; 
+                 }
+                 else
+                 {
+                     $where  =  "sch_cd= $keyword" ; 
+                 }
+                 
+             }
+            
+            //$query = $this->db->query("Registration..Current_Matric_Result_Announcement '$keyword',9,2016,1,$isrno");
+            $this->db->select("*"); 
+            $this->db->from('biseresult');
+            $this->db->where($where);
+            $query = $this->db->get();
+         //   return $query->result();
+            //$query = $this->db->query("Registration..Current_Inter_Result_Announcement '$keyword',11,2016,1,$isrno");
+            $rowcount = $query->num_rows();
+            if($rowcount > 0)
+            {
+                return $query->result_array();
+
+            }
+            else
+            {
+                return  -1;
+            }
+            
+            
+            
+            
         }
+        
         public function getresultstd($keyword)
         {
             $query = $this->db->query("matric_new..getRes9thStdData '$keyword',2016,9,1,1");
@@ -159,6 +215,20 @@
             {
                 return  -1;
             }
+        }
+        
+        public function saveResHistory($rno,$iyear,$sess,$cls,$kpo)
+        {
+            $data2 = array(
+                'rno'=>$rno,
+                'iyear'=>$iyear,
+                'sess'=>$sess,
+                'class'=>$cls,
+                'pkpo'=>$kpo,
+                'print_date'=>date('Y-m-d H:i:s'),
+            );
+            $hist_id = $this->db->insert("Registration..ResCardsHistory", $data2);
+            return $hist_id;
         }
       
   }
